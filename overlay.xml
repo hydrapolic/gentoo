@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <layman>
     <overlay contact = "hydrapolic@gmail.com"
-            name = "gentoo"
+            name = "hydra"
             src = "git://github.com/hydrapolic/gentoo.git"
             type = "git"
             status = "unofficial">
