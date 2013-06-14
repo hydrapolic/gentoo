@@ -17,6 +17,7 @@ IUSE="mysql50 mysql51 mysql51plugin +mysql55 mysql56 percona51 percona55"
 
 DEPEND="dev-util/cmake
 	dev-libs/libaio
+	dev-perl/DBD-mysql
 	mysql50? ( sys-devel/automake:1.10 )
 	mysql51? ( sys-devel/automake:1.10 )
 	mysql51plugin? ( sys-devel/automake:1.10 )
