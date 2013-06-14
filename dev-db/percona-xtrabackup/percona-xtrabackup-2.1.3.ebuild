@@ -13,13 +13,11 @@ SRC_URI="http://www.percona.com/redir/downloads/XtraBackup/XtraBackup-${PV}/sour
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="mysql50 mysql51 mysql51plugin +mysql55 mysql56 percona51 percona55"
+IUSE="mysql51plugin +mysql55 mysql56 percona51 percona55"
 
 DEPEND="dev-util/cmake
 	dev-libs/libaio
 	dev-perl/DBD-mysql
-	mysql50? ( sys-devel/automake:1.10 )
-	mysql51? ( sys-devel/automake:1.10 )
 	mysql51plugin? ( sys-devel/automake:1.10 )
 	percona51? ( sys-devel/automake:1.10 dev-vcs/bzr )
 	percona55? ( dev-vcs/bzr )"
@@ -27,15 +25,13 @@ DEPEND="dev-util/cmake
 S="${WORKDIR}/${MY_PV}"
 
 pkg_setup() {
-  if ! ( use mysql50 || use mysql51 || use mysql51plugin || use mysql55 || use mysql56 || use percona51 || use percona55 ); then
+  if ! ( use mysql51plugin || use mysql55 || use mysql56 || use percona51 || use percona55 ); then
     die "Please select a target!"
   fi
 
   einfo;einfo
   ewarn "Warning: please select a single target!"
   einfo
-  einfo "mysql50 - MySQL 5.0"
-  einfo "mysql51 - built-in InnoDB in MySQL 5.1"
   einfo "mysql51plugin - InnoDB plugin in MySQL 5.1"
   einfo "mysql55 - InnoDB in MySQL 5.5"
   einfo "mysql56 - InnoDB in MySQL 5.6, MariaDB 10.0"
@@ -46,14 +42,6 @@ pkg_setup() {
 }
 
 src_compile() {
-  if use mysql50; then
-	AUTO_DOWNLOAD="yes" ${S}/utils/build.sh innodb50
-  fi
-  
-  if use mysql51; then
-	AUTO_DOWNLOAD="yes" ${S}/utils/build.sh innodb51_builtin
-  fi
-  
   if use mysql51plugin; then
 	AUTO_DOWNLOAD="yes" ${S}/utils/build.sh innodb51
   fi
@@ -78,14 +66,6 @@ src_compile() {
 
 src_install() {	
 	dobin innobackupex
-	
-	if use mysql50; then
-	  dobin src/xtrabackup_51
-	fi
-	
-	if use mysql51; then
-	  dobin src/xtrabackup_51
-	fi
 	
 	if use mysql51plugin; then
 	  dobin src/xtrabackup_plugin
@@ -112,8 +92,6 @@ src_install() {
 
 pkg_postinst() {
 	elog "Percona xtrabackup installed. Use the following binaries:"
-	elog "for MySQL 5.0: xtrabackup_51" 
-	elog "for MySQL 5.1 (builtin): xtrabackup_51" 
 	elog "for MySQL 5.1 (plugin): xtrabackup_plugin"
 	elog "for MySQL 5.5: xtrabackup_innodb55" 
 	elog "for MySQL 5.6/MariaDB 10: xtrabackup_56"
