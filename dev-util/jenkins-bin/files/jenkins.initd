@@ -1,0 +1,72 @@
+#!/sbin/runscript
+
+depend() {
+	need net
+	use dns logger mysql postgresql
+}
+
+PIDFILE=/run/${RC_SVCNAME}.pid
+
+: ${JENKINS_HOME:=/var/lib/${RC_SVCNAME}/home}
+: ${JENKINS_USER:=${RC_SVCNAME}}
+: ${JENKINS_WAR:=/usr/share/${RC_SVCNAME}/${RC_SVCNAME}.war}
+: ${JENKINS_LOG:=/var/log/${RC_SVCNAME}/${RC_SVCNAME}.log}
+
+checkconfig() {
+	if [[ -z "${JENKINS_HOME}" ]] ; then
+		eerror "JENKINS_HOME not configured"
+		return 1
+	fi
+	if [[ ! -d "${JENKINS_HOME}" ]] ; then
+		eerror "JENKINS_HOME directory does not exist: ${JENKINS_HOME}"
+		return 1
+	fi
+	return 0
+}
+
+start() {
+	checkconfig || return 1
+
+	JAVA_HOME=`java-config --jre-home`
+
+	# Don't use --daemon here, because in this case stop will not work
+	[[ -n "${JENKINS_LOG}" ]] \
+		&& JENKINS_OPTS="${JENKINS_OPTS} --logfile=${JENKINS_LOG}"
+	[[ -n "${JENKINS_PORT}" ]] \
+		&& JENKINS_OPTS="${JENKINS_OPTS} --httpPort=${JENKINS_PORT}"
+	[[ -n "${JENKINS_DEBUG_LEVEL}" ]] \
+		&& JENKINS_OPTS="${JENKINS_OPTS} --debug=${JENKINS_DEBUG_LEVEL}"
+	[[ -n "${JENKINS_HANDLER_STARTUP}" ]] \
+		&& JENKINS_OPTS="${JENKINS_OPTS} --handlerCountStartup=${JENKINS_HANDLER_STARTUP}"
+	[[ -n "${JENKINS_HANDLER_MAX}" ]] \
+		&& JENKINS_OPTS="${JENKINS_OPTS} --handlerCountMax=${JENKINS_HANDLER_MAX}"
+	[[ -n "${JENKINS_HANDLER_IDLE}" ]] \
+		&& JENKINS_OPTS="${JENKINS_OPTS} --handlerCountMaxIdle=${JENKINS_HANDLER_IDLE}"
+
+	[[ "${JENKINS_ENABLE_ACCESS_LOG}" == "yes" ]] \
+		&& JAVA_OPTS="${JAVA_OPTS} --accessLoggerClassName=winstone.accesslog.SimpleAccessLogger --simpleAccessLogger.format=combined --simpleAccessLogger.file=${JENKINS_LOG}"
+
+	if [[ ! -d "${PIDFILE%/*}" ]] ; then
+		mkdir "${PIDFILE%/*}"
+		chown "${JENKINS_USER}" "${PIDFILE%/*}"
+	fi
+
+	ebegin "Starting ${RC_SVCNAME}"
+	start-stop-daemon --start \
+		--quiet --background \
+		--user "${JENKINS_USER}" \
+		--make-pidfile --pidfile "${PIDFILE}" \
+		--exec "${JAVA_HOME}/bin/java" \
+		-- \
+			${JAVA_OPTS} \
+			-DJENKINS_HOME="${JENKINS_HOME}" \
+			-jar "${JENKINS_WAR}" \
+			${JENKINS_OPTS}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping ${RC_SVCNAME}"
+	start-stop-daemon --stop --quiet --pidfile "${PIDFILE}"
+	eend $?
+}
