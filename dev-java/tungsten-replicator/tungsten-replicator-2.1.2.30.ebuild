@@ -16,6 +16,7 @@ SRC_URI="http://tungsten-replicator.googlecode.com/files/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="installer"
 
 DEPEND=">=virtual/jdk-1.6
  >=dev-lang/ruby-1.8.5[ssl]
@@ -34,9 +35,14 @@ pkg_setup() {
 
 src_install() {
 	keepdir /opt/tungsten /var/lib/tungsten
-	mv * "${D}/opt/tungsten/"
+	
+	if use installer; then
+	  dodir /opt/tungsten/_installer
+	  mv * "${D}/opt/tungsten/_installer"
+	fi
 
-	fowners -R tungsten:mysql "/opt/tungsten"
+	fowners -R tungsten:mysql "/opt/tungsten" "/var/lib/tungsten"
+	fperms 0770 "/opt/tungsten" "/var/lib/tungsten"
 
 	newinitd "${FILESDIR}/tungsten.initd" tungsten
 	newconfd "${FILESDIR}/tungsten.confd" tungsten
