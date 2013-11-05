@@ -38,6 +38,7 @@ src_install() {
 	
 	if use installer; then
 	  dodir /opt/tungsten/_installer
+	  mv .* "${D}/opt/tungsten/_installer"
 	  mv * "${D}/opt/tungsten/_installer"
 	fi
 
