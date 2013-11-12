@@ -43,7 +43,7 @@ src_install() {
 	fi
 
 	fowners -R tungsten:mysql "/opt/tungsten" "/var/lib/tungsten"
-	fperms 0770 "/opt/tungsten" "/var/lib/tungsten"
+	fperms 0750 "/opt/tungsten" "/var/lib/tungsten"
 
 	newinitd "${FILESDIR}/tungsten.initd" tungsten
 	newconfd "${FILESDIR}/tungsten.confd" tungsten
