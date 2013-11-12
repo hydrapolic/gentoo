@@ -37,9 +37,9 @@ src_install() {
 	keepdir /opt/tungsten /var/lib/tungsten
 	
 	if use installer; then
-	  dodir /opt/tungsten/_installer
-	  mv .* "${D}/opt/tungsten/_installer"
-	  mv * "${D}/opt/tungsten/_installer"
+	  dodir /opt/tungsten/_installer/${PV}
+	  mv .* "${D}/opt/tungsten/_installer/${PV}"
+	  mv * "${D}/opt/tungsten/_installer/${PV}"
 	fi
 
 	fowners -R tungsten:mysql "/opt/tungsten" "/var/lib/tungsten"
