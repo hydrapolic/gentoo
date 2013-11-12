@@ -38,7 +38,7 @@ src_install() {
 	
 	if use installer; then
 	  dodir /opt/tungsten/_installer/${PV}
-	  mv .* "${D}/opt/tungsten/_installer/${PV}"
+	  mv .manifest* "${D}/opt/tungsten/_installer/${PV}"
 	  mv * "${D}/opt/tungsten/_installer/${PV}"
 	fi
 
