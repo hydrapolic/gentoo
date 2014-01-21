@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit versionator
+inherit user versionator
 
 MY_PV="2.1.2-44"
 MY_P=${PN}-${MY_PV}
