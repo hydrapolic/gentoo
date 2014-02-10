@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="installer"
 
-DEPEND=">=virtual/jdk-1.6
+DEPEND=">=virtual/jre-1.6
  >=dev-lang/ruby-1.8.5[ssl]
  app-arch/tar
  net-misc/rsync
