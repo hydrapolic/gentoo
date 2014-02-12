@@ -87,7 +87,7 @@ src_install() {
 	  dobin src/xtrabackup_55
 	fi
 	
-	doman doc/xtrabackup.1
+	#doman doc/xtrabackup.1
 }
 
 pkg_postinst() {
