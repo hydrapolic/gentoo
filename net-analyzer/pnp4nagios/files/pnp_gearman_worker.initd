@@ -1,0 +1,17 @@
+#!/sbin/runscript
+# Copyright 1999-2012 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+pidfile="/run/pnp_gearman_worker.pid"
+command="/usr/libexec/process_perfdata.pl"
+command_args="--config=/etc/pnp/process_perfdata.cfg --gearman --daemon"
+
+depend() {
+	need net
+}
+
+start() {
+	start-stop-daemon --start 
+	--verbose --wait 2000 --user nagios --exec "${command}" -- "${command_args}"
+
+}
