@@ -20,7 +20,7 @@ SRC_URI="http://mathias-kettner.de/download/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="examples perl python test"
+IUSE="examples nagios4 perl python test"
 
 RDEPEND="perl? (
 		dev-lang/perl:0
@@ -73,7 +73,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf
+	econf $(use_with nagios4)
 
 	if use perl; then
 		cd api/perl/
