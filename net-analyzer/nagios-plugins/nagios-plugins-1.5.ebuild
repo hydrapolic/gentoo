@@ -8,41 +8,42 @@ PATCHSET=2
 
 inherit autotools eutils multilib user
 
-DESCRIPTION="Nagios $PV plugins - Pack of plugins to make Nagios work properly"
-HOMEPAGE="http://www.nagios.org/"
-SRC_URI="https://www.nagios-plugins.org/download/${P}.tar.gz"
+DESCRIPTION="Monitoring plugins - Pack of plugins to make Icinga, Naemon, Nagios, Shinken, Sensu work properly"
+HOMEPAGE="http://www.monitoring-plugins.org"
+SRC_URI="https://www.monitoring-plugins.org/download/${P}.tar.gz
+	http://dev.gentoo.org/~flameeyes/${PN}/${PN}-1.4.16-patches-${PATCHSET}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc ~x86"
 IUSE="+ssl samba mysql postgres ldap snmp nagios-dns nagios-ntp nagios-ping nagios-ssh nagios-game ups ipv6 radius +suid jabber gnutls sudo smart"
 
-DEPEND="ldap? ( >=net-nds/openldap-2.0.25 )
+DEPEND="ldap? ( net-nds/openldap )
 	mysql? ( virtual/mysql )
 	postgres? ( dev-db/postgresql-base )
 	ssl? (
-		!gnutls? ( >=dev-libs/openssl-0.9.6g )
+		!gnutls? ( dev-libs/openssl )
 		gnutls? ( net-libs/gnutls )
 	)
-	radius? ( >=net-dialup/radiusclient-0.3.2 )"
+	radius? ( net-dialup/radiusclient )"
 
 # tests try to ssh into the box itself
 RESTRICT="test"
 
 RDEPEND="${DEPEND}
-	>=dev-lang/perl-5.6.1-r7
-	samba? ( >=net-fs/samba-2.2.5-r1 )
-	snmp? ( >=dev-perl/Net-SNMP-4.0.1-r1 )
+	dev-lang/perl
+	samba? ( net-fs/samba )
+	snmp? ( dev-perl/Net-SNMP )
 	mysql? ( dev-perl/DBI
 			 dev-perl/DBD-mysql )
-	nagios-dns? ( >=net-dns/bind-tools-9.2.2_rc1 )
-	nagios-ntp? ( >=net-misc/ntp-4.1.1a )
-	nagios-ping? ( >=net-analyzer/fping-2.4_beta2-r1 )
-	nagios-ssh? ( >=net-misc/openssh-3.5_p1 )
-	ups? ( >=sys-power/nut-1.4 )
-	nagios-game? ( >=games-util/qstat-2.6 )
-	jabber? ( >=dev-perl/Net-Jabber-2.0 )
-	sudo? ( >=app-admin/sudo-1.8.5 )
+	nagios-dns? ( net-dns/bind-tools )
+	nagios-ntp? ( net-misc/ntp )
+	nagios-ping? ( net-analyzer/fping )
+	nagios-ssh? ( net-misc/openssh )
+	ups? ( sys-power/nut )
+	nagios-game? ( games-util/qstat )
+	jabber? ( dev-perl/Net-Jabber )
+	sudo? ( app-admin/sudo )
 	smart? ( sys-apps/smartmontools )"
 
 REQUIRED_USE="smart? ( sudo )"
@@ -50,6 +51,17 @@ REQUIRED_USE="smart? ( sudo )"
 pkg_setup() {
 	enewgroup nagios
 	enewuser nagios -1 /bin/bash /var/nagios/home nagios
+}
+
+src_prepare() {
+    if use gnutls; then
+	  epatch "${FILESDIR}"/gnutls_compatibility.patch
+	fi
+	
+	epatch "${WORKDIR}"/patches/0003-configure-use-pg_config-to-find-where-to-find-Postgr.patch
+	epatch "${WORKDIR}"/patches/0004-configure-don-t-expect-presence-of-127.0.0.1.patch
+
+	eautoreconf
 }
 
 src_configure() {
@@ -69,11 +81,12 @@ src_configure() {
 		$(use_with radius) \
 		$(use_with postgres pgsql /usr) \
 		${myconf} \
+		--disable-nls \
 		--libexecdir=/usr/$(get_libdir)/nagios/plugins \
 		--sysconfdir=/etc/nagios
 }
 
-DOCS=( ACKNOWLEDGEMENTS AUTHORS CODING ChangeLog FAQ NEWS README REQUIREMENTS SUPPORT THANKS )
+DOCS=( ACKNOWLEDGEMENTS AUTHORS CODING ChangeLog FAQ LEGAL NEWS README REQUIREMENTS SUPPORT THANKS )
 
 src_install() {
 	default
@@ -94,26 +107,6 @@ EOF
 		doins "${T}"/50${PN}
 	fi
 
-	cd contrib/
-	dodoc *README*
-
-	# remove stuff that is way too broken to fix, or for which the USE
-	# flag has been removed.
-	rm -r tarballs aix \
-		check_compaq_insight.pl *.c *README* \
-		$(usex !jabber nagios_sendim.pl) \
-		$(usex !smart check_smart.pl)
-
-	# fix perl interpreter
-	sed -i -e '1s:/usr/local/bin/perl:/usr/bin/perl:' \
-		"${S}"/contrib/* || die
-
-	exeinto ${nagiosplugindir}/contrib
-	doexe *
-
-	dosym ../utils.sh ${nagiosplugindir}/contrib/utils.sh
-	dosym ../utils.pm ${nagiosplugindir}/contrib/utils.pm
-
 	# enforce permissions/owners (seem to trigger only in some case)
 	chown -R root:nagios "${D}${nagiosplugindir}" || die
 	chmod -R o-rwx "${D}${nagiosplugindir}" || die
@@ -125,5 +118,4 @@ pkg_postinst() {
 	elog "This ebuild has a number of USE flags which determines what nagios is able to monitor."
 	elog "Depending on what you want to monitor with nagios, some or all of these USE"
 	elog "flags need to be set for nagios to function correctly."
-	elog "contrib plugins are installed into /usr/$(get_libdir)/nagios/plugins/contrib"
 }
