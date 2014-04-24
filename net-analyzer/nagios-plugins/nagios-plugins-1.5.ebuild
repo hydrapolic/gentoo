@@ -54,7 +54,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-    if use gnutls; then
+	if use gnutls; then
 	  epatch "${FILESDIR}"/gnutls_compatibility.patch
 	fi
 	
