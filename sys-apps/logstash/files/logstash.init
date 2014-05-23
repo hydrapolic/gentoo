@@ -28,7 +28,7 @@ else
 	JAVA=java
 fi
 
-server_command="/usr/bin/logstash"
+server_command="/opt/logstash/bin/logstash"
 
 depend() {
 	use net
