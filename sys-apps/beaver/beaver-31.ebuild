@@ -28,8 +28,17 @@ RDEPEND=""
 
 S=${WORKDIR}/${MY_P}
 
-pkg_setup() {
-  enewgroup beaver
-  enewuser beaver -1 -1 /var/lib/beaver beaver
+src_install() {
+  distutils-r1_src_install
+  
+  newinitd "${FILESDIR}"/beaver.initd beaver
+  
+  dodoc "${FILESDIR}"/logstash-redis.example
 }
 
+pkg_postinst() {
+  elog
+  elog "A sample configuration with connection to redis is in logstash-redis.example"
+  elog "Check http://beaver.readthedocs.org/en/latest/user/usage.html#ssh-tunneling-support for SSH tunneling"
+  elog
+}
