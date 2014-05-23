@@ -20,25 +20,25 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="<dev-lang/python-3.2[sqlite]
- dev-python/conf_d
- dev-python/glob2
- dev-python/msgpack
- dev-python/python-daemon"
+	dev-python/conf_d
+	dev-python/glob2
+	dev-python/msgpack
+	dev-python/python-daemon"
 RDEPEND=""
 
 S=${WORKDIR}/${MY_P}
 
 src_install() {
-  distutils-r1_src_install
+	distutils-r1_src_install
   
-  newinitd "${FILESDIR}"/beaver.initd beaver
+	newinitd "${FILESDIR}"/beaver.initd beaver
   
-  dodoc "${FILESDIR}"/logstash-redis.example
+	dodoc "${FILESDIR}"/logstash-redis.example
 }
 
 pkg_postinst() {
-  elog
-  elog "A sample configuration with connection to redis is in logstash-redis.example"
-  elog "Check http://beaver.readthedocs.org/en/latest/user/usage.html#ssh-tunneling-support for SSH tunneling"
-  elog
+	elog
+	elog "A sample configuration with connection to redis is in logstash-redis.example"
+	elog "Check http://beaver.readthedocs.org/en/latest/user/usage.html#ssh-tunneling-support for SSH tunneling"
+	elog
 }
