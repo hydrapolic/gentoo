@@ -5,7 +5,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python{2_6,2_7} )
 
-inherit distutils-r1
+inherit distutils-r1 user
 
 MY_PN="Beaver"
 MY_P="${MY_PN}-${PV}"
@@ -19,10 +19,17 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="dev-python/conf_d
+DEPEND="<dev-lang/python-3.2[sqlite]
+ dev-python/conf_d
  dev-python/glob2
  dev-python/msgpack
  dev-python/python-daemon"
 RDEPEND=""
 
 S=${WORKDIR}/${MY_P}
+
+pkg_setup() {
+  enewgroup beaver
+  enewuser beaver -1 -1 /var/lib/beaver beaver
+}
+
