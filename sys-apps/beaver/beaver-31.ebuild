@@ -31,6 +31,8 @@ S=${WORKDIR}/${MY_P}
 src_install() {
 	distutils-r1_src_install 
 
+	keepdir /etc/beaver
+
 	newinitd "${FILESDIR}"/beaver.initd beaver
 
 	dodoc "${FILESDIR}"/logstash-redis.example
