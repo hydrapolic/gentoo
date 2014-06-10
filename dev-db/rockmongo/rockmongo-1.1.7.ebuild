@@ -18,8 +18,6 @@ RDEPEND="
 	dev-php/pecl-mongo
 "
 
-S=${WORKDIR}/${PN}
-
 need_httpd_cgi
 need_php_httpd
 
