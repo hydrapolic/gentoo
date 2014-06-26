@@ -18,7 +18,7 @@ RESTRICT="mirror"
 
 DEPEND="media-fonts/dejavu"
 RDEPEND="${DEPEND}
-	>=virtual/jdk-1.5"
+	>=virtual/jre-1.5"
 
 S="${WORKDIR}"
 
