@@ -24,7 +24,6 @@ DEPEND="|| ( >=dev-libs/libmemcached-1.0.14 >=dev-libs/libmemcached-1.0[sasl?] )
 		dev-lang/php[session?,json?]
 		igbinary? ( dev-php/igbinary[php_targets_php5-5?,php_targets_php5-4?,php_targets_php5-3?] )"
 RDEPEND="${DEPEND}"
-PATCHES=( "${FILESDIR}/libmc-1.09-fix.diff" )
 
 src_prepare() {
 	local slot orig_s="${S}"
