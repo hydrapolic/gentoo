@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-php/pecl-memcached/pecl-memcached-2.1.0-r3.ebuild,v 1.1 2013/12/16 08:12:13 robbat2 Exp $
 
-EAPI="4"
+EAPI="5"
 PHP_EXT_NAME="memcached"
 PHP_EXT_INI="yes"
 PHP_EXT_ZENDEXT="no"
 DOCS="README"
 
-USE_PHP="php5-5 php5-3 php5-4"
+USE_PHP="php5-6 php5-5 php5-4"
 
 inherit base php-ext-pecl-r2
 
@@ -22,7 +22,7 @@ IUSE="+session igbinary json sasl"
 DEPEND="|| ( >=dev-libs/libmemcached-1.0.14 >=dev-libs/libmemcached-1.0[sasl?] )
 		sys-libs/zlib
 		dev-lang/php[session?,json?]
-		igbinary? ( dev-php/igbinary[php_targets_php5-5?,php_targets_php5-4?,php_targets_php5-3?] )"
+		igbinary? ( dev-php/igbinary[php_targets_php5-6?,php_targets_php5-5?,php_targets_php5-4?] )"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
