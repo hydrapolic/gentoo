@@ -16,6 +16,7 @@ KEYWORDS="~amd64"
 RDEPEND=""
 DEPEND="${RDEPEND} dev-perl/IO-Socket-Timeout
                    virtual/perl-Module-Build
-                   dev-perl/Module-Build-Tiny"
+                   dev-perl/Module-Build-Tiny
+				   dev-perl/Try-Tiny"
 
 mytargets="install"
