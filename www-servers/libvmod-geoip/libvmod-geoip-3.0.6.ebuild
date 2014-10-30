@@ -24,8 +24,8 @@ IUSE="doc"
 DEPEND="
     doc? ( dev-python/docutils )
 	dev-libs/geoip
-	>=www-servers/varnish-3.0.5
-	<www-servers/varnish-3.0.6
+	>=www-servers/varnish-3.0.6
+	<www-servers/varnish-4
 	"
 
 RDEPEND="${DEPEND}"
