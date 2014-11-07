@@ -3,7 +3,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python2_7 )
 
 inherit distutils-r1 user
 
@@ -17,13 +17,14 @@ SRC_URI="http://pypi.python.org/packages/source/${MY_PN:0:1}/${MY_PN}/${MY_P}.ta
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="redis"
 
-DEPEND="<dev-lang/python-3.2[sqlite]
+DEPEND="dev-lang/python[sqlite]
 	dev-python/conf_d
 	dev-python/glob2
 	dev-python/msgpack
-	dev-python/python-daemon"
+	dev-python/python-daemon
+	redis? ( dev-python/redis-py )"
 RDEPEND=""
 
 S=${WORKDIR}/${MY_P}
