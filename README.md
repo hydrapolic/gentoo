@@ -5,6 +5,7 @@ gentoo ebuilds
 
 ```
 |-- app-misc
+|   |-- chkcrontab
 |   `-- elasticsearch
 |-- dev-db
 |   |-- mongodb
@@ -18,8 +19,6 @@ gentoo ebuilds
 |   `-- Redis
 |-- dev-php
 |   |-- pecl-memcached
-|   |-- pecl-mongo
-|   |-- pecl-redis
 |   `-- pecl-zendopcache
 |-- dev-python
 |   |-- conf_d
@@ -29,7 +28,6 @@ gentoo ebuilds
 |   |-- j2cli
 |   `-- pyes
 |-- dev-util
-|   |-- jenkins-bin
 |   `-- yuicompressor
 |-- net-analyzer
 |   |-- check_mk
@@ -38,8 +36,7 @@ gentoo ebuilds
 |   |-- nagios
 |   |-- nagios-core
 |   |-- nagios-plugins
-|   |-- nagvis
-|   `-- pnp4nagios
+|   `-- nagvis
 |-- sys-apps
 |   |-- beaver
 |   |-- logstash
@@ -50,6 +47,7 @@ gentoo ebuilds
 |-- www-apps
 |   `-- kibana
 `-- www-servers
+    |-- apache
     |-- libvmod-geoip
     |-- pound
     `-- varnish-geoip
