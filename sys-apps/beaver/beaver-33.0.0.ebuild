@@ -19,13 +19,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="redis"
 
-DEPEND="dev-lang/python[sqlite]
+DEPEND="dev-lang/python:2.7[sqlite]
 	dev-python/conf_d
 	dev-python/glob2
 	dev-python/msgpack
 	dev-python/python-daemon
 	redis? ( dev-python/redis-py )"
-RDEPEND=""
+RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
 
