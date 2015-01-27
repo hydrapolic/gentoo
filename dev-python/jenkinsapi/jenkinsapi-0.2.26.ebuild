@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_7,3_3} )
+PYTHON_COMPAT=( python{2_7,3_3,3_4} pypy )
 
 inherit distutils-r1
 
@@ -17,12 +17,15 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 
-DEPEND="dev-python/pytz
-	dev-python/requests
-	test? ( dev-python/mock
-		dev-python/nose
-		dev-python/coverage
-		dev-python/unittest2
+RDEPEND=">=dev-python/pytz-2014.4[${PYTHON_USEDEP}]
+	>=dev-python/requests-2.3.0[${PYTHON_USEDEP}]"
+
+DEPEND="${RDEPEND}
+	dev-python/setuptools[${PYTHON_USEDEP}]
+	test? ( dev-python/mock[${PYTHON_USEDEP}]
+		dev-python/nose[${PYTHON_USEDEP}]
+		dev-python/coverage[${PYTHON_USEDEP}]
+		dev-python/unittest2[${PYTHON_USEDEP}]
 	)"
 
 python_test() {
