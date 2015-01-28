@@ -15,11 +15,9 @@ SRC_URI="https://github.com/patrys/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="test"
 
 RDEPEND="dev-python/requests[${PYTHON_USEDEP}]"
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-	test? ( ${RDEPEND} )"
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
 python_test() {
 	esetup.py test
