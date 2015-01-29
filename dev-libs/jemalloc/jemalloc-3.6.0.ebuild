@@ -11,7 +11,7 @@ SRC_URI="http://www.canonware.com/download/${PN}/${P}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 ppc ppc64 ~s390 ~sparc x86 ~amd64-linux ~x86-linux ~x64-macos"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug no-prefix static-libs stats"
 HTML_DOCS=( doc/jemalloc.html )
 PATCHES=( "${FILESDIR}/${PN}-3.5.1-strip-optimization.patch"

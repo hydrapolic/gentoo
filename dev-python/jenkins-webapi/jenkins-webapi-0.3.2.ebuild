@@ -30,7 +30,7 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/alabaster-0.6.1[${PYTHON_USEDEP}]
 	)"
 
-PATCHES=( 
+PATCHES=(
 		"${FILESDIR}"/local_jenkins_war.patch
 		"${FILESDIR}"/tests_py27.patch
 		)
