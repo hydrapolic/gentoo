@@ -26,7 +26,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/httpd-${PV}"
 
 src_prepare() {
-	#epatch "${FILESDIR}"/${PN}-2.4.7-Makefile.patch #459446
+	epatch "${FILESDIR}"/${PN}-2.4.7-Makefile.patch #459446
 
 	# This package really should upgrade to using pcre's .pc file.
 	cat <<-\EOF >"${T}"/pcre-config
