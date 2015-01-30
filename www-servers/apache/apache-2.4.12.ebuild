@@ -133,12 +133,6 @@ pkg_setup() {
 	apache-2_pkg_setup
 }
 
-src_prepare() {
-	epatch "${FILESDIR}/mod_proxy_fcgi_fix.patch"
-
-	apache-2_src_prepare
-}
-
 src_configure() {
 	# Brain dead check.
 	tc-is-cross-compiler && export ap_cv_void_ptr_lt_long="no"
