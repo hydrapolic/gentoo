@@ -18,14 +18,17 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 
 RDEPEND="dev-python/requests[${PYTHON_USEDEP}]"
-DEPEND="test? ( 
-				dev-python/pytest[${PYTHON_USEDEP}]
-				dev-python/mock[${PYTHON_USEDEP}]
-				dev-python/webtest[${PYTHON_USEDEP}]
-				dev-python/redis-py[${PYTHON_USEDEP}]
-				dev-python/lockfile[${PYTHON_USEDEP}]
-			)
-		doc? ( dev-python/sphinx )"
+DEPEND="
+	test? ( 
+		dev-python/pytest[${PYTHON_USEDEP}]
+		dev-python/mock[${PYTHON_USEDEP}]
+		dev-python/webtest[${PYTHON_USEDEP}]
+		dev-python/redis-py[${PYTHON_USEDEP}]
+		dev-python/lockfile[${PYTHON_USEDEP}]
+	)
+	doc? ( 
+		dev-python/sphinx 
+	)"
 
 
 python_test() {
