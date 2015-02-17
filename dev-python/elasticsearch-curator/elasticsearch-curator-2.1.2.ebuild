@@ -21,8 +21,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 
+RDEPEND=">=dev-python/elasticsearch-py-1.0.0
+	<=dev-python/elasticsearch-py-2.0.0"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-		test? ( virtual/jre:1.7
+		test? ( ${RDEPEND}
+			virtual/jre:1.7
 			dev-python/mock[${PYTHON_USEDEP}]
 			dev-python/nose[${PYTHON_USEDEP}]
 			dev-python/coverage[${PYTHON_USEDEP}]
