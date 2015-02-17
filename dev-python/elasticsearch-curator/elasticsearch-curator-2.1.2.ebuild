@@ -16,13 +16,13 @@ HOMEPAGE="https://github.com/elasticsearch/curator"
 SRC_URI="https://github.com/elasticsearch/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	test? ( https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz )"
 
-LICENSE="APACHE-2.0"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 
-RDEPEND=">=dev-python/elasticsearch-py-1.0.0
-	<=dev-python/elasticsearch-py-2.0.0"
+RDEPEND=">=dev-python/elasticsearch-py-1.0.0[${PYTHON_USEDEP}]
+	<dev-python/elasticsearch-py-2.0.0[${PYTHON_USEDEP}]"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		test? ( ${RDEPEND}
 			virtual/jre:1.7
