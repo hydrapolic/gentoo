@@ -1,6 +1,6 @@
---- a/SConstruct	2012-08-29 16:21:35.107094792 +0200
-+++ b/SConstruct	2012-08-29 19:09:16.964893217 +0200
-@@ -677,7 +677,6 @@
+--- a/SConstruct	2013-06-26 10:31:56.209089504 +0200
++++ b/SConstruct	2013-06-26 10:33:59.177045991 +0200
+@@ -702,7 +702,6 @@
      # -Winvalid-pch Warn if a precompiled header (see Precompiled Headers) is found in the search path but can't be used.
      env.Append( CCFLAGS=["-fPIC",
                           "-fno-strict-aliasing",
@@ -8,12 +8,11 @@
                           "-pthread",
                           "-Wall",
                           "-Wsign-compare",
-@@ -685,14 +684,15 @@
+@@ -710,14 +709,14 @@
                           "-Winvalid-pch"] )
      # env.Append( " -Wconversion" ) TODO: this doesn't really work yet
      if linux:
 -        env.Append( CCFLAGS=["-Werror", "-pipe"] )
-+        # env.Append( CPPDEFINES=["XP_UNIX=1"] )
          if not has_option('clang'):
              env.Append( CCFLAGS=["-fno-builtin-memcmp"] ) # glibc's memcmp is faster than gcc's
  
@@ -27,20 +26,3 @@
  
      #make scons colorgcc friendly
      for key in ('HOME', 'TERM'):
-@@ -703,6 +703,7 @@
- 
-     if linux and has_option( "sharedclient" ):
-         env.Append( LINKFLAGS=" -Wl,--as-needed -Wl,-zdefs " )
-+        env.Append( SHLINKFLAGS=" -Wl,-soname=libmongoclient.so " )
- 
-     if linux and has_option( "gcov" ):
-         env.Append( CXXFLAGS=" -fprofile-arcs -ftest-coverage " )
-@@ -712,7 +713,7 @@
-         env.Append( CCFLAGS=["-O0", "-fstack-protector"] )
-         env['ENV']['GLIBCXX_FORCE_NEW'] = 1; # play nice with valgrind
-     else:
--        env.Append( CCFLAGS=["-O3"] )
-+        env.Append( CXXFLAGS=["-O3"] )
- 
-     if debugLogging:
-         env.Append( CPPDEFINES=["_DEBUG"] );
