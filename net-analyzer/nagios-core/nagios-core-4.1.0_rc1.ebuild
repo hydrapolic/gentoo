@@ -109,6 +109,9 @@ src_prepare(){
 	#
 	# Gentoo bug #530640.
 	epatch "${FILESDIR}"/fix-bogus-perf-data-warnings.patch
+	
+	# build HTML pages
+	epatch "${FILESDIR}"/nagios-core-4.1.0-html.patch
 }
 
 src_configure() {
