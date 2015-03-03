@@ -7,3 +7,4 @@
 -	go build -o "bin/$i" -ldflags "-X github.com/mongodb/mongo-tools/common/options.Gitspec `git rev-parse HEAD`" -tags "$tags" "$i/main/$i.go"
 +	go build -o "bin/$i" -tags "$tags" "$i/main/$i.go"
  done
+

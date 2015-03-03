@@ -1,8 +1,9 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/dev-db/mongodb/mongodb-2.6.8.ebuild,v 1.1 2015/02/27 09:55:48 ultrabug Exp $
 
 EAPI=5
-SCONS_MIN_VERSION="1.2.0"
+SCONS_MIN_VERSION="2.3.0"
 CHECKREQS_DISK_BUILD="2400M"
 CHECKREQS_DISK_USR="512M"
 CHECKREQS_MEMORY="1024M"
@@ -13,15 +14,14 @@ MY_P=${PN}-src-r${PV/_rc/-rc}
 
 DESCRIPTION="A high-performance, open source, schema-free document-oriented database"
 HOMEPAGE="http://www.mongodb.org"
-SRC_URI="http://downloads.mongodb.org/src/${MY_P}.tar.gz
-	mms-agent? ( http://dev.gentoo.org/~ultrabug/20140409-mms-monitoring-agent.zip )"
+SRC_URI="http://downloads.mongodb.org/src/${MY_P}.tar.gz"
 
 LICENSE="AGPL-3 Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug kerberos mms-agent ssl static-libs +tools"
 
-PDEPEND="mms-agent? ( dev-python/pymongo app-arch/unzip )"
+PDEPEND=""
 RDEPEND="
 	app-arch/snappy
 	>=dev-cpp/yaml-cpp-0.5.1
@@ -30,8 +30,10 @@ RDEPEND="
 	dev-libs/snowball-stemmer
 	dev-util/google-perftools[-minimal]
 	net-libs/libpcap
+	>=sys-devel/gcc-4.8.2:*
+	mms-agent? ( app-admin/mms-agent )
 	ssl? ( >=dev-libs/openssl-1.0.1g )
-	tools? ( >=dev-db/mongo-tools-${PV} )"
+	tools? ( =app-admin/mongo-tools-${PV} )"
 DEPEND="${RDEPEND}
 	sys-libs/ncurses
 	sys-libs/readline
@@ -107,22 +109,6 @@ src_install() {
 
 	# see bug #526114
 	pax-mark emr "${ED}"/usr/bin/{mongo,mongod,mongos}
-
-	if use mms-agent; then
-		local MY_PN="mms-agent"
-		local MY_D="/opt/${MY_PN}"
-
-		insinto /etc
-		newins "${WORKDIR}/${MY_PN}/settings.py" mms-agent.conf
-		rm "${WORKDIR}/${MY_PN}/settings.py"
-
-		insinto ${MY_D}
-		doins "${WORKDIR}/${MY_PN}/"*
-		dosym /etc/mms-agent.conf ${MY_D}/settings.py
-
-		fowners -R mongodb:mongodb ${MY_D}
-		newinitd "${FILESDIR}/${MY_PN}.initd-r2" ${MY_PN}
-	fi
 }
 
 pkg_preinst() {
@@ -153,15 +139,5 @@ pkg_postinst() {
 		ewarn "WiredTiger is incompatible with MMAPv1 and you need to dump/reload your data if you want to use it."
 		ewarn "Once you have your data dumped, you need to set storage.engine: wiredTiger in /etc/${PN}.conf"
 		ewarn "  http://docs.mongodb.org/master/release-notes/3.0-upgrade/#change-storage-engine-to-wiredtiger"
-		ewarn " "
-		if use mms-agent; then
-			ewarn "MMS Agent configuration file has been moved to :"
-			ewarn "  /etc/mms-agent.conf"
-		fi
-	else
-		if use mms-agent; then
-			elog "Edit your MMS Agent configuration file :"
-			elog "  /etc/mms-agent.conf"
-		fi
 	fi
 }
