@@ -13,7 +13,7 @@ SRC_URI="https://download.elasticsearch.org/${PN}/${PN}/${P}.tar.gz"
 LICENSE="Apache-2.0"
 
 SLOT="0"
-KEYWORDS="x86 amd64 lpha sparc"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-python/pyes

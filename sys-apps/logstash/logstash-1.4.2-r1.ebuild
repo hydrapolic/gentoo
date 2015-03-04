@@ -13,12 +13,10 @@ SRC_URI="https://download.elasticsearch.org/${PN}/${PN}/${P}.tar.gz"
 LICENSE="Apache-2.0"
 
 SLOT="0"
-KEYWORDS="x86 amd64 lpha sparc"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-python/pyes
-	dev-python/urllib3
-	virtual/python-argparse"
+DEPEND="virtual/python-argparse"
 
 RDEPEND="virtual/jre"
 
@@ -37,9 +35,7 @@ src_install() {
 	dodir "${LS_ROOT_PATH}"
 	cp -R "${S}"/* "${D}/${LS_ROOT_PATH}/"
 	
-	# requires pyes
-	# https://logstash.jira.com/browse/LOGSTASH-211
-	dobin ${FILESDIR}/logstash_index_cleaner.py
+	dobin ${FILESDIR}/logstash
 	
 	dodir /etc/logrotate.d
 	cp ${FILESDIR}/logstash.logrotate ${D}/etc/logrotate.d/${PN} || die \
