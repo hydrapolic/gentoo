@@ -1,0 +1,11 @@
+#IS_CONFIGURED="yes"
+
+# -e [ encrypt communication ]
+# -d [ decrypt communication ]
+#OPTS=""
+
+#SRCHOST=""
+#SRCPORT=""
+
+#TARGETHOST=""
+#TARGETPORT=""

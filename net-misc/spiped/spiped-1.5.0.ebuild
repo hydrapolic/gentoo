@@ -21,4 +21,9 @@ src_install() {
 	dosbin spiped/spiped
 
 	doman spipe/spipe.1 spiped/spiped.1
+
+	newinitd "${FILESDIR}/${PN}.init" "${PN}"
+	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
+
+	keepdir /etc/spiped
 }
