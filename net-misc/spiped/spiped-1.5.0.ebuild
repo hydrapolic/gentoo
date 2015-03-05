@@ -4,7 +4,7 @@
 
 EAPI=5
 
-DESCRIPTION="The spiped secure pipe daemon"
+DESCRIPTION="secure pipe daemon"
 HOMEPAGE="http://www.tarsnap.com/spiped.html"
 SRC_URI="http://www.tarsnap.com/${PN}/${P}.tgz"
 
