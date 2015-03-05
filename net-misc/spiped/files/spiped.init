@@ -4,7 +4,7 @@
 # $Header: $
 
 KEYFILE=${KEYFILE:="/etc/spiped/keyfile"}
-USER=${USER:="nobody"}
+SPIPED_USER=${SPIPED_USER:="nobody"}
 PIDFILE="/run/spiped/spiped.pid"
 
 command="spiped"
@@ -26,10 +26,10 @@ start() {
 	checkconfig || return 1
 
 	ebegin "Starting ${SVCNAME}"
-	checkpath -d -o "${USER}" -m750 "$(dirname "${PIDFILE}")"
+	checkpath -d -o "${SPIPED_USER}" -m750 "$(dirname "${PIDFILE}")"
 
 	start-stop-daemon --start \
-		--user ${USER} \
+		--user ${SPIPED_USER} \
 		--pidfile ${PIDFILE} \
 		--exec $command -- $command_args
         
