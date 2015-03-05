@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/openssl"
+DEPEND="dev-libs/openssl:*"
 RDEPEND="${DEPEND}"
 
 src_install() {
