@@ -17,19 +17,20 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="sasl ssl"
 
-RDEPEND=""
-DEPEND="dev-lang/go
+# Maintainer note:
+# openssl DEPEND constraint, see:
+# https://github.com/mongodb/mongo-tools/issues/11
+
+RDEPEND="!<dev-db/mongodb-3.0.0"
+DEPEND="${RDEPEND}
+	dev-lang/go
 	sasl? ( dev-libs/cyrus-sasl )
-	ssl? ( <dev-libs/openssl-1.0.2 )
-"
+	ssl? ( <dev-libs/openssl-1.0.2 )"
 
 S=${WORKDIR}/${MY_P}
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-3.0.0-build.patch"
-
-	# Maintainer note : openssl DEPEND constraint, see :
-	# https://github.com/mongodb/mongo-tools/issues/11
 }
 
 src_compile() {
