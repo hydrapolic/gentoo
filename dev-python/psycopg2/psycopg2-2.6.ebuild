@@ -10,7 +10,7 @@ MY_PV=${PV/-/_}
 
 inherit distutils-r1
 
-DESCRIPTION="the most popular PostgreSQL adapter for the Python programming language"
+DESCRIPTION="PostgreSQL adapter for Python"
 HOMEPAGE="http://initd.org/psycopg/"
 SRC_URI="https://github.com/psycopg/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
@@ -23,6 +23,7 @@ DEPEND="dev-db/postgresql"
 RDEPEND="${DEPEND}"
 
 python_test() {
+	# tests connect to local database
 	export PSYCOPG2_TESTDB="gentoo_psycopg2_test"
 	export PSYCOPG2_TESTDB_HOST="localhost"
 	export PSYCOPG2_TESTDB_PORT="5432"
