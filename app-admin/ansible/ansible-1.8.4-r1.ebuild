@@ -22,8 +22,8 @@ RDEPEND="
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	net-misc/sshpass
 	virtual/ssh
-	postgres? ( dev-python/psycopg )
-	redis? ( dev-python/redis-py )
+	postgres? ( dev-python/psycopg[${PYTHON_USEDEP}] )
+	redis? ( dev-python/redis-py[${PYTHON_USEDEP}] )
 "
 
 python_install_all() {
