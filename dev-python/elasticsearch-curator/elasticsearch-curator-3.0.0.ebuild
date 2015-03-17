@@ -43,7 +43,9 @@ python_test() {
 	PID="${ES}/elasticsearch.pid"
 
 	# run Elasticsearch instance on custom port
-	sed -i "s/#http.port: 9200/http.port: ${ES_PORT}/g;s/#cluster.name: elasticsearch/cluster.name: gentoo-es-curator-test/g" ${ES}/config/elasticsearch.yml
+	sed -i "s/#http.port: 9200/http.port: ${ES_PORT}/g; \
+	  s/#cluster.name: elasticsearch/cluster.name: gentoo-es-curator-test/g" \
+	  ${ES}/config/elasticsearch.yml
 	${ES}/bin/elasticsearch -d -p ${PID}
 
 	for i in `seq 10`; do
