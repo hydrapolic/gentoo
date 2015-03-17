@@ -33,15 +33,3 @@
  
      #make scons colorgcc friendly
      for key in ('HOME', 'TERM'):
-@@ -1053,11 +1052,6 @@
-         env.Append( CPPDEFINES=["MONGO_GCOV"] )
-         env.Append( LINKFLAGS=" -fprofile-arcs -ftest-coverage " )
- 
--    if optBuild:
--        env.Append( CCFLAGS=["-O3"] )
--    else:
--        env.Append( CCFLAGS=["-O0"] )
--
-     if debugBuild:
-         if not optBuild:
-             env.Append( CCFLAGS=["-fstack-protector"] )

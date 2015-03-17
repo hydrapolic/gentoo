@@ -18,7 +18,7 @@ SRC_URI="http://downloads.mongodb.org/src/${MY_P}.tar.gz"
 
 LICENSE="AGPL-3 Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug kerberos mms-agent ssl static-libs +tools"
 
 RDEPEND="app-arch/snappy
@@ -35,7 +35,7 @@ DEPEND="${RDEPEND}
 	sys-libs/ncurses
 	sys-libs/readline
 	kerberos? ( dev-libs/cyrus-sasl[kerberos] )"
-PDEPEND="tools? ( ~app-admin/mongo-tools-${PV} )"
+PDEPEND="tools? ( >=app-admin/mongo-tools-${PV} )"
 
 S=${WORKDIR}/${MY_P}
 
@@ -75,6 +75,12 @@ src_prepare() {
 }
 
 src_compile() {
+	# respect mongoDB upstream's basic recommendations
+	# see bug #536688 and #526114
+	if ! use debug; then
+		filter-flags '-m*'
+		filter-flags '-O?'
+	fi
 	escons ${scons_opts} core tools
 }
 

@@ -1,5 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/dev-db/mongodb/mongodb-2.6.8.ebuild,v 1.1 2015/02/27 09:55:48 ultrabug Exp $
 
 EAPI=5
 
@@ -25,7 +26,7 @@ RDEPEND="!<dev-db/mongodb-3.0.0"
 DEPEND="${RDEPEND}
 	dev-lang/go
 	sasl? ( dev-libs/cyrus-sasl )
-	ssl? ( <dev-libs/openssl-1.0.2 )"
+	ssl? ( dev-libs/openssl )"
 
 S=${WORKDIR}/${MY_P}
 
