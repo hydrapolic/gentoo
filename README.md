@@ -8,47 +8,41 @@ gentoo ebuilds
 |   |-- chkcrontab
 |   `-- elasticsearch
 |-- dev-db
-|   |-- mongodb
 |   |-- percona-xtrabackup
-|   `-- rockmongo
+|   |-- rockmongo
+|   `-- xtrabackup-bin
 |-- dev-java
 |   `-- tungsten-replicator
-|-- dev-perl
-|   |-- IO-Socket-Timeout
-|   |-- PerlIO-via-Timeout
-|   `-- Redis
 |-- dev-php
-|   |-- pecl-memcached
+|   |-- composer
 |   `-- pecl-zendopcache
 |-- dev-python
 |   |-- conf_d
-|   |-- elasticsearch-curator
-|   |-- elasticsearch-py
 |   |-- glob2
 |   |-- j2cli
 |   `-- pyes
 |-- dev-util
 |   `-- yuicompressor
 |-- net-analyzer
-|   |-- check_mk
 |   |-- mk-livestatus
-|   |-- mod_gearman
 |   |-- nagios
+|   |-- nagios-check_geoip
+|   |-- nagios-check_mysql_health
 |   |-- nagios-core
-|   |-- nagios-plugins
-|   `-- nagvis
+|   |-- nagvis
+|   `-- nrpe
+|-- net-wireless
+|   `-- unifi-api
 |-- sys-apps
 |   |-- beaver
-|   |-- logstash
-|   `-- lumberjack
+|   `-- logstash
 |-- sys-block
 |   |-- hpacucli
 |   `-- hpssacli
 |-- www-apps
-|   `-- kibana
+|   |-- kibana
+|   |-- kibana-bin
+|   `-- toran-proxy
 `-- www-servers
-    |-- apache
-    |-- libvmod-geoip
-    |-- pound
-    `-- varnish-geoip
+    `-- libvmod-geoip
 ```
