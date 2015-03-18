@@ -23,7 +23,7 @@ S="${WORKDIR}/${MY_P}-linux-x64"
 
 pkg_setup() {
 	enewgroup ${MY_PN}
-	enewuser ${MY_PN} -1 /bin/bash /opt/${MY_PN} ${MY_PN}
+	enewuser ${MY_PN} -1 -1 /opt/${MY_PN} ${MY_PN}
 }
 
 src_install() {
