@@ -1,67 +1,44 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-misc/mtail/mtail-1.1.1.ebuild,v 1.6 2005/01/01 15:15:35 eradicator Exp $
+# $Header: $
 
 EAPI=5
 
-inherit eutils systemd
-
-DESCRIPTION="a tool for managing events and logs."
-HOMEPAGE="http://logstash.net/"
-DIST="flatjar"
+DESCRIPTION="Tool for managing events and logs"
+HOMEPAGE="http://www.logstash.net"
 SRC_URI="https://download.elasticsearch.org/${PN}/${PN}/${P}.tar.gz"
-LICENSE="Apache-2.0"
 
+LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="dev-python/pyes
-	dev-python/urllib3
-	virtual/python-argparse"
-
-RDEPEND="virtual/jre"
-
-LS_ROOT_PATH="/opt/logstash"
+DEPEND="virtual/jre:*"
+RDEPEND="${DEPEND}"
 
 src_install() {
-	insinto /etc/${PN}/conf.d
+	keepdir /etc/"${PN}"/{conf.d,patterns,plugins}
+	keepdir "/var/log/${PN}"
+
+	insinto "/etc/${PN}/conf.d"
 	doins "${FILESDIR}/agent.conf.sample"
 
-	keepdir "/etc/${PN}/patterns"
-	keepdir "/etc/${PN}/plugins"
-	keepdir "/var/lib/${PN}"
-	keepdir "/var/log/${PN}"
-	
-	# copy files
-	dodir "${LS_ROOT_PATH}"
-	cp -R "${S}"/* "${D}/${LS_ROOT_PATH}/"
-	
-	# symlink launcher
-	# dosym "${LS_ROOT_PATH}/bin/${PN}" "/usr/bin/${PN}"
+	insinto "/opt/${PN}"
+	doins -r .
 
-	# requires pyes
-	# https://logstash.jira.com/browse/LOGSTASH-211
-	dobin ${FILESDIR}/logstash_index_cleaner.py
-	dobin ${FILESDIR}/logstash
-	
-	dodir /etc/logrotate.d
-	cp ${FILESDIR}/logstash.logrotate ${D}/etc/logrotate.d/${PN} || die \
-	 "failed copying lograte file into place"
+	insinto /etc/logrotate.d
+	doins "${FILESDIR}/${PN}.logrotate"
 
-	#Init scripts
-	newconfd "${FILESDIR}/${PN}.conf" "${PN}"
-	newinitd "${FILESDIR}/${PN}.init" "${PN}"
-	
-	#systemd
-	systemd_dounit "${FILESDIR}"/${PN}-agent.service
-	systemd_dounit "${FILESDIR}"/${PN}-web.service
+	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
+	newinitd "${FILESDIR}/${PN}.initd" "${PN}"
 }
 
 pkg_postinst() {
-	einfo "some useful links for getting started"
-	einfo "  https://github.com/logstash/logstash/wiki"
-	einfo "  http://cookbook.logstash.net/"
-	einfo "  http://www.logstash.net/docs/${PV}/"
-	einfo "  https://github.com/logstash/logstash/tree/v${PV}/patterns"
+	einfo "Getting started with logstash:"
+	einfo "  http://www.logstash.net/docs/${PV}/tutorials/getting-started-with-logstash"
+	einfo ""
+	einfo "Packages that might be interesting:"
+	einfo "  app-misc/elasticsearch"
+	einfo "  dev-python/elasticsearch-curator"
+	einfo "  www-apps/kibana-bin"
 }
