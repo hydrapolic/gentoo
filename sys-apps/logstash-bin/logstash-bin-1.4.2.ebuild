@@ -4,7 +4,7 @@
 
 EAPI=5
 
-MY_PN="logstash"
+MY_PN="${PN/-bin}"
 MY_P="${MY_PN}-${PV}"
 
 DESCRIPTION="Tool for managing events and logs"
@@ -18,6 +18,8 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="virtual/jre:*"
+
+S="${WORKDIR}/${MY_P}"
 
 src_install() {
 	keepdir /etc/"${MY_PN}"/{conf.d,patterns,plugins}
