@@ -30,6 +30,7 @@ src_install() {
 
 	insinto "/opt/${MY_PN}"
 	doins -r .
+	fperms 0755 "/opt/${MY_PN}/bin/${MY_PN}"
 
 	insinto /etc/logrotate.d
 	doins "${FILESDIR}/${MY_PN}.logrotate"
