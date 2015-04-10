@@ -13,8 +13,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="virtual/jre:*"
-RDEPEND="${DEPEND}"
+DEPEND=""
+RDEPEND="virtual/jre:*"
 
 src_install() {
 	keepdir /etc/"${PN}"/{conf.d,patterns,plugins}
