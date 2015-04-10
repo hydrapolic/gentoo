@@ -4,9 +4,12 @@
 
 EAPI=5
 
+MY_PN="logstash"
+MY_P="${MY_PN}-${PV}"
+
 DESCRIPTION="Tool for managing events and logs"
 HOMEPAGE="http://www.logstash.net"
-SRC_URI="https://download.elasticsearch.org/${PN}/${PN}/${P}.tar.gz"
+SRC_URI="https://download.elasticsearch.org/${MY_PN}/${MY_PN}/${MY_P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -17,20 +20,20 @@ DEPEND=""
 RDEPEND="virtual/jre:*"
 
 src_install() {
-	keepdir /etc/"${PN}"/{conf.d,patterns,plugins}
-	keepdir "/var/log/${PN}"
+	keepdir /etc/"${MY_PN}"/{conf.d,patterns,plugins}
+	keepdir "/var/log/${MY_PN}"
 
-	insinto "/etc/${PN}/conf.d"
+	insinto "/etc/${MY_PN}/conf.d"
 	doins "${FILESDIR}/agent.conf.sample"
 
-	insinto "/opt/${PN}"
+	insinto "/opt/${MY_PN}"
 	doins -r .
 
 	insinto /etc/logrotate.d
-	doins "${FILESDIR}/${PN}.logrotate"
+	doins "${FILESDIR}/${MY_PN}.logrotate"
 
-	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
-	newinitd "${FILESDIR}/${PN}.initd" "${PN}"
+	newconfd "${FILESDIR}/${MY_PN}.confd" "${MY_PN}"
+	newinitd "${FILESDIR}/${MY_PN}.initd" "${MY_PN}"
 }
 
 pkg_postinst() {
