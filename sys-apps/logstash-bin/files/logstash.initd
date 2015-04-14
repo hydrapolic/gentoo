@@ -1,39 +1,33 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 LOGSTASH_USER=${LOGSTASH_USER:-root}
 LOGSTASH_GROUP=${LOGSTASH_GROUP:-root}
-PIDFILE="/run/logstash/logstash.pid"
 LOGFILE="/var/log/logstash/logstash.log"
 
-server_command="/opt/logstash/bin/logstash"
-server_args=" agent --config /etc/logstash/conf.d/*.conf --log ${LOGFILE}"
+command="/opt/logstash/bin/logstash"
+command_args="agent --config /etc/logstash/conf.d/*.conf --log ${LOGFILE}"
+extra_commands="checkconfig"
+command_background="true"
+start_stop_daemon_args="--user=\"${LOGSTASH_USER}\""
+pidfile="/run/logstash/logstash.pid"
 
 depend() {
 	use net
 	after elasticsearch
 }
 
-start() {
-	ebegin "Starting ${SVCNAME}"
-	checkpath -d -o "${LOGSTASH_USER}":"${LOGSTASH_GROUP}" -m750 "$(dirname "${PIDFILE}")"
-	checkpath -d -o "${LOGSTASH_USER}":"${LOGSTASH_GROUP}" -m750 "$(dirname "${LOGFILE}")"
-	checkpath -f -o "${LOGSTASH_USER}":"${LOGSTASH_GROUP}" -m640 "${LOGFILE}"
-	
-	start-stop-daemon --start \
-		--chdir "/tmp" \
-		--user="${LOGSTASH_USER}" \
-		--pidfile="${PIDFILE}" \
-		--make-pidfile \
-		--background \
-		--exec ${server_command} -- ${server_args}
-	eend $?
+checkconfig() {
+	ebegin "Checking your configuration"
+	${command} ${command_args} --configtest
+	eend $? "Configuration error. Please fix your configuration files."
 }
 
-stop() {
-	ebegin "Stopping ${SVCNAME}"
-	start-stop-daemon --stop \
-		--pidfile=${PIDFILE} \
-	eend $?
+start_pre() {
+	checkconfig || return 1
+
+	checkpath -d -o "${LOGSTASH_USER}":"${LOGSTASH_GROUP}" -m750 "$(dirname "${pidfile}")"
+	checkpath -d -o "${LOGSTASH_USER}":"${LOGSTASH_GROUP}" -m750 "$(dirname "${LOGFILE}")"
+	checkpath -f -o "${LOGSTASH_USER}":"${LOGSTASH_GROUP}" -m640 "${LOGFILE}"
 }
