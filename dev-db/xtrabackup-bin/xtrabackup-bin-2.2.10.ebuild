@@ -1,13 +1,10 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-db/xtrabackup-bin/xtrabackup-bin-2.2.5.ebuild,v 1.1 2014/10/19 09:57:03 idl0r Exp $
 
 EAPI=5
 
 MY_PN="percona-${PN/-bin}"
-MY_PVR="${PV}-5042"
 MY_P="${MY_PN}-${PV}"
-MY_PF="${MY_PN}-${MY_PVR}"
 
 inherit eutils
 
@@ -16,10 +13,10 @@ InnoDB and XtraDB databases"
 HOMEPAGE="http://www.percona.com/software/percona-xtrabackup"
 SRC_URI="
 	amd64? (
-		http://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-${PV}/binary/tarball/${MY_PF}-Linux-x86_64.tar.gz
+		http://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-${PV}/binary/tarball/${MY_P}-Linux-x86_64.tar.gz
 	)
 	x86? (
-		http://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-${PV}/binary/tarball/${MY_PF}-Linux-i686.tar.gz
+		http://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-${PV}/binary/tarball/${MY_P}-Linux-i686.tar.gz
 	)"
 
 LICENSE="GPL-2"
