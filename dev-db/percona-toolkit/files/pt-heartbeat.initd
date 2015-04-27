@@ -10,6 +10,6 @@ start_stop_daemon_args="-u nagios"
 pidfile="/run/pt-heartbeat.pid"
 
 depend() {
-	user net
+	use net
 	after mysql
 }
