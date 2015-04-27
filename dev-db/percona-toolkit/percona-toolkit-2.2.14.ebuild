@@ -45,4 +45,6 @@ src_prepare() {
 src_install() {
 	perl-module_src_install
 	dodoc docs/percona-toolkit.pod
+
+	newinitd "${FILESDIR}/pt-heartbeat.initd" pt-heartbeat
 }
