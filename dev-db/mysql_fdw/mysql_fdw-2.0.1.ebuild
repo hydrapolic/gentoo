@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+POSTGRES_COMPAT=( 9.{3,4} )
 
 MY_PV=${PV//\./_}
 
@@ -15,7 +16,12 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="dev-db/postgresql:*"
+DEPEND="virtual/mysql
+	|| (
+		dev-db/postgresql:9.4[server]
+		dev-db/postgresql:9.3[server]
+	)"
+
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${PN}-REL-${MY_PV}
