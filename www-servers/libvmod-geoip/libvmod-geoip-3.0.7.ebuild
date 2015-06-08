@@ -6,7 +6,7 @@ EAPI=4
 
 VARNISH_VERSION="${PV}"
 
-inherit git-2
+inherit git-2 eutils
 
 DESCRIPTION="This Varnish module exports functions to look up GeoIP country codes in VCL"
 HOMEPAGE="https://github.com/lampeh/libvmod-geoip"
