@@ -16,6 +16,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
+RESTRICT="strip"
+QA_PREBUILT="opt/logstash/vendor/jruby/lib/jni/*/libjffi*.so"
+
 DEPEND=""
 RDEPEND="|| ( virtual/jre:1.8 virtual/jre:1.7 )"
 
