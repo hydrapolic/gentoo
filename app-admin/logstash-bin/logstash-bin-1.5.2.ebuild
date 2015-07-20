@@ -33,7 +33,7 @@ src_install() {
 
 	insinto "/opt/${MY_PN}"
 	doins -r .
-	fperms 0755 "/opt/${MY_PN}/bin/${MY_PN}"
+	fperms 0755 "/opt/${MY_PN}/bin/${MY_PN} /opt/${MY_PN}/vendor/jruby/bin/jruby"
 
 	insinto /etc/logrotate.d
 	doins "${FILESDIR}/${MY_PN}.logrotate"
