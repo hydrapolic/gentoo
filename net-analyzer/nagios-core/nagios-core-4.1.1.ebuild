@@ -102,13 +102,6 @@ src_prepare(){
 	# Gentoo bug #388321.
 	#
 	epatch "${FILESDIR}"/use-INSTALL-to-install-themes.patch
-
-	# Upstream bug:
-	#
-	# http://tracker.nagios.org/view.php?id=534
-	#
-	# Gentoo bug #530640.
-	epatch "${FILESDIR}"/fix-bogus-perf-data-warnings.patch
 }
 
 src_configure() {
@@ -145,6 +138,7 @@ src_compile() {
 	if use web; then
 		# Only compile the CGIs when USE=web is set.
 		emake CC=$(tc-getCC) DESTDIR="${D}" cgis
+		emake CC=$(tc-getCC) DESTDIR="${D}" html
 	fi
 }
 
