@@ -137,8 +137,7 @@ src_compile() {
 
 	if use web; then
 		# Only compile the CGIs when USE=web is set.
-		emake CC=$(tc-getCC) DESTDIR="${D}" cgis
-		emake CC=$(tc-getCC) DESTDIR="${D}" html
+		emake CC=$(tc-getCC) DESTDIR="${D}" cgis html
 	fi
 }
 
