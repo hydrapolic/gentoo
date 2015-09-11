@@ -25,3 +25,16 @@ src_install() {
 
 	webapp_src_install
 }
+
+pkg_postinst() {
+	elog "Be sure to set the following directories to be owned"
+	elog "by the web user (for example apache:apache)"
+	elog
+	elog "app/bootstrap.php.cache"
+	elog "app/cache"
+	elog "app/logs"
+	elog "app/toran"
+	elog "bin/cron"
+	elog "web/app.php"
+	elog "web/repo"
+}
