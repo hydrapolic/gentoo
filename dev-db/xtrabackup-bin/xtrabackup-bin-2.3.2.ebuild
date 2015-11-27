@@ -29,17 +29,19 @@ DEPEND=""
 RDEPEND="dev-libs/libaio
 	|| ( dev-libs/libgcrypt:0/11 dev-libs/libgcrypt:11/11 )
 	dev-libs/libgpg-error
-	dev-perl/DBD-mysql
 	sys-libs/zlib"
 
-
-src_install() {
+src_unpack() {
 	if use amd64; then
 		S="${WORKDIR}/${MY_P}-Linux-x86_64"
 	elif use x86; then
 		S="${WORKDIR}/${MY_P}-Linux-i686"
 	fi
 
+	default
+}
+
+src_install() {
 	for tool in xbcloud xbcloud_osenv xbcrypt xbstream xtrabackup; do
 		dobin bin/${tool}
 	done
@@ -47,10 +49,12 @@ src_install() {
 	for man in xbcrypt xbstream xtrabackup; do
 		doman man/man1/${man}.1
 	done
+
+	dosym xtrabackup /usr/bin/innobackupex
 }
 
 pkg_postinst() {
 	einfo "xtrabackup 2.3.x is for MySQL/Percona Server 5.6+ and MariaDB 10.0+"
 	einfo
-	ewarn "innobackupex got removed in 2.3.x series and is just a symlink to xtrabackup"
+	ewarn "innobackupex got deprecated in 2.3.x series and is just a symlink to xtrabackup"
 }
