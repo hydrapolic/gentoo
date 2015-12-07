@@ -33,7 +33,7 @@ src_unpack() {
 src_install() {
 	keepdir /etc/${MY_PN}
 	keepdir /var/lib/${MY_PN}
-   
+
 	fperms 0750 /var/lib/${MY_PN}
 
 	insinto /etc/${MY_PN}
@@ -43,4 +43,11 @@ src_install() {
 	newinitd "${FILESDIR}/${MY_PN}.initd" ${MY_PN}
 
 	dobin ${MY_PN}
+}
+
+pkg_postinst() {
+	if [[ ! -e /etc/${MY_PN}/${MY_PN}.yml ]]; then
+		elog "Before starting filebeat, you need to create a configuration file at:"
+		elog "/etc/${MY_PN}/${MY_PN}.yml"
+	fi
 }
