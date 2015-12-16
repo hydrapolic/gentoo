@@ -1,0 +1,21 @@
+--- SConstruct.orig	2015-12-02 20:01:34.000000000 +0100
++++ SConstruct	2015-12-15 14:57:57.610341967 +0100
+@@ -1371,7 +1371,6 @@
+     env.Append( CCFLAGS=["-fno-omit-frame-pointer",
+                          "-fPIC",
+                          "-fno-strict-aliasing",
+-                         "-ggdb",
+                          "-pthread",
+                          "-Wall",
+                          "-Wsign-compare",
+@@ -1382,8 +1381,9 @@
+         if not has_option("disable-warnings-as-errors"):
+             env.Append( CCFLAGS=["-Werror"] )
+ 
+-    env.Append( CXXFLAGS=["-Wnon-virtual-dtor", "-Woverloaded-virtual"] )
+     env.Append( LINKFLAGS=["-fPIC", "-pthread"] )
++    env.Append( CXXFLAGS=os.environ['CXXFLAGS'] )
++    env.Append( LINKFLAGS=os.environ['LDFLAGS'] )
+ 
+     # SERVER-9761: Ensure early detection of missing symbols in dependent libraries at program
+     # startup.
