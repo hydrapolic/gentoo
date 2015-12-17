@@ -19,7 +19,7 @@ SRC_URI="https://fastdl.mongodb.org/src/${MY_P}.tar.gz"
 LICENSE="AGPL-3 Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug kerberos libressl mms-agent ssl +tools"
+IUSE="debug kerberos libressl mms-agent ssl +tools test"
 
 RDEPEND=">=app-arch/snappy-1.1.2
 	>=dev-cpp/yaml-cpp-0.5.1
@@ -38,7 +38,8 @@ DEPEND="${RDEPEND}
 	sys-libs/ncurses
 	sys-libs/readline
 	dev-util/valgrind
-	kerberos? ( dev-libs/cyrus-sasl[kerberos] )"
+	kerberos? ( dev-libs/cyrus-sasl[kerberos] )
+	test? ( dev-python/pymongo )"
 PDEPEND="tools? ( >=app-admin/mongo-tools-${PV} )"
 
 S=${WORKDIR}/${MY_P}
