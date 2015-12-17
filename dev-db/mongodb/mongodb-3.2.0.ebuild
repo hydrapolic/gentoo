@@ -61,7 +61,6 @@ pkg_setup() {
 	scons_opts+=" --use-system-snappy"
 	scons_opts+=" --use-system-stemmer"
 	scons_opts+=" --use-system-yaml"
-	scons_opts+=" --use-system-tcmalloc"
 	scons_opts+=" --use-system-zlib"
 
 	if use debug; then
