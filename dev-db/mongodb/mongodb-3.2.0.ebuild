@@ -39,7 +39,10 @@ DEPEND="${RDEPEND}
 	sys-libs/readline
 	dev-util/valgrind
 	kerberos? ( dev-libs/cyrus-sasl[kerberos] )
-	test? ( dev-python/pymongo )"
+	test? ( 
+		dev-python/pymongo 
+		dev-python/pyyaml
+	)"
 PDEPEND="tools? ( >=app-admin/mongo-tools-${PV} )"
 
 S=${WORKDIR}/${MY_P}
