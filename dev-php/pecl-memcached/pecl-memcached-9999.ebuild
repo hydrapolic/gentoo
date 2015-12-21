@@ -12,7 +12,7 @@ USE_PHP="php7-0"
 
 inherit php-ext-source-r2 git-r3 autotools
 
-KEYWORDS="amd64"
+KEYWORDS=""
 
 DESCRIPTION="This extension provides an API for communicating with Redis servers"
 EGIT_REPO_URI="https://github.com/php-memcached-dev/php-memcached.git"
