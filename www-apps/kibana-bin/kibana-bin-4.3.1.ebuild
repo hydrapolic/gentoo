@@ -54,7 +54,7 @@ src_install() {
 	mv * "${D}"/opt/${MY_PN}
 
 	# bug 567934
-	pax-mark m "${ED}/${MY_PN}/kibana/node/bin/node"
+	pax-mark m "${ED}/opt/${MY_PN}/node/bin/node"
 }
 
 pkg_postinst() {
