@@ -50,10 +50,8 @@ S=${WORKDIR}/${MY_P}
 pkg_pretend() {
 	if [[ ${REPLACING_VERSIONS} < 3.0 ]]; then
 		ewarn "To upgrade an existing MongoDB deployment to 3.2, you must be"
-		ewarn "running a 3.0-series release."
-		ewarn
-		ewarn "To upgrade from a 2.6-series release, you must upgrade to the"
-		ewarn "latest 3.0-series release before upgrading to 3.2."
+		ewarn "running a 3.0-series release. Please update to the latest 3.0"
+		ewarn "release before continuing if wish to keep your data."
 	fi
 }
 
@@ -153,11 +151,8 @@ src_test() {
 }
 
 pkg_postinst() {
-	ewarn "Make sure to read the release notes and follow the upgrade process:"
-	ewarn "  https://docs.mongodb.org/manual/release-notes/3.2/"
-	ewarn "  https://docs.mongodb.org/master/release-notes/3.2-upgrade/"
-	
 	if [[ ${REPLACING_VERSIONS} < 3.0 ]]; then
+		ewarn
 		ewarn "!! IMPORTANT !!"
 		ewarn
 		ewarn "${PN} configuration files have changed !"
@@ -169,7 +164,12 @@ pkg_postinst() {
 		ewarn "WiredTiger is incompatible with MMAPv1 and you need to dump/reload your data if you want to use it."
 		ewarn "Once you have your data dumped, you need to set storage.engine: wiredTiger in /etc/${PN}.conf"
 		ewarn "  http://docs.mongodb.org/master/release-notes/3.0-upgrade/#change-storage-engine-to-wiredtiger"
-	elif [[ $REPLACING_VERSIONS} == 3.0 ]];then
-		ewarn "Starting in 3.2, MongoDB uses the WiredTiger as the default storage engine."
+		ewarn
 	fi
+	
+	ewarn "Make sure to read the release notes and follow the upgrade process:"
+	ewarn "  https://docs.mongodb.org/manual/release-notes/3.2/"
+	ewarn "  https://docs.mongodb.org/master/release-notes/3.2-upgrade/"
+	ewarn
+	ewarn " Starting in 3.2, MongoDB uses the WiredTiger as the default storage engine."
 }
