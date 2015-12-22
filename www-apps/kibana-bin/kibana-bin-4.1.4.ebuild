@@ -42,7 +42,7 @@ src_install() {
 	keepdir /etc/${MY_PN}
 
 	insinto /etc/${MY_PN}
-	doins config/* /etc/${MY_PN}
+	doins config/*
 	rm -rf config
 
 	insinto /etc/logrotate.d
