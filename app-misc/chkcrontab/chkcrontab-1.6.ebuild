@@ -20,3 +20,7 @@ IUSE="test"
 python_test() {
 	esetup.py test
 }
+
+python_install_all() {
+	doman doc/${PN}.1
+}
