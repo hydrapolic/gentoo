@@ -23,4 +23,5 @@ python_test() {
 
 python_install_all() {
 	doman doc/${PN}.1
+	distutils-r1_python_install_all
 }
