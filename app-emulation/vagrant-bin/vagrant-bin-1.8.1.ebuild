@@ -11,8 +11,8 @@ MY_P="${MY_PN}_${PV}"
 
 DESCRIPTION="A tool for building and distributing virtual machines"
 HOMEPAGE="https://www.vagrantup.com"
-SRC_URI="amd64? ( https://dl.bintray.com/mitchellh/${MY_PN}/${MY_P}_x86_64.rpm )
-		x86? ( https://dl.bintray.com/mitchellh/${MY_PN}/${MY_P}_i686.rpm )"
+SRC_URI="amd64? ( https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_x86_64.rpm )
+		x86? ( https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_i686.rpm )"
 
 LICENSE="MIT"
 SLOT="0"
