@@ -19,7 +19,7 @@ LICENSE="MIT"
 SLOT="0"
 
 KEYWORDS="~amd64"
-IUSE="doc"
+IUSE="city doc"
 
 DEPEND="
     doc? ( dev-python/docutils )
@@ -34,6 +34,11 @@ VARNISH="${WORKDIR}/varnish-${VARNISH_VERSION}"
 VMOD="${WORKDIR}/${P}"
 
 src_prepare() {
+	if use city; then
+		cd "${VMOD}"
+		epatch "${FILESDIR}/city.patch"
+	fi
+
 	cd "${VARNISH}"
 	econf
 	emake
