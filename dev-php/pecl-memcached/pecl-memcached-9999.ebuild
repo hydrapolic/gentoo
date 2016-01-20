@@ -14,12 +14,17 @@ inherit php-ext-source-r2 git-r3 autotools
 
 KEYWORDS=""
 
-DESCRIPTION="This extension provides an API for communicating with Redis servers"
+DESCRIPTION="Interface PHP with memcached via libmemcached library"
 EGIT_REPO_URI="https://github.com/php-memcached-dev/php-memcached.git"
 EGIT_BRANCH="php7"
 LICENSE="PHP-3"
 SLOT="0"
 IUSE="+session json sasl"
+
+DEPEND="|| ( >=dev-libs/libmemcached-1.0.14 >=dev-libs/libmemcached-1.0[sasl?] )
+                sys-libs/zlib
+                dev-lang/php:*[session?,json?]"
+RDEPEND="${DEPEND}"
 
 src_configure() {
 	my_conf="--enable-memcached
