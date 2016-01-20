@@ -1,48 +1,50 @@
-gentoo
-======
-
-gentoo ebuilds
-
 ```
-|-- app-misc
-|   |-- chkcrontab
-|   `-- elasticsearch
-|-- dev-db
-|   |-- percona-xtrabackup
-|   |-- rockmongo
-|   `-- xtrabackup-bin
-|-- dev-java
-|   `-- tungsten-replicator
-|-- dev-php
-|   |-- composer
-|   `-- pecl-zendopcache
-|-- dev-python
-|   |-- conf_d
-|   |-- glob2
-|   |-- j2cli
-|   `-- pyes
-|-- dev-util
-|   `-- yuicompressor
-|-- net-analyzer
-|   |-- mk-livestatus
-|   |-- nagios
-|   |-- nagios-check_geoip
-|   |-- nagios-check_mysql_health
-|   |-- nagios-core
-|   |-- nagvis
-|   `-- nrpe
-|-- net-wireless
-|   `-- unifi-api
-|-- sys-apps
-|   |-- beaver
-|   `-- logstash
-|-- sys-block
-|   |-- hpacucli
-|   `-- hpssacli
-|-- www-apps
-|   |-- kibana
-|   |-- kibana-bin
-|   `-- toran-proxy
-`-- www-servers
-    `-- libvmod-geoip
+├── app-admin
+│   └── chefdk
+├── app-benchmarks
+│   └── stress-ng
+├── dev-db
+│   ├── mysql_fdw
+│   ├── percona-toolkit
+│   ├── percona-xtrabackup
+│   ├── rockmongo
+│   └── xtrabackup-bin
+├── dev-php
+│   ├── composer
+│   ├── libsmbclient-php
+│   ├── pecl-memcached
+│   └── pecl-redis
+├── dev-python
+│   ├── conf_d
+│   ├── glob2
+│   ├── j2cli
+│   ├── mongo-connector
+│   ├── pyes
+│   └── pysolr
+├── dev-ruby
+│   ├── sequel
+│   └── unidecode
+├── net-analyzer
+│   ├── mk-livestatus
+│   ├── nagios-check_geoip
+│   ├── nagvis
+│   └── percona-monitoring-plugins
+├── net-wireless
+│   └── unifi-api
+├── sys-apps
+│   ├── beaver
+│   └── iproute2
+├── sys-block
+│   ├── hpacucli
+│   └── hpssacli
+├── sys-kernel
+│   └── linux-headers
+├── www-apache
+│   └── mod_security
+├── www-apps
+│   ├── jekyll-import
+│   ├── kibana
+│   └── toran-proxy
+└── www-servers
+    └── libvmod-geoip
 ```
