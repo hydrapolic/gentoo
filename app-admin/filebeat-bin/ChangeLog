@@ -1,0 +1,46 @@
+# ChangeLog for app-admin/filebeat-bin
+# Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
+# (auto-generated from git log)
+
+*filebeat-bin-1.0.0 (07 Dec 2015)
+
+  07 Dec 2015; Tomas Mozes <tmozes@sygic.com> +filebeat-bin-1.0.0.ebuild,
+  +files/filebeat.confd, +files/filebeat.initd, +files/filebeat.yml.example,
+  +metadata.xml:
+  new ebuild
+
+  07 Dec 2015; Tomas Mozes <tmozes@sygic.com> filebeat-bin-1.0.0.ebuild,
+  -files/filebeat.yml.example:
+  use bundled example config
+
+  07 Dec 2015; Tomas Mozes <tmozes@sygic.com> files/filebeat.initd:
+  specify configuration file
+
+  09 Dec 2015; Tomas Mozes <tmozes@sygic.com> filebeat-bin-1.0.0.ebuild:
+  removing empty IUSE and (R)DEPEND as suggested by idella
+
+*filebeat-bin-1.0.1 (22 Dec 2015)
+
+  22 Dec 2015; Ian Delaney <idella4@gentoo.org> -filebeat-bin-1.0.0.ebuild,
+  +filebeat-bin-1.0.1.ebuild:
+  version bump 1.0.1
+
+  Package-Manager: portage-2.2.26
+
+  24 Jan 2016; Michał Górny <mgorny@gentoo.org> metadata.xml:
+  Replace all herds with appropriate projects (GLEP 67)
+
+  Replace all uses of herd with appropriate project maintainers, or no
+  maintainers in case of herds requested to be disbanded.
+
+  24 Jan 2016; Michał Górny <mgorny@gentoo.org> metadata.xml:
+  Set appropriate maintainer types in metadata.xml (GLEP 67)
+
+*filebeat-bin-1.1.1 (15 Feb 2016)
+
+  15 Feb 2016; Tomas Mozes <hydrapolic@gmail.com> filebeat-bin-1.0.1.ebuild,
+  +filebeat-bin-1.1.1.ebuild:
+  bump to version 1.1.1
+
+  Package-Manager: portage-2.2.27
+
