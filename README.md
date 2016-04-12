@@ -43,7 +43,6 @@
 │   └── mod_security
 ├── www-apps
 │   ├── jekyll-import
-│   ├── kibana
 │   └── toran-proxy
 └── www-servers
     └── libvmod-geoip
