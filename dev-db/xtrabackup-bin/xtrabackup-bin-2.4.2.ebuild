@@ -1,16 +1,13 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 MY_PN="percona-${PN/-bin}"
 MY_P="${MY_PN}-${PV}"
 
-inherit eutils
-
-DESCRIPTION="MySQL hot backup software that performs non-blocking backups for
-InnoDB and XtraDB databases"
+DESCRIPTION="MySQL hot backup software. non-blocking backups for InnoDB/XtraDB databases"
 HOMEPAGE="http://www.percona.com/software/percona-xtrabackup"
 SRC_URI="
 	amd64? (
@@ -25,28 +22,35 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
+# NOTE: dev-perl/DBD-mysql still necessary, now for bin/xtrabackup?
 DEPEND=""
 RDEPEND="dev-libs/libaio
 	|| ( dev-libs/libgcrypt:0/11 dev-libs/libgcrypt:11/11 )
 	dev-libs/libgpg-error
+	dev-perl/DBD-mysql
 	sys-libs/zlib"
 
 src_unpack() {
+	default
+
 	if use amd64; then
 		S="${WORKDIR}/${MY_P}-Linux-x86_64"
 	elif use x86; then
 		S="${WORKDIR}/${MY_P}-Linux-i686"
 	fi
-
-	default
 }
 
 src_install() {
-	for tool in xbcloud xbcloud_osenv xbcrypt xbstream xtrabackup; do
+	# Two new tools with an old libcurl.so.3 dep...
+	# TODO: Wait for a new release using libcurl.so.4
+	# net-misc/curl dev-libs/libev
+	# dobin bin/xbcloud{,_osenv}
+
+	for tool in xbcrypt xbstream xtrabackup; do
 		dobin bin/${tool}
 	done
 
-	for man in xbcrypt xbstream xtrabackup; do
+	for man in innobackupex xbcrypt xbstream xtrabackup; do
 		doman man/man1/${man}.1
 	done
 
@@ -54,7 +58,5 @@ src_install() {
 }
 
 pkg_postinst() {
-	einfo "xtrabackup 2.3.x is for MySQL/Percona Server 5.6+ and MariaDB 10.0+"
-	einfo
 	ewarn "innobackupex got deprecated in 2.3.x series and is just a symlink to xtrabackup"
 }
