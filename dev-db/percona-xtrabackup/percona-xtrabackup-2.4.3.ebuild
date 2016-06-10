@@ -14,14 +14,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="=dev-libs/boost-1.59.0
-	dev-libs/libaio
-	dev-libs/libev
-	dev-libs/libgcrypt:0
-	dev-libs/libgpg-error
-	dev-python/sphinx
-	net-misc/curl
-	sys-libs/zlib"
-RDEPEND="${DEPEND}"
+		dev-libs/libaio
+		dev-libs/libev
+		dev-libs/libgcrypt:0=
+		dev-libs/libgpg-error
+		dev-python/sphinx
+		net-misc/curl
+		sys-libs/zlib"
+RDEPEND="${DEPEND}
+		!dev-db/xtrabackup-bin"
 
 src_configure() {
 	cmake -DBUILD_CONFIG=xtrabackup_release || die
