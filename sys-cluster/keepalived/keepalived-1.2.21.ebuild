@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 inherit autotools
 
@@ -19,19 +19,17 @@ RDEPEND="dev-libs/popt
 	sys-apps/iproute2
 	dev-libs/libnl:=
 	dev-libs/openssl:=
-	snmp? ( net-analyzer/net-snmp )"
+	snmp? ( net-analyzer/net-snmp )
+	net-libs/libnfnetlink"
 DEPEND="${RDEPEND}
 	>=sys-kernel/linux-headers-2.6.30"
-
-PATCHES=(
-	"${FILESDIR}"/${PN}-1.2.2-libipvs-fix-backup-daemon.patch
-)
 
 DOCS=( README CONTRIBUTORS INSTALL VERSION ChangeLog AUTHOR TODO
 	doc/keepalived.conf.SYNOPSIS doc/NOTE_vrrp_vmac.txt )
 
 src_prepare() {
 	eautoreconf
+	default
 }
 
 src_configure() {
