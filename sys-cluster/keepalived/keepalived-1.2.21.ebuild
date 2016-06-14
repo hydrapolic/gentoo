@@ -24,6 +24,10 @@ RDEPEND="dev-libs/popt
 DEPEND="${RDEPEND}
 	>=sys-kernel/linux-headers-2.6.30"
 
+PATCHES=(
+    "${FILESDIR}"/${PN}-1.2.2-libipvs-fix-backup-daemon.patch
+)
+
 DOCS=( README CONTRIBUTORS INSTALL VERSION ChangeLog AUTHOR TODO
 	doc/keepalived.conf.SYNOPSIS doc/NOTE_vrrp_vmac.txt )
 
