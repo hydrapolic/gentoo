@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -25,7 +25,7 @@ DEPEND="${RDEPEND}
 	>=sys-kernel/linux-headers-2.6.30"
 
 PATCHES=(
-    "${FILESDIR}"/${PN}-1.2.2-libipvs-fix-backup-daemon.patch
+	"${FILESDIR}"/${PN}-1.2.2-libipvs-fix-backup-daemon.patch
 )
 
 DOCS=( README CONTRIBUTORS INSTALL VERSION ChangeLog AUTHOR TODO
