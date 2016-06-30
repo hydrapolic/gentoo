@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PHP_EXT_NAME="libsmbclient"
+PHP_EXT_NAME="smbclient"
 USE_PHP="php7-0 php5-6 php5-5 php5-4"
 
 inherit php-ext-source-r2 eutils
