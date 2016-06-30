@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -11,7 +11,7 @@ inherit php-ext-source-r2 eutils
 
 DESCRIPTION="PHP wrapper for libsmbclient"
 HOMEPAGE="https://github.com/eduardok/libsmbclient-php"
-SRC_URI="https://github.com/eduardok/libsmbclient-php/archive/0.7.0.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/eduardok/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
