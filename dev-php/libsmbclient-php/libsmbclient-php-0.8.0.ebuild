@@ -19,4 +19,4 @@ KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND=""
-DEPEND="net-fs/samba[smbclient]"
+DEPEND="net-fs/samba[client]"
