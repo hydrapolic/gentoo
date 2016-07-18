@@ -48,6 +48,7 @@ src_prepare() {
 	sed -i \
 		-e '/set_logrotate_files(data_files)/d' \
 		-e 's/set_sysv_files(data_files)/print/g' \
+		-e 's@/etc/udev/rules.d/@/lib/udev/rules.d/@g' \
 		"${S}"/setup.py || die
 
 	default
