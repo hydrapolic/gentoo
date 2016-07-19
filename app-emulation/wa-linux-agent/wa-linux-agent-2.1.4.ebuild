@@ -29,7 +29,8 @@ RDEPEND="${DEPEND}
 	sys-apps/iproute2
 	sys-apps/sed
 	sys-apps/grep
-	app-portage/eix"
+	app-portage/eix
+	net-misc/dhcp"
 
 S="${WORKDIR}/WALinuxAgent-${PV}"
 
