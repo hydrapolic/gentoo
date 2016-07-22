@@ -29,8 +29,7 @@ RDEPEND="${DEPEND}
 	sys-apps/iproute2
 	sys-apps/sed
 	sys-apps/grep
-	app-portage/eix
-	net-misc/dhcp"
+	app-portage/eix"
 
 S="${WORKDIR}/WALinuxAgent-${PV}"
 
@@ -43,6 +42,7 @@ src_prepare() {
 	sed -i \
 		-e '/Provisioning.DeleteRootPassword/s/=.*$/=n/' \
 		-e '/Provisioning.SshHostKeyPairType/s/=.*$/=ed25519/' \
+		-e '/AutoUpdate.Enabled/s/=.*$/=n/'
 		"${S}"/config/waagent.conf || die
 
 	# install init.d / logrotate in gentoo way
