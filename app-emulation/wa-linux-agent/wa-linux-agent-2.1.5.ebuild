@@ -42,7 +42,7 @@ src_prepare() {
 	sed -i \
 		-e '/Provisioning.DeleteRootPassword/s/=.*$/=n/' \
 		-e '/Provisioning.SshHostKeyPairType/s/=.*$/=ed25519/' \
-		-e '/AutoUpdate.Enabled/s/=.*$/=n/'
+		-e '/AutoUpdate.Enabled/s/=.*$/=n/' \
 		"${S}"/config/waagent.conf || die
 
 	# install init.d / logrotate in gentoo way
