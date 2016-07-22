@@ -52,6 +52,11 @@ src_prepare() {
 		-e 's@/etc/udev/rules.d/@/lib/udev/rules.d/@g' \
 		"${S}"/setup.py || die
 
+	# use dhcpcd instead of dhcp that fails to start
+	# "Unable to set up timer: out of range"
+	sed -i -e 's/pidof dhclient/pidof dhcpcd/' \
+		"${S}"/azurelinuxagent/common/osutil/default.py || die
+
 	default
 }
 
