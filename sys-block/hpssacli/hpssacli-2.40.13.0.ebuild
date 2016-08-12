@@ -53,7 +53,7 @@ src_install() {
 	doman "${S}"/usr/man/man*/*
 
 	cat <<-EOF >"${T}"/45${PN}
-		LDPATH=${HPSACLI_BASEDIR}
+		LDPATH=${HPSSACLI_BASEDIR}
 		EOF
 	doenvd "${T}"/45${PN}
 
