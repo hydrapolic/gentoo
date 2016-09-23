@@ -25,7 +25,7 @@ src_unpack() {
 src_compile() {
 	export GOPATH="${WORKDIR}"
 	
-	cd ${S}/filebeat && emake
+	cd ${BEATS}/filebeat && emake
 }
 
 src_install() {
