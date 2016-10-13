@@ -18,7 +18,9 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	!www-client/phantomjs"
+	!www-client/phantomjs
+	media-libs/fontconfig
+	media-libs/freetype"
 
 DOCS=( ChangeLog README.md )
 
