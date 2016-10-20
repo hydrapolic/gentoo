@@ -227,7 +227,7 @@ php_set_ini_dir() {
 
 src_prepare() {
 	# Disable some assembly on x86.
-	eapply "${FILESDIR}/fix-x86-build-bug_571658.patch"
+	#eapply "${FILESDIR}/fix-x86-build-bug_571658.patch"
 
 	# Change PHP branding
 	# Get the alpha/beta/rc version
