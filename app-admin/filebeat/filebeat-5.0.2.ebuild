@@ -31,7 +31,6 @@ src_compile() {
 }
 
 src_install() {
-	keepdir /etc/${PN}
 	keepdir /var/{lib,log}/${PN}
 
 	fperms 0750 /var/{lib,log}/${PN}
@@ -45,8 +44,8 @@ src_install() {
 	insinto "/etc/${PN}"
 	doins ${PN}/{filebeat.template.json,filebeat.template-es2x.json}
 
-	insinto "/usr/share/${PN}"
-	doins libbeat/scripts/migrate_beat_config_1_x_to_5_0.py
+	exeinto "/usr/share/${PN}"
+	doexe libbeat/scripts/migrate_beat_config_1_x_to_5_0.py
 
 	dobin filebeat/filebeat
 }
@@ -57,10 +56,10 @@ pkg_postinst() {
 		elog "https://www.elastic.co/guide/en/beats/libbeat/5.0/upgrading.html"
 		elog ""
 		elog "The migration script:"
-		elog "/usr/share/${PN}"
+		elog "${EROOT%/}/usr/share/filebeat/migrate_beat_config_1_x_to_5_0.py"
 		elog ""
 	fi
 
 	elog "Example configurations:"
-	elog "/usr/share/doc/${PF}/examples"
+	elog "${EROOT%/}/usr/share/doc/${PF}/examples"
 }
