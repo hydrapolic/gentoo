@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
+EAPI="6"
 
 PHP_EXT_NAME="memcached"
 PHP_EXT_INI="yes"
@@ -10,7 +10,7 @@ PHP_EXT_ZENDEXT="no"
 
 USE_PHP="php7-0 php7-1"
 
-inherit php-ext-source-r2 git-r3 autotools
+inherit php-ext-source-r3 git-r3 autotools
 
 KEYWORDS=""
 
@@ -22,15 +22,25 @@ SLOT="0"
 IUSE="+session json sasl"
 
 DEPEND="|| ( >=dev-libs/libmemcached-1.0.14 >=dev-libs/libmemcached-1.0[sasl?] )
-                sys-libs/zlib
-                dev-lang/php:*[session?,json?]"
+			sys-libs/zlib
+			dev-lang/php:*[session?,json?]"
 RDEPEND="${DEPEND}"
 
+src_unpack() {
+	git-r3_src_unpack
+	php-ext-source-r3_src_unpack
+}
+
+src_prepare() {
+	php-ext-source-r3_src_prepare
+}
+
+
 src_configure() {
-	my_conf="--enable-memcached
+	local PHP_EXT_ECONF_ARGS="--enable-memcached
 		$(use_enable session memcached-session)
 		$(use_enable sasl memcached-sasl)
 		$(use_enable json memcached-json)"
 
-	php-ext-source-r2_src_configure
+	php-ext-source-r3_src_configure
 }
