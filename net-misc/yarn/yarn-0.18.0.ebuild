@@ -10,10 +10,14 @@ KEYWORDS="amd64"
 SRC_URI="https://github.com/yarnpkg/yarn/releases/download/v${PVR}/yarn-v${PVR}.tar.gz"
 SLOT="0"
 
-DEPEND="|| ( net-libs/nodejs net-libs/nodejs-bin )"
+DEPEND="( net-libs/nodejs )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/dist"
+
+src_prepare() {
+	sed -i 's@^basedir=.*@basedir=/usr/local/yarn/bin@g' bin/yarn || die
+}
 
 src_install() {
 	dest="/usr/local/${PN}"
