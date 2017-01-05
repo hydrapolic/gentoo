@@ -52,7 +52,7 @@ src_install() {
 	exeinto /usr/share/${MY_PN}/bin
 	doexe "${FILESDIR}/elasticsearch-systemd-pre-exec"
 
-	fperms +x /usr/share/${MY_PN}/bin/*
+	chmod +x "${D}"/usr/share/${MY_PN}/bin/*
 
 	keepdir /var/{lib,log}/${MY_PN}
 	keepdir /usr/share/${MY_PN}/plugins
