@@ -21,23 +21,21 @@ fi
 ES_HOME=${ES_HOME:="/usr/share/elasticsearch"}
 ES_USER=${ES_USER:="elasticsearch"}
 ES_GROUP=${ES_GROUP:="elasticsearch"}
-MAX_OPEN_FILES=${MAX_OPEN_FILES:=65535}
+ES_STARTUP_SLEEP_TIME=${ES_STARTUP_TIME:=5}
+MAX_OPEN_FILES=${MAX_OPEN_FILES:=65536}
 MAX_MAP_COUNT=${MAX_MAP_COUNT:=262144}
 
-DATA_DIR="${ES_BASE_PATH}/data"
+DATA_DIR=${DATA_DIR:="${ES_BASE_PATH}/data"}
 
 if [ -f "${CONF_DIR}/elasticsearch.in.sh" ]; then
     ES_INCLUDE="${CONF_DIR}/elasticsearch.in.sh"
 fi
 
-export JAVA_OPTS
-export JAVA_HOME
 export ES_INCLUDE
+export JAVA_HOME
+export JAVA_OPTS
 export ES_JVM_OPTIONS
 export ES_JAVA_OPTS
-export ES_HEAP_SIZE
-export ES_HEAP_NEWSIZE
-export ES_DIRECT_SIZE
 export ES_STARTUP_SLEEP_TIME
 
 server_command="/usr/share/elasticsearch/bin/elasticsearch"
@@ -57,11 +55,6 @@ start() {
 			return 1
 		fi
 	done
-
-	if [ -n "${MAX_LOCKED_MEMORY}" -a -z "${ES_HEAP_SIZE}" ]; then
-		eerror "MAX_LOCKED_MEMORY is set - ES_HEAP_SIZE must also be set"
-		return 1
-	fi
 
 	if [ -n "${MAX_MAP_COUNT}" -a -f /proc/sys/vm/max_map_count ]; then
 		sysctl -q -w vm.max_map_count=${MAX_MAP_COUNT}
