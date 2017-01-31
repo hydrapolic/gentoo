@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -21,7 +21,7 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}
 	>=dev-libs/openssl-1.0.0:*
 	>=net-misc/openssh-5.3
-	dev-python/pyasn1
+	dev-python/pyasn1[${PYTHON_USEDEP}]
 	sys-apps/util-linux
 	sys-block/parted
 	sys-apps/shadow

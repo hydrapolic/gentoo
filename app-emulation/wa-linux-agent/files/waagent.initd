@@ -1,7 +1,7 @@
 #!/sbin/openrc-run
 
 command=/usr/sbin/waagent
-pidfile=/var/run/waagent.pid
+pidfile=/run/waagent.pid
 command_args=-daemon
 command_background=true
 name="Azure Linux Agent"
