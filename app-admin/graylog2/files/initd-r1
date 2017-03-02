@@ -1,7 +1,6 @@
 #!/sbin/openrc-run
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 export JAVA_HOME=`java-config --jre-home`
 
@@ -24,23 +23,23 @@ start() {
   [ -e "$GRAYLOG_LOG_DIR" ] || \
     install -d -o${GRAYLOG_USER} -g${GRAYLOG_GROUP} -m750 "$GRAYLOG_LOG_DIR"
   
-  CLASSPATH="$(java-config -r)"
-  CLASSPATH="${CLASSPATH}:$(java-config -d --classpath sigar)"
-
   ebegin "Starting Graylog"
+
+  checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}/data"
+  checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}/data/contentpacks"
+  checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}/data/journal"
 
   start-stop-daemon \
     --start \
     --exec "${JAVA_HOME}/bin/java" \
     --user ${GRAYLOG_USER} \
     --group ${GRAYLOG_GROUP} \
-    --env CLASSPATH="${CLASSPATH}" \
     --background \
-    --chdir /usr/share/graylog2 \
+    --chdir ${GRAYLOG_INSTALL_DIR} \
     --stdout ${GRAYLOG_LOG_DIR}/graylog.stdout.log \
     --stderr ${GRAYLOG_LOG_DIR}/graylog.stderr.log \
-    -- ${JAVA_OPTS} -Djava.library.path=`java-config --lib sigar` -classpath "${CLASSPATH}" -jar /usr/share/graylog2/graylog.jar server -f "${GRAYLOG_CONFIG_FILE}" -p "${GRAYLOG_PID_FILE}" ${GRAYLOG_OPTIONS}
-
+    -- ${JAVA_OPTS} -jar ${GRAYLOG_INSTALL_DIR}/graylog.jar server -f "${GRAYLOG_CONFIG_FILE}" -p "${GRAYLOG_PID_FILE}" ${GRAYLOG_OPTIONS}
+  
   eend $?
 }
 
