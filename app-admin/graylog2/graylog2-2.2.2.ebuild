@@ -58,6 +58,11 @@ src_prepare() {
 	# remove plugins
 	rm plugin/graylog-plugin-anonymous-usage-statistics-${PV}.jar || die
 
+	# gentoo specific paths
+	sed -i "s@\(node_id_file = \).*@\1/var/lib/graylog2/node-id@g; \
+		s@\(message_journal_dir = \).*@\1/var/lib/graylog2/data/journal@g; \
+		s@#\(content_packs_dir = \).*@\1/var/lib/graylog2/data/contentpacks@g" \
+		graylog.conf.example || die
 }
 
 src_compile() {
