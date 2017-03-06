@@ -16,12 +16,13 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 MY_PN="graylog"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
-QA_PREBUILT="/usr/share/graylog2/lib/sigar/libsigar*"
+INSTALL_DIR="/usr/share/graylog2"
+DATA_DIR="/var/lib/graylog2"
+
+QA_PREBUILT="${INSTALL_DIR}/lib/sigar/libsigar*"
 RESTRICT="strip"
 
 RDEPEND="virtual/jdk:1.8"
-
-INSTALL_DIR="/usr/share/graylog2"
 
 pkg_setup() {
 	enewgroup graylog
@@ -59,9 +60,9 @@ src_prepare() {
 	rm plugin/graylog-plugin-anonymous-usage-statistics-${PV}.jar || die
 
 	# gentoo specific paths
-	sed -i "s@\(node_id_file = \).*@\1/var/lib/graylog2/node-id@g; \
-		s@\(message_journal_dir = \).*@\1/var/lib/graylog2/data/journal@g; \
-		s@#\(content_packs_dir = \).*@\1/var/lib/graylog2/data/contentpacks@g" \
+	sed -i "s@\(node_id_file = \).*@\1${DATA_DIR}/node-id@g; \
+		s@\(message_journal_dir = \).*@\1${DATA_DIR}/data/journal@g; \
+		s@#\(content_packs_dir = \).*@\1/${DATA_DIR}/data/contentpacks@g" \
 		graylog.conf.example || die
 }
 
@@ -73,7 +74,7 @@ src_install() {
 	insinto /etc/graylog2
 	doins graylog.conf.example
 
-	insinto /var/lib/graylog2/data/contentpacks
+	insinto ${DATA_DIR}/data/contentpacks
 	doins data/contentpacks/grok-patterns.json
 
 	insinto "${INSTALL_DIR}"
