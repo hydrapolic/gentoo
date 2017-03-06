@@ -25,6 +25,7 @@ start() {
   
   ebegin "Starting Graylog"
 
+  checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}"
   checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}/data"
   checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}/data/contentpacks"
   checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}/data/journal"
