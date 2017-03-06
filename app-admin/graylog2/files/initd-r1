@@ -22,7 +22,7 @@ start() {
 
   [ -e "$GRAYLOG_LOG_DIR" ] || \
     install -d -o${GRAYLOG_USER} -g${GRAYLOG_GROUP} -m750 "$GRAYLOG_LOG_DIR"
-  
+
   ebegin "Starting Graylog"
 
   checkpath -d -o "${GRAYLOG_USER}:${GRAYLOG_GROUP}" -m750 "${GRAYLOG_DATA_DIR}"
