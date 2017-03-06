@@ -30,10 +30,10 @@ pkg_setup() {
 
 src_prepare() {
 	default
-	
+
 	# graylogctl is replaced by our own initd
 	rm -r bin
-	
+
 	# Stick to architecture of build host
 	if ! use amd64; then
 		rm -r lib/sigar/libsigar-amd64-*.so || die "Failed in removing AMD64 support libraries"
@@ -54,7 +54,7 @@ src_prepare() {
 		lib/sigar/libsigar-ppc-*.so \
 		lib/sigar/libsigar-s390x*.so \
 		lib/sigar/*winnt* || die "Failed in removing unsupported platform libraries"
-	
+
 	# remove plugins
 	rm plugin/graylog-plugin-anonymous-usage-statistics-${PV}.jar || die
 
