@@ -61,6 +61,6 @@ src_install() {
 
 pkg_postinst() {
 	einfo "Run as $PN user:"
-	einfo "/opt/blackfire/blackfire-agent-linux_amd64 --register"
+	einfo "/opt/blackfire/blackfire-agent --register"
 	einfo "and then /etc/init.d/blackfire-agent start"
 }
