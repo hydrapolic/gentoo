@@ -1,7 +1,7 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
 inherit autotools eutils
 
@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~hppa ~x86"
 IUSE="debug examples libressl sasl ssl static-libs test"
 
-RDEPEND=">=dev-libs/libbson-1.3.5
+RDEPEND=">=dev-libs/libbson-1.6.2
 	sasl? ( dev-libs/cyrus-sasl )
 	ssl? (
 		!libressl? ( dev-libs/openssl:0= )
@@ -33,14 +33,14 @@ src_prepare() {
 	sed -i -e "s/PTHREAD_LIBS/PTHREAD_CFLAGS/g" src/Makefile.am \
 		tests/Makefile.am || die
 	eautoreconf
+
+	default
 }
 
 src_configure() {
 	econf --with-libbson=system \
-		--disable-hardening \
 		--disable-optimizations \
-		--disable-examples \
-		--docdir="${EPREFIX}/usr/share/doc/${P}" \
+		--disable-shm-counters \
 		$(use_enable sasl) \
 		$(use_enable ssl ssl openssl) \
 		$(use_enable debug) \
