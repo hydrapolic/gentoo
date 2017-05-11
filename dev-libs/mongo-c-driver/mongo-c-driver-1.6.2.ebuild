@@ -41,6 +41,8 @@ src_configure() {
 	econf --with-libbson=system \
 		--disable-optimizations \
 		--disable-shm-counters \
+		--disable-examples \
+		--docdir="${EPREFIX}/usr/share/doc/${P}" \
 		$(use_enable sasl) \
 		$(use_enable ssl ssl openssl) \
 		$(use_enable debug) \
