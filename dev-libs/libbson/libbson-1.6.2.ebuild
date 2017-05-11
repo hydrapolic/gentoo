@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -28,7 +28,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --enable-optimizations=no \
+	econf --disable-optimizations \
 		$(use_enable debug) \
 		$(use_enable static-libs static)
 }
@@ -46,4 +46,8 @@ src_install() {
 		insinto /usr/share/${PF}/examples
 		doins examples/*.c
 	fi
+}
+
+src_test() {
+	emake test
 }
