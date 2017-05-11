@@ -14,9 +14,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~hppa ~x86"
 IUSE="debug examples static-libs"
 
-RDEPEND=""
-DEPEND="${RDEPEND}"
-
 DOCS=( AUTHORS NEWS README )
 
 src_prepare() {
@@ -34,10 +31,12 @@ src_configure() {
 }
 
 src_install() {
-	default_src_install
+	default
+
 	if [[ -f "${D}usr/share/doc/${P}/COPYING" ]] ; then
 		rm "${D}usr/share/doc/${P}/COPYING" || die
 	fi
+
 	# Installing all the manuals conflicts with man-pages
 	doman doc/man/bson_*.3
 	use static-libs || find "${D}" -name '*.la' -delete
@@ -46,6 +45,8 @@ src_install() {
 		insinto /usr/share/${PF}/examples
 		doins examples/*.c
 	fi
+
+	einstalldocs
 }
 
 src_test() {
