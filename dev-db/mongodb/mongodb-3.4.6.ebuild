@@ -102,6 +102,7 @@ pkg_setup() {
 src_prepare() {
 	epatch \
 		"${FILESDIR}/${PN}-3.4.0-fix-scons.patch"
+		"${FILESDIR}/${P}-no-boost-check.patch"
 	if has_version ">=dev-libs/boost-1.62"; then
 		epatch "${FILESDIR}/${PN}-3.2.10-boost-1.62.patch"
 	fi
