@@ -18,7 +18,6 @@ LICENSE="Apache-2.0 Artistic-2 BSD BSD-2 CC-BY-3.0 CC-BY-4.0 icu ISC MIT MPL-2.0
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=""
 RDEPEND="net-libs/nodejs"
 
 pkg_setup() {
@@ -52,7 +51,7 @@ src_install() {
 	newins "${FILESDIR}"/${MY_PN}.logrotate ${MY_PN}
 
 	newconfd "${FILESDIR}"/${MY_PN}.confd ${MY_PN}
-	newinitd "${FILESDIR}"/${MY_PN}.initd-r5 ${MY_PN}
+	newinitd "${FILESDIR}"/${MY_PN}.initd ${MY_PN}
 
 	mv * "${ED%/}"/opt/${MY_PN} || die
 }
