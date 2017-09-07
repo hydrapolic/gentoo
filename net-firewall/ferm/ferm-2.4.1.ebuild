@@ -24,8 +24,6 @@ RDEPEND="dev-lang/perl:*
 DOCS=( AUTHORS NEWS README.rst TODO doc/ferm.txt examples/ )
 HTML_DOCS=( doc/ferm.html )
 
-src_compile() { :; }
-
 src_install() {
 	dosbin src/{,import-}ferm
 	systemd_dounit ferm.service
