@@ -21,7 +21,7 @@ RDEPEND="dev-lang/perl:*
 	net-firewall/iptables
 	virtual/perl-File-Spec"
 
-DOCS=( AUTHORS NEWS README TODO doc/ferm.txt examples/ )
+DOCS=( AUTHORS NEWS README.rst TODO doc/ferm.txt examples/ )
 HTML_DOCS=( doc/ferm.html )
 
 src_compile() { :; }
