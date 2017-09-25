@@ -15,9 +15,6 @@
 #LS_HEAP_SIZE="500m"
 #LS_JAVA_OPTS="-Djava.io.tmpdir=$HOME"
 
-# pidfiles location
-#LS_PIDFILE=/run/logstash.pid
-
 # user id to be invoked as
 #LS_USER=logstash
 #LS_GROUP=logstash
