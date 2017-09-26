@@ -1,5 +1,4 @@
 ```
-.
 ├── app-arch
 │   └── qpress
 ├── app-emulation
@@ -17,8 +16,6 @@
 │   └── percona-monitoring-plugins
 ├── net-wireless
 │   └── unifi-api
-├── sys-block
-│   └── hpacucli
 ├── www-apps
 │   └── toran-proxy
 └── www-client
