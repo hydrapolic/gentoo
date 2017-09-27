@@ -40,9 +40,7 @@ src_install() {
 	rm -v config/startup.options
 	insinto /etc/${MY_PN}
 	doins config/*
-	rm -rv config || die
-
-	rm -rv data || die
+	rm -rv config data || die
 
 	insinto "/opt/${MY_PN}"
 	doins -r .
