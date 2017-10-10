@@ -1,0 +1,24 @@
+--- a/plugins/check_mysql.c	2016-11-29 09:45:08.000000000 +0100
++++ b/plugins/check_mysql.c	2017-10-10 06:20:17.602585701 +0200
+@@ -42,6 +42,9 @@
+ #include "netutils.h"
+ 
+ #include <mysql.h>
++#if defined(MARIADB_BASE_VERSION) && defined(MARIADB_VERSION_ID)
++	#include <server/mysql_version.h>
++#endif
+ #include <mysqld_error.h>
+ #include <errmsg.h>
+ 
+--- a/plugins/check_mysql_query.c	2016-11-29 09:45:08.000000000 +0100
++++ b/plugins/check_mysql_query.c	2017-10-10 06:20:37.156683254 +0200
+@@ -39,6 +39,9 @@
+ #include "netutils.h"
+ 
+ #include <mysql.h>
++#if defined(MARIADB_BASE_VERSION) && defined(MARIADB_VERSION_ID)
++	#include <server/mysql_version.h>
++#endif
+ #include <errmsg.h>
+ 
+ char *db_user = NULL;
