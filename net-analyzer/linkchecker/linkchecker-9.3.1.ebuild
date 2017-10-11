@@ -41,8 +41,6 @@ python_prepare_all() {
 		"${FILESDIR}/${PN}-9.3.1-build-fix.patch"
 	)
 
-	emake -C doc/html
-
 	distutils-r1_python_prepare_all
 }
 
