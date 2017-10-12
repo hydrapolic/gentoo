@@ -134,12 +134,6 @@ src_prepare() {
 			-i {} \; || die "failed to re-set custom-cflags"
 	fi
 
-	# remove -Werror for gcc-4.6's sake
-	#find "${S}" -name 'Makefile*' -o -name '*.mk' -o -name 'common.make' | \
-	#	xargs sed -i 's/ *-Werror */ /'
-	# not strictly necessary to fix this
-	#sed -i 's/, "-Werror"//' "${S}/tools/python/setup.py" || die "failed to re-set setup.py"
-
 	default
 }
 

@@ -392,9 +392,9 @@ src_install() {
 
 	emake DESTDIR="${ED}" DOCDIR="/usr/share/doc/${PF}" \
 		XEN_PYTHON_NATIVE_INSTALL=y install-tools
-	
+
 	# Created at runtime
-	rm -rv "${ED}var/run" || die
+	rm -rv "${ED%/}/var/run" || die
 
 	# Fix the remaining Python shebangs.
 	python_fix_shebang "${D}"
