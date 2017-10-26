@@ -11,8 +11,8 @@ SRC_URI="https://www.monitoring-plugins.org/download/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~arm64 x86"
-IUSE="gnutls ipv6 ldap libressl mysql dns fping game postgres samba snmp ssh +ssl"
+KEYWORDS="~amd64 ~arm ~arm64 ~sparc ~x86"
+IUSE="gnutls ipv6 ldap libressl mysql dns fping game postgres radius samba snmp ssh +ssl"
 
 # Most of the plugins use automagic dependencies, i.e. the plugin will
 # get built if the binary it uses is installed. For example, check_snmp
@@ -33,7 +33,8 @@ REAL_DEPEND="dev-lang/perl
 			libressl? ( dev-libs/libressl:= )
 		)
 		gnutls? ( net-libs/gnutls )
-	)"
+	)
+	radius? ( net-dialup/freeradius-client )"
 
 DEPEND="${REAL_DEPEND}
 	dns? ( net-dns/bind-tools )
@@ -80,6 +81,7 @@ src_configure() {
 		$(use_with ipv6) \
 		$(use_with ldap) \
 		$(use_with postgres pgsql /usr) \
+		$(use_with radius) \
 		"${myconf[@]}" \
 		--libexecdir="/usr/$(get_libdir)/nagios/plugins" \
 		--sysconfdir="/etc/nagios"
