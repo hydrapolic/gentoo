@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils depend.php depend.apache
+inherit eutils depend.apache
 
 DESCRIPTION="NagVis is a visualization addon for the well known network managment system Nagios."
 HOMEPAGE="http://www.nagvis.org/"
@@ -22,7 +22,6 @@ RDEPEND="|| ( net-analyzer/nagios net-analyzer/icinga )
 	net-analyzer/mk-livestatus
 	dev-lang/php[gd,nls,json,session,pdo,sqlite,sockets,mysql,unicode,xml]"
 
-need_php_httpd
 want_apache2
 
 pkg_setup() {
