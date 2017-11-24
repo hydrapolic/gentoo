@@ -54,7 +54,7 @@ src_prepare() {
 	use python && python_fix_shebang .
 
 	# remove bundled libs
-	rm -r lib/ivykis modules/afmongodb/mongo-c-driver modules/afamqp/rabbitmq-c || die
+	rm -rv lib/ivykis modules/afmongodb/mongo-c-driver modules/afamqp/rabbitmq-c || die
 
 	if use !json ; then
 		sed -i -e '/cim/d' scl/Makefile.am || die
