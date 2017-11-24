@@ -38,8 +38,8 @@ RDEPEND="
 	!dev-libs/eventlog
 	>=dev-libs/glib-2.10.1:2"
 DEPEND="${RDEPEND}
+	>=dev-libs/ivykis-0.36.1
 	sys-devel/flex
-	>=net-libs/ivykis-0.36.1
 	virtual/pkgconfig"
 
 S=${WORKDIR}/${PN}-${MY_PV}
