@@ -1,0 +1,47 @@
+diff --git a/linkcheck/url.py b/linkcheck/url.py
+index 5da62cd..2dc730a 100644
+--- a/linkcheck/url.py
++++ b/linkcheck/url.py
+@@ -325,7 +325,7 @@ def url_norm (url, encoding=None):
+     urlparts[0] = url_quote_part(urlparts[0], encoding=encoding) # scheme
+     urlparts[1] = url_quote_part(urlparts[1], safechars='@:', encoding=encoding) # host
+     urlparts[2] = url_quote_part(urlparts[2], safechars=_nopathquote_chars, encoding=encoding) # path
+-    urlparts[4] = url_quote_part(urlparts[4], encoding=encoding) # anchor
++    urlparts[4] = url_quote_part(urlparts[4], safechars="!$&'()*+,-./;=?@_~", encoding=encoding) # anchor
+     res = urlunsplit(urlparts)
+     if url.endswith('#') and not urlparts[4]:
+         # re-append trailing empty fragment
+diff --git a/tests/checker/data/http.html.result b/tests/checker/data/http.html.result
+index 69726d7..122ab2a 100644
+--- a/tests/checker/data/http.html.result
++++ b/tests/checker/data/http.html.result
+@@ -72,7 +72,7 @@ valid
+ 
+ url http://example.org/foo/ #a=1,2,3
+ cache key http://example.org/foo/%%20
+-real url http://example.org/foo/%%20#a%%3D1%%2C2%%2C3
++real url http://example.org/foo/%%20#a=1,2,3
+ error
+ 
+ url http://.example.org/
+diff --git a/tests/test_url.py b/tests/test_url.py
+index 3e5647b..a1d794f 100644
+--- a/tests/test_url.py
++++ b/tests/test_url.py
+@@ -168,14 +168,14 @@ class TestUrl (unittest.TestCase):
+         nurl = "http://example.com:81/"
+         self.urlnormtest(url, nurl)
+ 
+-    def test_norm_fragment (self):
++    def test_norm_fragment_empty (self):
+         # Test url norm fragment preserving.
+         # Empty fragment identifiers must be preserved:
+         url = "http://www.w3.org/2000/01/rdf-schema#"
+         nurl = url
+         self.urlnormtest(url, nurl)
+         url = "http://example.org/foo/ #a=1,2,3"
+-        nurl = "http://example.org/foo/%20#a%3D1%2C2%2C3"
++        nurl = "http://example.org/foo/%20#a=1,2,3"
+         self.urlnormtest(url, nurl)
+ 
+     def test_norm_empty_path (self):
