@@ -35,10 +35,11 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch \
-		"${FILESDIR}"/${PN}-4.0.1-shared.patch \
+	eapply \
 		"${FILESDIR}"/${PN}-3.2.3-config.patch \
-		"${FILESDIR}"/${PN}-4.0.1-sharedlua.patch
+		"${FILESDIR}"/${PN}-4.0.1-shared.patch \
+		"${FILESDIR}"/${PN}-4.0.1-sharedlua.patch \
+		"${FILESDIR}"/${PN}-sentinel-4.0.6-config.patch
 	eapply_user
 
 	# Copy lua modules into build dir
