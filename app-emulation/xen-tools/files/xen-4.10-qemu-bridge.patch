@@ -1,0 +1,79 @@
+diff --git a/tools/qemu-xen/Makefile b/tools/qemu-xen/Makefile
+index 81447b1..a0cf388 100644
+--- a/tools/qemu-xen/Makefile
++++ b/tools/qemu-xen/Makefile
+@@ -203,7 +203,7 @@ $(call set-vpath, $(SRC_PATH))
+ 
+ LIBS+=-lz $(LIBS_TOOLS)
+ 
+-HELPERS-$(CONFIG_LINUX) = qemu-bridge-helper$(EXESUF)
++HELPERS-$(CONFIG_LINUX) = xen-bridge-helper$(EXESUF)
+ 
+ ifdef BUILD_DOCS
+ DOCS=qemu-doc.html qemu-doc.txt qemu.1 qemu-img.1 qemu-nbd.8 qemu-ga.8
+@@ -377,7 +377,7 @@ qemu-img$(EXESUF): qemu-img.o $(block-obj-y) $(crypto-obj-y) $(io-obj-y) $(qom-o
+ qemu-nbd$(EXESUF): qemu-nbd.o $(block-obj-y) $(crypto-obj-y) $(io-obj-y) $(qom-obj-y) $(COMMON_LDADDS)
+ qemu-io$(EXESUF): qemu-io.o $(block-obj-y) $(crypto-obj-y) $(io-obj-y) $(qom-obj-y) $(COMMON_LDADDS)
+ 
+-qemu-bridge-helper$(EXESUF): qemu-bridge-helper.o $(COMMON_LDADDS)
++xen-bridge-helper$(EXESUF): xen-bridge-helper.o $(COMMON_LDADDS)
+ 
+ fsdev/virtfs-proxy-helper$(EXESUF): fsdev/virtfs-proxy-helper.o fsdev/9p-marshal.o fsdev/9p-iov-marshal.o $(COMMON_LDADDS)
+ fsdev/virtfs-proxy-helper$(EXESUF): LIBS += -lcap
+diff --git a/tools/qemu-xen/include/net/net.h b/tools/qemu-xen/include/net/net.h
+index 1c55a93..2d0878d 100644
+--- a/tools/qemu-xen/include/net/net.h
++++ b/tools/qemu-xen/include/net/net.h
+@@ -222,7 +222,7 @@ NetClientState *net_hub_port_find(int hub_id);
+ 
+ #define DEFAULT_NETWORK_SCRIPT "/etc/qemu-ifup"
+ #define DEFAULT_NETWORK_DOWN_SCRIPT "/etc/qemu-ifdown"
+-#define DEFAULT_BRIDGE_HELPER CONFIG_QEMU_HELPERDIR "/qemu-bridge-helper"
++#define DEFAULT_BRIDGE_HELPER CONFIG_QEMU_HELPERDIR "/xen-bridge-helper"
+ #define DEFAULT_BRIDGE_INTERFACE "br0"
+ 
+ void qdev_set_nic_properties(DeviceState *dev, NICInfo *nd);
+diff --git a/tools/qemu-xen/qemu-bridge-helper.c b/tools/qemu-xen/qemu-bridge-helper.c
+index 5396fbf..6db08d5 100644
+--- a/tools/qemu-xen/qemu-bridge-helper.c
++++ b/tools/qemu-xen/qemu-bridge-helper.c
+@@ -57,7 +57,7 @@ typedef QSIMPLEQ_HEAD(ACLList, ACLRule) ACLList;
+ static void usage(void)
+ {
+     fprintf(stderr,
+-            "Usage: qemu-bridge-helper [--use-vnet] --br=bridge --fd=unixfd\n");
++            "Usage: xen-bridge-helper [--use-vnet] --br=bridge --fd=unixfd\n");
+ }
+ 
+ static int parse_acl_file(const char *filename, ACLList *acl_list)
+diff --git a/tools/qemu-xen/qemu-options.hx b/tools/qemu-xen/qemu-options.hx
+index 9f6e2ad..a5502ef 100644
+--- a/tools/qemu-xen/qemu-options.hx
++++ b/tools/qemu-xen/qemu-options.hx
+@@ -2232,7 +2232,7 @@ to disable script execution.
+ 
+ If running QEMU as an unprivileged user, use the network helper
+ @var{helper} to configure the TAP interface and attach it to the bridge.
+-The default network helper executable is @file{/path/to/qemu-bridge-helper}
++The default network helper executable is @file{/path/to/xen-bridge-helper}
+ and the default bridge device is @file{br0}.
+ 
+ @option{fd}=@var{h} can be used to specify the handle of an already
+@@ -2257,7 +2257,7 @@ qemu-system-i386 linux.img \
+ #launch a QEMU instance with the default network helper to
+ #connect a TAP device to bridge br0
+ qemu-system-i386 linux.img \
+-                 -net nic -net tap,"helper=/path/to/qemu-bridge-helper"
++                 -net nic -net tap,"helper=/path/to/xen-bridge-helper"
+ @end example
+ 
+ @item -netdev bridge,id=@var{id}[,br=@var{bridge}][,helper=@var{helper}]
+@@ -2266,7 +2266,7 @@ Connect a host TAP network interface to a host bridge device.
+ 
+ Use the network helper @var{helper} to configure the TAP interface and
+ attach it to the bridge. The default network helper executable is
+-@file{/path/to/qemu-bridge-helper} and the default bridge
++@file{/path/to/xen-bridge-helper} and the default bridge
+ device is @file{br0}.
+ 
+ Examples:
