@@ -40,6 +40,7 @@ python_prepare_all() {
 		"${FILESDIR}/${PN}-9.3-desktop.patch"
 		"${FILESDIR}/${PN}-9.3.1-build-fix.patch"
 		"${FILESDIR}/${PN}-9.3.1-requests.patch"
+		"${FILESDIR}/${PN}-9.3.1-colon-fix.patch"
 	)
 
 	distutils-r1_python_prepare_all
