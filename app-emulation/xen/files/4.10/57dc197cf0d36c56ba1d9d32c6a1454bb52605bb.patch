@@ -1,0 +1,45 @@
+From 57dc197cf0d36c56ba1d9d32c6a1454bb52605bb Mon Sep 17 00:00:00 2001
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Date: Wed, 17 Jan 2018 16:56:03 +0100
+Subject: [PATCH] x86/mm: Always set _PAGE_ACCESSED on L4e updates
+
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+master commit: bd61fe94bee0556bc2f64999a4a8315b93f90f21
+master date: 2018-01-15 13:53:16 +0000
+---
+ xen/arch/x86/pv/mm.h | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/xen/arch/x86/pv/mm.h b/xen/arch/x86/pv/mm.h
+index 7502d53..976209b 100644
+--- a/xen/arch/x86/pv/mm.h
++++ b/xen/arch/x86/pv/mm.h
+@@ -144,9 +144,21 @@ static inline l3_pgentry_t unadjust_guest_l3e(l3_pgentry_t l3e,
+ static inline l4_pgentry_t adjust_guest_l4e(l4_pgentry_t l4e,
+                                             const struct domain *d)
+ {
+-    if ( likely(l4e_get_flags(l4e) & _PAGE_PRESENT) &&
+-         likely(!is_pv_32bit_domain(d)) )
+-        l4e_add_flags(l4e, _PAGE_USER);
++    /*
++     * When shadowing an L4 behind the guests back (e.g. for per-pcpu
++     * purposes), we cannot efficiently sync access bit updates from hardware
++     * (on the shadow tables) back into the guest view.
++     *
++     * We therefore unconditionally set _PAGE_ACCESSED even in the guests
++     * view.  This will appear to the guest as a CPU which proactively pulls
++     * all valid L4e's into its TLB, which is compatible with the x86 ABI.
++     *
++     * At the time of writing, all PV guests set the access bit anyway, so
++     * this is no actual change in their behaviour.
++     */
++    if ( likely(l4e_get_flags(l4e) & _PAGE_PRESENT) )
++        l4e_add_flags(l4e, (_PAGE_ACCESSED |
++                            (is_pv_32bit_domain(d) ? 0 : _PAGE_USER)));
+ 
+     return l4e;
+ }
+-- 
+2.1.4
+
