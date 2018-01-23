@@ -23,7 +23,7 @@ else
 
 	[[ -n ${UPSTREAM_VER} ]] && \
 		UPSTREAM_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${P}-upstream-patches-${UPSTREAM_VER}.tar.xz
-		https://github.com/hydrapolic/gentoo-dist/blob/master/xen/${P}-upstream-patches-${UPSTREAM_VER}.tar.xz"
+		https://github.com/hydrapolic/gentoo-dist/raw/master/xen/${P}-upstream-patches-${UPSTREAM_VER}.tar.xz"
 	[[ -n ${SECURITY_VER} ]] && \
 		SECURITY_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${PN}-security-patches-${SECURITY_VER}.tar.xz"
 	[[ -n ${GENTOO_VER} ]] && \
