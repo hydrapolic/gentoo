@@ -1,0 +1,44 @@
+commit 192be8fccbdd752f37afc31ee0fa806a662bb9dd
+Author: Antonio Quartulli <a@unstable.cc>
+Date:   Sun Jan 7 02:31:49 2018 +0800
+
+    ss: fix crash when skipping disabled header field
+    
+    When the first header field is disabled (i.e. when passing the -t
+    option), field_flush() is invoked with the `buffer` global variable
+    still zero'd.
+    However, in field_flush() we try to access buffer.cur->len
+    during variables initialization, thus leading to a SIGSEGV.
+    
+    It's interesting to note that this bug appears only when the code
+    is compiled with -O0, because the compiler is smart
+    enough to immediately jump to the return statement if optimizations
+    are enabled and skip the faulty instruction.
+    
+    Cc: Stefano Brivio <sbrivio@redhat.com>
+    Cc: Stephen Hemminger <stephen@networkplumber.org>
+    Signed-off-by: Antonio Quartulli <a@unstable.cc>
+    Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+
+diff --git a/misc/ss.c b/misc/ss.c
+index 1abf43d0..b35859dc 100644
+--- a/misc/ss.c
++++ b/misc/ss.c
+@@ -1018,12 +1018,15 @@ static void print_right_spacing(struct column *f, int printed)
+ /* Done with field: update buffer pointer, start new token after current one */
+ static void field_flush(struct column *f)
+ {
+-	struct buf_chunk *chunk = buffer.tail;
+-	unsigned int pad = buffer.cur->len % 2;
++	struct buf_chunk *chunk;
++	unsigned int pad;
+ 
+ 	if (f->disabled)
+ 		return;
+ 
++	chunk = buffer.tail;
++	pad = buffer.cur->len % 2;
++
+ 	if (buffer.cur->len > f->max_len)
+ 		f->max_len = buffer.cur->len;
+ 

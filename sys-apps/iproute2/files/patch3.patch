@@ -1,0 +1,48 @@
+commit 507358183576b44a2f6c825b35441a9549d385c7
+Author: Stephen Hemminger <stephen@networkplumber.org>
+Date:   Mon Dec 18 09:51:02 2017 -0800
+
+    ss: fix crash with invalid command input file
+    
+    If given an invalid input file with -F flag, ss would crash.
+    Examples of invalid input are line to long, or null file.
+    
+    Found by fuzzing with ASAN.
+    
+    Reported-by:Bug Basher <iamliketohack@gmail.com>
+    Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+
+diff --git a/misc/ssfilter.y b/misc/ssfilter.y
+index ba82b65f..4db3c95f 100644
+--- a/misc/ssfilter.y
++++ b/misc/ssfilter.y
+@@ -202,15 +202,23 @@ int yylex(void)
+ 				argc++;
+ 			} else if (yy_fp) {
+ 				while (tokptr == NULL) {
+-					if (fgets(argbuf, sizeof(argbuf)-1, yy_fp) == NULL)
++					size_t len;
++
++					if (fgets(argbuf, sizeof(argbuf), yy_fp) == NULL)
+ 						return 0;
+-					argbuf[sizeof(argbuf)-1] = 0;
+-					if (strlen(argbuf) == sizeof(argbuf) - 1) {
+-						fprintf(stderr, "Too long line in filter");
++
++					len = strnlen(argbuf, sizeof(argbuf));
++					if (len == 0) {
++						fprintf(stderr, "Invalid line\n");
++						exit(-1);
++					}
++
++					if (len >= sizeof(argbuf) - 1) {
++						fprintf(stderr, "Too long line in filter\n");
+ 						exit(-1);
+ 					}
+-					if (argbuf[strlen(argbuf)-1] == '\n')
+-						argbuf[strlen(argbuf)-1] = 0;
++					if (argbuf[len - 1] == '\n')
++						argbuf[len-1] = 0;
+ 					if (argbuf[0] == '#' || argbuf[0] == '0')
+ 						continue;
+ 					tokptr = argbuf;
