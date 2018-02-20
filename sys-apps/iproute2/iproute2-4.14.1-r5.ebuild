@@ -45,7 +45,7 @@ PATCHES=(
 	"${FILESDIR}"/${P}-fix-tc-actions.patch
 	"${FILESDIR}"/${P}-configure-nomagic.patch # bug 643722
 	"${FILESDIR}"/${P}-posix-shell.patch
-	"${FILESDIR}"/patch1.patch
+	"${FILESDIR}"/${P}-ss-fix-null-pointer-access.patch # 647704
 )
 
 src_prepare() {
