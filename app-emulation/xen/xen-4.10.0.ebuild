@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -17,12 +17,13 @@ if [[ $PV == *9999 ]]; then
 	SRC_URI=""
 else
 	KEYWORDS="~amd64 ~arm -x86"
-	UPSTREAM_VER=
+	UPSTREAM_VER=0
 	SECURITY_VER=
 	GENTOO_VER=
 
 	[[ -n ${UPSTREAM_VER} ]] && \
-		UPSTREAM_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${P}-upstream-patches-${UPSTREAM_VER}.tar.xz"
+		UPSTREAM_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${P}-upstream-patches-${UPSTREAM_VER}.tar.xz
+		https://github.com/hydrapolic/gentoo-dist/raw/master/xen/${P}-upstream-patches-${UPSTREAM_VER}.tar.xz"
 	[[ -n ${SECURITY_VER} ]] && \
 		SECURITY_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${PN}-security-patches-${SECURITY_VER}.tar.xz"
 	[[ -n ${GENTOO_VER} ]] && \
