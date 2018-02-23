@@ -19,10 +19,10 @@ if [[ $PV == *9999 ]]; then
 	S="${WORKDIR}/${REPO}"
 else
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
-	UPSTREAM_VER=
+	UPSTREAM_VER=0
 	SECURITY_VER=
 	# xen-tools's gentoo patches tarball
-	GENTOO_VER=10
+	GENTOO_VER=11
 	# xen-tools's gentoo patches version which apply to this specific ebuild
 	GENTOO_GPV=0
 	# xen-tools ovmf's patches
@@ -33,11 +33,13 @@ else
 	OVMF_PV=20170321
 
 	[[ -n ${UPSTREAM_VER} ]] && \
-		UPSTREAM_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${P/-tools/}-upstream-patches-${UPSTREAM_VER}.tar.xz"
+		UPSTREAM_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${P/-tools/}-upstream-patches-${UPSTREAM_VER}.tar.xz
+		https://github.com/hydrapolic/gentoo-dist/raw/master/xen/${P/-tools/}-upstream-patches-${UPSTREAM_VER}.tar.xz"
 	[[ -n ${SECURITY_VER} ]] && \
 		SECURITY_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${PN/-tools}-security-patches-${SECURITY_VER}.tar.xz"
 	[[ -n ${GENTOO_VER} ]] && \
-		GENTOO_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${PN/-tools}-gentoo-patches-${GENTOO_VER}.tar.xz"
+		GENTOO_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${PN/-tools}-gentoo-patches-${GENTOO_VER}.tar.xz
+		https://github.com/hydrapolic/gentoo-dist/raw/master/xen/${PN/-tools/}-gentoo-patches-${GENTOO_VER}.tar.xz"
 	[[ -n ${OVMF_VER} ]] && \
 		OVMF_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${PN/-tools}-ovmf-patches-${OVMF_VER}.tar.xz"
 
@@ -228,7 +230,6 @@ src_prepare() {
 			eapply "${WORKDIR}"/patches-gentoo/$i
 		done
 	fi
-	eapply "${FILESDIR}/xen-4.10-qemu-bridge.patch"
 
 	# Ovmf's patchset
 	if use ovmf; then
