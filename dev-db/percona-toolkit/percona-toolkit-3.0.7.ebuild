@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
@@ -33,7 +33,7 @@ RDEPEND="${COMMON_DEPEND}
 	dev-perl/TermReadKey"
 DEPEND="${COMMON_DEPEND}
 	virtual/perl-ExtUtils-MakeMaker"
-	
+
 # Bug #501904 - CVE-2014-2029
 # sed -i -e '/^=item --\[no\]version-check/,/^default: yes/{/^default: yes/d}' bin/*
 PATCHES=(
