@@ -13,7 +13,7 @@
 : ${SYSLOG_NG_USER:=root}
 
 command="/usr/sbin/syslog-ng"
-command_args="--control \"${SYSLOG_NG_CONTROLFILE}\" --persist-file \"${SYSLOG_NG_STATEFILE}\" --cfgfile \"${SYSLOG_NG_CONFIGFILE}\" --pidfile \"${SYSLOG_NG_PIDFILE}\" ${SYSLOG_NG_OPTS}"
+command_args="--cfgfile \"${SYSLOG_NG_CONFIGFILE}\" --control \"${SYSLOG_NG_CONTROLFILE}\" --persist-file \"${SYSLOG_NG_STATEFILE}\" --pidfile \"${SYSLOG_NG_PIDFILE}\" ${SYSLOG_NG_OPTS}"
 command_user="${SYSLOG_NG_USER}:${SYSLOG_NG_GROUP}"
 extra_commands="checkconfig"
 extra_started_commands="reload"
