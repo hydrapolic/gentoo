@@ -43,6 +43,10 @@ DEPEND="${RDEPEND}
 	sys-devel/flex
 	virtual/pkgconfig"
 
+PATCHES=(
+	"${FILESDIR}/patches/${PN}-3.14.1-fix-ssl.patch"
+)
+
 DOCS=( AUTHORS NEWS.md CONTRIBUTING.md contrib/syslog-ng.conf.{HP-UX,RedHat,SunOS,doc}
 	contrib/syslog2ng "${FILESDIR}/${MY_PV_MM}/syslog-ng.conf.gentoo.hardened"
 	"${T}/syslog-ng.logrotate.hardened" "${FILESDIR}/README.hardened" )
