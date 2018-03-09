@@ -53,7 +53,7 @@ src_install() {
 	newinitd "${FILESDIR}/${PN}.init.3" ${PN}
 
 	systemd_newtmpfilesd "${FILESDIR}/${PN}.tmpfiles.d" ${PN}.conf
-	systemd_newunit "${FILESDIR}"/${PN}.service.2 ${PN}.service
+	systemd_newunit "${FILESDIR}"/${PN}.service.3 ${PN}.service
 }
 
 pkg_postinst() {
