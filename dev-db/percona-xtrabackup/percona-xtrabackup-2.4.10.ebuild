@@ -11,7 +11,7 @@ SRC_URI="https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-${PV}/s
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 
 DEPEND="
 	app-arch/lz4:0=
@@ -34,7 +34,7 @@ RDEPEND="
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-2.4.6-remove-boost-version-check.patch
-	"${FILESDIR}"/${PN}-2.4.6-fix-gcc6-isystem.patch
+	"${FILESDIR}"/${PN}-2.4.10-fix-gcc6-isystem.patch
 )
 
 src_prepare() {
