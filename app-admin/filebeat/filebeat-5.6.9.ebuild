@@ -36,7 +36,7 @@ src_install() {
 	newinitd "${FILESDIR}/${PN}.initd" ${PN}
 
 	docinto "/usr/share/doc/${PF}/examples"
-	dodocs ${PN}/{filebeat.yml,filebeat.full.yml}
+	dodoc ${PN}/{filebeat.yml,filebeat.full.yml}
 
 	insinto "/etc/${PN}"
 	doins ${PN}/{filebeat.template.json,filebeat.template-es2x.json,filebeat.template-es6x.json}
