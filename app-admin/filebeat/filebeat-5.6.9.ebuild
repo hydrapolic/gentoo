@@ -35,7 +35,7 @@ src_install() {
 	newconfd "${FILESDIR}/${PN}.confd" ${PN}
 	newinitd "${FILESDIR}/${PN}.initd" ${PN}
 
-	docinto "/usr/share/doc/${PF}/examples"
+	docinto examples
 	dodoc ${PN}/{filebeat.yml,filebeat.full.yml}
 
 	insinto "/etc/${PN}"
