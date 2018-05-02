@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit user eapi7-ver
+inherit eapi7-ver user
 
 MY_PN="${PN%-bin}"
 MY_P=${MY_PN}-${PV}
@@ -30,15 +30,16 @@ src_prepare() {
 	default
 
 	# remove bundled nodejs
-	rm -rv node || die
+	rm -r node || die
+
+	# remove empty unused directory
+	rmdir data || die
 }
 
 src_install() {
-	keepdir /var/log/${MY_PN}
-
 	insinto /etc/${MY_PN}
 	doins -r config/.
-	rm -rv config || die
+	rm -r config || die
 
 	insinto /etc/logrotate.d
 	newins "${FILESDIR}"/${MY_PN}.logrotate ${MY_PN}
@@ -50,6 +51,9 @@ src_install() {
 	doins -r .
 
 	chmod +x "${ED%/}"/opt/${MY_PN}/bin/* || die
+
+	diropts -m 0750 -o ${MY_PN} -g ${MY_PN}
+	keepdir /var/log/${MY_PN}
 }
 
 pkg_postinst() {
