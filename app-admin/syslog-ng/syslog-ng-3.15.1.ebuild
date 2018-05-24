@@ -4,10 +4,9 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 
-inherit autotools python-single-r1 eutils multilib systemd versionator
+inherit autotools eapi7-ver python-single-r1 systemd
 
-MY_PV=${PV/_/}
-MY_PV_MM=$(get_version_component_range 1-2)
+MY_PV_MM=$(ver_cut 1-2)
 DESCRIPTION="syslog replacement with advanced filtering features"
 HOMEPAGE="https://syslog-ng.com/open-source-log-management"
 SRC_URI="https://github.com/balabit/syslog-ng/releases/download/${P}/${P}.tar.gz"
@@ -17,10 +16,15 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="amqp caps dbi geoip http ipv6 json libressl mongodb pacct python redis smtp spoof-source systemd tcpd"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+# unit tests require https://github.com/Snaipe/Criterion with additional deps
 RESTRICT="test"
 
 RDEPEND="
-	amqp? ( >=net-libs/rabbitmq-c-0.8.0 )
+	>=dev-libs/glib-2.10.1:2
+	>=dev-libs/ivykis-0.36.1
+	>=dev-libs/libpcre-6.1:=
+	!dev-libs/eventlog
+	amqp? ( >=net-libs/rabbitmq-c-0.8.0:= )
 	caps? ( sys-libs/libcap )
 	dbi? ( >=dev-db/libdbi-0.9.0 )
 	geoip? ( >=dev-libs/geoip-1.5.0 )
@@ -28,26 +32,20 @@ RDEPEND="
 	json? ( >=dev-libs/json-c-0.9:= )
 	mongodb? ( >=dev-libs/mongo-c-driver-1.2.0 )
 	python? ( ${PYTHON_DEPS} )
-	redis? ( >=dev-libs/hiredis-0.11.0 )
+	redis? ( >=dev-libs/hiredis-0.11.0:= )
 	smtp? ( net-libs/libesmtp )
-	spoof-source? ( net-libs/libnet:1.1 )
-	systemd? ( sys-apps/systemd )
+	spoof-source? ( net-libs/libnet:1.1= )
+	systemd? ( sys-apps/systemd:= )
 	tcpd? ( >=sys-apps/tcp-wrappers-7.6 )
-	>=dev-libs/ivykis-0.36.1
-	>=dev-libs/libpcre-6.1
 	!libressl? ( dev-libs/openssl:0= )
-	libressl? ( dev-libs/libressl:0= )
-	!dev-libs/eventlog
-	>=dev-libs/glib-2.10.1:2"
+	libressl? ( dev-libs/libressl:0= )"
 DEPEND="${RDEPEND}
 	sys-devel/flex
 	virtual/pkgconfig"
 
 DOCS=( AUTHORS NEWS.md CONTRIBUTING.md contrib/syslog-ng.conf.{HP-UX,RedHat,SunOS,doc}
-	contrib/syslog2ng "${FILESDIR}/${MY_PV_MM}/syslog-ng.conf.gentoo.hardened"
+	contrib/syslog2ng "${T}/syslog-ng.conf.gentoo.hardened"
 	"${T}/syslog-ng.logrotate.hardened" "${FILESDIR}/README.hardened" )
-
-S=${WORKDIR}/${PN}-${MY_PV}
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
@@ -72,23 +70,28 @@ src_prepare() {
 			-i contrib/systemd/syslog-ng@default || die
 	fi
 
-	for f in "${FILESDIR}"/*logrotate*.in ; do
-		local bn=$(basename "${f}")
+	for f in "${FILESDIR}"/syslog-ng.logrotate.hardened.in "${FILESDIR}"/syslog-ng.logrotate.in; do
+		local bn=${f##*/}
 
 		sed \
-			-e "$(usex systemd \
-				's/@GENTOO_RESTART@/systemctl kill -s HUP syslog-ng@default/' \
-				's:@GENTOO_RESTART@:/etc/init.d/syslog-ng reload:')" \
+			-e "s#@GENTOO_RESTART@#$(usex systemd "systemctl kill -s HUP syslog-ng@default" \
+				"/etc/init.d/syslog-ng reload")#g" \
 			"${f}" > "${T}/${bn/.in/}" || die
 	done
 
-	default
+	for f in "${FILESDIR}/syslog-ng.conf.gentoo.fbsd.in" \
+			"${FILESDIR}/syslog-ng.conf.gentoo.hardened.in" \
+			"${FILESDIR}/syslog-ng.conf.gentoo.in"; do
+		local bn=${f##*/}
+		sed -e "s/@SYSLOGNG_VERSION@/${MY_PV_MM}/g" "${f}" > "${T}/${bn/.in/}" || die
+	done
 
+	default
 	eautoreconf
 }
 
 src_configure() {
-	econf \
+	local myconf=(
 		--disable-docs \
 		--disable-java \
 		--disable-java-modules \
@@ -118,6 +121,9 @@ src_configure() {
 		$(use_enable spoof-source) \
 		$(use_enable systemd) \
 		$(use_enable tcpd tcp-wrapper)
+	)
+
+	econf "${myconf[@]}"
 }
 
 src_install() {
@@ -129,18 +135,18 @@ src_install() {
 
 	insinto /etc/syslog-ng
 	if use userland_BSD ; then
-		newins "${FILESDIR}/${MY_PV_MM}/syslog-ng.conf.gentoo.fbsd" syslog-ng.conf
+		newins "${T}/syslog-ng.conf.gentoo.fbsd" syslog-ng.conf
 	else
-		newins "${FILESDIR}/${MY_PV_MM}/syslog-ng.conf.gentoo" syslog-ng.conf
+		newins "${T}/syslog-ng.conf.gentoo" syslog-ng.conf
 	fi
 
 	insinto /etc/logrotate.d
 	newins "${T}/syslog-ng.logrotate" syslog-ng
 
-	newinitd "${FILESDIR}/${MY_PV_MM}/syslog-ng.rc" syslog-ng
-	newconfd "${FILESDIR}/${MY_PV_MM}/syslog-ng.confd" syslog-ng
+	newinitd "${FILESDIR}/syslog-ng.rc" syslog-ng
+	newconfd "${FILESDIR}/syslog-ng.confd" syslog-ng
 	keepdir /etc/syslog-ng/patterndb.d /var/lib/syslog-ng
-	prune_libtool_files --modules
+	find "${D}" -name '*.la' -delete || die
 
 	use python && python_optimize
 }
@@ -148,18 +154,14 @@ src_install() {
 pkg_postinst() {
 	# bug #355257
 	if ! has_version app-admin/logrotate ; then
-		echo
 		elog "It is highly recommended that app-admin/logrotate be emerged to"
 		elog "manage the log files.  ${PN} installs a file in /etc/logrotate.d"
 		elog "for logrotate to use."
-		echo
 	fi
 
 	if use systemd; then
-		echo
 		ewarn "The service file for systemd has changed to support multiple instances."
 		ewarn "To start the default instance issue:"
 		ewarn "# systemctl start syslog-ng@default"
-		echo
 	fi
 }
