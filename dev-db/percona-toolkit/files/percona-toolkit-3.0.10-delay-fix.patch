@@ -1,6 +1,8 @@
---- /usr/bin/pt-slave-delay	2012-10-08 14:53:13.000000000 -0700
-+++ pt-slave-delay	2012-12-18 11:19:11.159323310 -0800
-@@ -3848,6 +3848,7 @@
+diff --git a/bin/pt-slave-delay b/bin/pt-slave-delay
+index 750b733..fca04e4 100755
+--- a/bin/pt-slave-delay
++++ b/bin/pt-slave-delay
+@@ -4244,6 +4244,7 @@ sub main {
     my ( $TS, $FILE, $POS ) = ( 0, 1, 2 );
     my @positions;
     my $next_start = 0;
@@ -8,7 +10,7 @@
     $now    = time();
     my $end = $now + ( $o->get('run-time') || 0 );    # When we should exit
  
-@@ -3862,6 +3863,10 @@
+@@ -4258,6 +4259,10 @@ sub main {
        die "Slave SQL thread is not running";
     }
  
@@ -19,7 +21,7 @@
     my $master_dbh;
     if ( $master_dsn ) {
        PTDEBUG && _d('Connecting to master via DSN from cmd-line');
-@@ -3981,7 +3986,7 @@
+@@ -4383,7 +4388,7 @@ sub main {
              || $pos->[$POS] != $res->{position} )
           {
              push @positions,
@@ -28,7 +30,7 @@
           }
        }
        else {
-@@ -4001,7 +4006,7 @@
+@@ -4403,7 +4408,7 @@ sub main {
                  # That happened because for an already lagged slave, $now
                  # isn't the correct time, but is actually
                  # $now - $seconds_lagged.
