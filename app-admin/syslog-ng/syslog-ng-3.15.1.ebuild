@@ -70,20 +70,17 @@ src_prepare() {
 			-i contrib/systemd/syslog-ng@default || die
 	fi
 
-	for f in "${FILESDIR}"/syslog-ng.logrotate.hardened.in "${FILESDIR}"/syslog-ng.logrotate.in; do
-		local bn=${f##*/}
-
+	for f in syslog-ng.logrotate.hardened.in syslog-ng.logrotate.in; do
 		sed \
 			-e "s#@GENTOO_RESTART@#$(usex systemd "systemctl kill -s HUP syslog-ng@default" \
 				"/etc/init.d/syslog-ng reload")#g" \
-			"${f}" > "${T}/${bn/.in/}" || die
+			"${FILESDIR}/${f}" > "${T}/${f/.in/}" || die
 	done
 
-	for f in "${FILESDIR}/syslog-ng.conf.gentoo.fbsd.in" \
-			"${FILESDIR}/syslog-ng.conf.gentoo.hardened.in" \
-			"${FILESDIR}/syslog-ng.conf.gentoo.in"; do
-		local bn=${f##*/}
-		sed -e "s/@SYSLOGNG_VERSION@/${MY_PV_MM}/g" "${f}" > "${T}/${bn/.in/}" || die
+	for f in syslog-ng.conf.gentoo.fbsd.in \
+			syslog-ng.conf.gentoo.hardened.in \
+			syslog-ng.conf.gentoo.in; do
+		sed -e "s/@SYSLOGNG_VERSION@/${MY_PV_MM}/g" "${FILESDIR}/${f}" > "${T}/${f/.in/}" || die
 	done
 
 	default
@@ -92,34 +89,34 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
-		--disable-docs \
-		--disable-java \
-		--disable-java-modules \
-		--disable-riemann \
-		--enable-manpages \
-		--localstatedir=/var/lib/syslog-ng \
-		--sysconfdir=/etc/syslog-ng \
-		--with-embedded-crypto \
-		--with-ivykis=system \
-		--with-module-dir=/usr/$(get_libdir)/syslog-ng \
-		--with-pidfile-dir=/var/run \
-		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)" \
-		$(use_enable amqp) \
-		$(usex amqp --with-librabbitmq-client=system --without-librabbitmq-client) \
-		$(use_enable caps linux-caps) \
-		$(use_enable dbi sql) \
-		$(use_enable geoip) \
-		$(use_enable http) \
-		$(use_enable ipv6) \
-		$(use_enable json) \
-		$(use_enable mongodb) \
-		$(usex mongodb --with-mongoc=system "--without-mongoc --disable-legacy-mongodb-options") \
-		$(use_enable pacct) \
-		$(use_enable python) \
-		$(use_enable redis) \
-		$(use_enable smtp) \
-		$(use_enable spoof-source) \
-		$(use_enable systemd) \
+		--disable-docs
+		--disable-java
+		--disable-java-modules
+		--disable-riemann
+		--enable-manpages
+		--localstatedir=/var/lib/syslog-ng
+		--sysconfdir=/etc/syslog-ng
+		--with-embedded-crypto
+		--with-ivykis=system
+		--with-module-dir=/usr/$(get_libdir)/syslog-ng
+		--with-pidfile-dir=/var/run
+		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
+		$(use_enable amqp)
+		$(usex amqp --with-librabbitmq-client=system --without-librabbitmq-client)
+		$(use_enable caps linux-caps)
+		$(use_enable dbi sql)
+		$(use_enable geoip)
+		$(use_enable http)
+		$(use_enable ipv6)
+		$(use_enable json)
+		$(use_enable mongodb)
+		$(usex mongodb --with-mongoc=system "--without-mongoc --disable-legacy-mongodb-options")
+		$(use_enable pacct)
+		$(use_enable python)
+		$(use_enable redis)
+		$(use_enable smtp)
+		$(use_enable spoof-source)
+		$(use_enable systemd)
 		$(use_enable tcpd tcp-wrapper)
 	)
 
