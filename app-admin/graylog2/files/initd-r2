@@ -10,7 +10,7 @@ pidfile="/run/${RC_SVCNAME}.pid"
 
 output_log="${GRAYLOG_LOG_DIR}/graylog.stdout.log"
 error_log="${GRAYLOG_LOG_DIR}/graylog.stderr.log"
-start_stop_daemon_args="--chdir \"${GRAYLOG_INSTALL_DIR}\""
+directory="${GRAYLOG_INSTALL_DIR}"
 
 depend() {
 	need net
