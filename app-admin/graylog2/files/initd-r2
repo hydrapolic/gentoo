@@ -11,17 +11,13 @@ pidfile="/run/${RC_SVCNAME}.pid"
 output_log="${GRAYLOG_LOG_DIR}/graylog.stdout.log"
 error_log="${GRAYLOG_LOG_DIR}/graylog.stderr.log"
 directory="${GRAYLOG_INSTALL_DIR}"
+required_files="${GRAYLOG_CONFIG_FILE}"
 
 depend() {
 	need net
 }
 
 start_pre() {
-	if [ ! -f "${GRAYLOG_CONFIG_FILE}" ]; then
-		eerror "Missing configuration file ${GRAYLOG_CONFIG_FILE}"
-		return 1
-	fi
-
 	local d
 	for d in \
 		"${GRAYLOG_DATA_DIR}" \
@@ -29,7 +25,7 @@ start_pre() {
 		"${GRAYLOG_DATA_DIR}/data/contentpacks" \
 		"${GRAYLOG_DATA_DIR}/data/journal" \
 		"${GRAYLOG_LOG_DIR}"; do
-	
+
 		checkpath -d -o "${GRAYLOG_USER}":"${GRAYLOG_GROUP}" -m750 "${d}"
 	done
 }
