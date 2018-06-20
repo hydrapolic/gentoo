@@ -58,11 +58,11 @@ src_configure() {
 		-DENABLE_MONGOC=ON
 		-DENABLE_SNAPPY=SYSTEM
 		-DENABLE_ZLIB=SYSTEM
-		-DENABLE_TESTS="$(usex test ON OFF)"
-		-DENABLE_TRACING="$(usex debug ON OFF)"
 		-DENABLE_SASL="$(usex sasl CYRUS OFF)"
 		-DENABLE_SSL="$(usex ssl $(usex libressl LIBRESSL OPENSSL) OFF)"
 		-DENABLE_STATIC="$(usex static-libs ON OFF)"
+		-DENABLE_TESTS="$(usex test ON OFF)"
+		-DENABLE_TRACING="$(usex debug ON OFF)"
 	)
 
 	cmake-utils_src_configure
