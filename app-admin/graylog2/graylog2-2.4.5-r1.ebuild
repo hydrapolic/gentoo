@@ -78,3 +78,10 @@ src_install() {
 	newconfd "${FILESDIR}/confd-r2" graylog2
 	newinitd "${FILESDIR}/initd-r2" graylog2
 }
+
+pkg_postinst() {
+	ewarn "Graylog does not depend on need.net any more (#439092)."
+	ewarn
+	ewarn "Please configure rc_need according to your binding address in:"
+	ewarn "/etc/conf.d/graylog2"
+}

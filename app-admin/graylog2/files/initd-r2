@@ -14,7 +14,7 @@ directory="${GRAYLOG_INSTALL_DIR}"
 required_files="${GRAYLOG_CONFIG_FILE}"
 
 depend() {
-	need net
+	use dns
 }
 
 start_pre() {
