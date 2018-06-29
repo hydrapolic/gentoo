@@ -30,8 +30,7 @@ RDEPEND="
 	>=dev-python/certifi-2018.04.16[${PYTHON_USEDEP}]
 	>=dev-python/urllib3-1.20[${PYTHON_USEDEP}]
 	>=dev-python/voluptuous-0.9.3[${PYTHON_USEDEP}]"
-DEPEND=">=dev-python/boto3-1.7.24[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/six-1.11.0[${PYTHON_USEDEP}]
 	dev-python/sphinx[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-3.10[${PYTHON_USEDEP}]
@@ -49,8 +48,10 @@ python_prepare_all() {
 	# avoid downloading from net
 	sed -e '/^intersphinx_mapping/,+3d' -i docs/conf.py || die
 
-	# allow to use newer dev-python/elasticsearch-py
-	sed -e 's/elasticsearch==5.5.2/elasticsearch>=5.4.0/g' -i setup.py || die
+	# requests_aws4auth not in portage
+	sed -e '/boto3/d' \
+		-e '/requests_aws4auth/d' \
+		-i setup.cfg || die
 
 	distutils-r1_python_prepare_all
 }
