@@ -233,6 +233,7 @@ src_prepare() {
 
 	eapply "${FILESDIR}/xen-tools-4.10.1-unbundle-ipxe.patch"
 	eapply "${FILESDIR}/xen-tools-4.10.1-shim.patch"
+	eapply "${FILESDIR}/xen-tools-4.10.1-gcc8.patch"
 
 	# Ovmf's patchset
 	if use ovmf; then
