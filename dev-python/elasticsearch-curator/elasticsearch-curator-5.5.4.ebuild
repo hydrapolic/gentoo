@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
 MY_PN="curator"
-ES_VERSION="6.3.0"
+ES_VERSION="6.3.1"
 
 inherit distutils-r1
 
@@ -51,7 +51,7 @@ python_prepare_all() {
 	# requests_aws4auth not in portage
 	sed -e '/boto3/d' \
 		-e '/requests_aws4auth/d' \
-		-i setup.cfg || die
+		-i setup.cfg setup.py || die
 
 	distutils-r1_python_prepare_all
 }
