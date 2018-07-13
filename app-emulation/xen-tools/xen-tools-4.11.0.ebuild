@@ -141,13 +141,15 @@ QA_PREBUILT="
 	usr/libexec/xen/bin/ivshmem-server
 	usr/libexec/xen/bin/qemu-img
 	usr/libexec/xen/bin/qemu-io
+	usr/libexec/xen/bin/qemu-keymap
 	usr/libexec/xen/bin/qemu-nbd
+	usr/libexec/xen/bin/qemu-pr-helper
 	usr/libexec/xen/bin/qemu-system-i386
 	usr/libexec/xen/bin/virtfs-proxy-helper
 	usr/libexec/xen/libexec/xen-bridge-helper
 	usr/share/qemu-xen/qemu/s390-ccw.img
-	usr/share/qemu-xen/qemu/u-boot.e500
 	usr/share/qemu-xen/qemu/s390-netboot.img
+	usr/share/qemu-xen/qemu/u-boot.e500
 "
 
 RESTRICT="test"
