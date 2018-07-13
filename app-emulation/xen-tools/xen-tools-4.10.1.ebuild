@@ -22,7 +22,7 @@ else
 	UPSTREAM_VER=0
 	SECURITY_VER=
 	# xen-tools's gentoo patches tarball
-	GENTOO_VER=12
+	GENTOO_VER=13
 	# xen-tools's gentoo patches version which apply to this specific ebuild
 	GENTOO_GPV=0
 	# xen-tools ovmf's patches
@@ -231,10 +231,6 @@ src_prepare() {
 		done
 	fi
 
-	eapply "${FILESDIR}/xen-tools-4.10.1-unbundle-ipxe.patch"
-	eapply "${FILESDIR}/xen-tools-4.10.1-shim.patch"
-	eapply "${FILESDIR}/xen-tools-4.10.1-gcc8.patch"
-
 	# Ovmf's patchset
 	if use ovmf; then
 		if [[ -n ${OVMF_VER} ]];then
@@ -256,7 +252,7 @@ src_prepare() {
 		 -i tools/firmware/Makefile || die
 
 	# Drop .config, fixes to gcc-4.6
-	#sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
+	sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
 
 	# if the user *really* wants to use their own custom-cflags, let them
 	if use custom-cflags; then

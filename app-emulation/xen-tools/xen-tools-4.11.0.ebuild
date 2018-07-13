@@ -22,7 +22,7 @@ else
 	UPSTREAM_VER=
 	SECURITY_VER=
 	# xen-tools's gentoo patches tarball
-	GENTOO_VER=12
+	GENTOO_VER=13
 	# xen-tools's gentoo patches version which apply to this specific ebuild
 	GENTOO_GPV=0
 	# xen-tools ovmf's patches
@@ -229,10 +229,6 @@ src_prepare() {
 			eapply "${WORKDIR}"/patches-gentoo/$i
 		done
 	fi
-
-	eapply "${FILESDIR}/xen-tools-4.10.1-unbundle-ipxe.patch"
-	eapply "${FILESDIR}/xen-tools-4.10.1-shim.patch"
-	eapply "${FILESDIR}/xen-tools-4.11.0-gcc8.patch"
 
 	# Ovmf's patchset
 	if use ovmf; then
