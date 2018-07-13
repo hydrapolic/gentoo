@@ -147,6 +147,7 @@ QA_PREBUILT="
 	usr/libexec/xen/libexec/xen-bridge-helper
 	usr/share/qemu-xen/qemu/s390-ccw.img
 	usr/share/qemu-xen/qemu/u-boot.e500
+	usr/share/qemu-xen/qemu/s390-netboot.img
 "
 
 RESTRICT="test"
