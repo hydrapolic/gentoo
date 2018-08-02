@@ -10,7 +10,7 @@ CHECKREQS_DISK_BUILD="2400M"
 CHECKREQS_DISK_USR="512M"
 CHECKREQS_MEMORY="1024M"
 
-inherit check-reqs eutils flag-o-matic multilib multiprocessing pax-utils python-single-r1 scons-utils systemd toolchain-funcs user versionator
+inherit check-reqs eapi7-ver eutils flag-o-matic multilib multiprocessing pax-utils python-single-r1 scons-utils systemd toolchain-funcs user
 
 MY_P=${PN}-src-r${PV/_rc/-rc}
 
@@ -30,6 +30,7 @@ RDEPEND=">=app-arch/snappy-1.1.3
 	dev-libs/snowball-stemmer
 	net-libs/libpcap
 	>=sys-libs/zlib-1.2.8:=
+	kerberos? ( dev-libs/cyrus-sasl[kerberos] )
 	mms-agent? ( app-admin/mms-agent )
 	ssl? (
 		!libressl? ( >=dev-libs/openssl-1.0.1g:0= )
@@ -40,11 +41,10 @@ DEPEND="${RDEPEND}
 	dev-python/cheetah[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	virtual/python-typing[${PYTHON_USEDEP}]
-	<dev-util/scons-3
-	sys-libs/ncurses
-	sys-libs/readline
+	dev-util/scons
+	sys-libs/ncurses:0=
+	sys-libs/readline:0=
 	debug? ( dev-util/valgrind )
-	kerberos? ( dev-libs/cyrus-sasl[kerberos] )
 	test? (
 		dev-python/pymongo[${PYTHON_USEDEP}]
 	)"
@@ -59,12 +59,14 @@ PATCHES=(
 S=${WORKDIR}/${MY_P}
 
 pkg_pretend() {
-	if [[ -n ${REPLACING_VERSIONS} ]] && [[ ${REPLACING_VERSIONS} < 3.4 ]]; then
-		ewarn "To upgrade from a version earlier than the 3.4-series, you must"
-		ewarn "successively upgrade major releases until you have upgraded"
-		ewarn "to 3.4-series. Then upgrade to 3.6 series."
-	elif [[ -n ${REPLACING_VERSIONS} ]]; then
-		ewarn "Be sure to set featureCompatibilityVersion to 3.4 before upgrading."
+	if [[ -n ${REPLACING_VERSIONS} ]]; then
+		if ver_test "$REPLACING_VERSIONS" -lt 3.4; then
+			ewarn "To upgrade from a version earlier than the 3.4-series, you must"
+			ewarn "successively upgrade major releases until you have upgraded"
+			ewarn "to 3.4-series. Then upgrade to 3.6 series."
+		else
+			ewarn "Be sure to set featureCompatibilityVersion to 3.4 before upgrading."
+		fi
 	fi
 }
 
@@ -79,10 +81,10 @@ src_prepare() {
 	default
 
 	# remove bundled libs
-	rm -rv src/third_party/{boost-*,pcre-*,scons-*,snappy-*,yaml-cpp-*,zlib-*} || die
+	rm -r src/third_party/{boost-*,pcre-*,scons-*,snappy-*,yaml-cpp-*,zlib-*} || die
 
 	# remove compass
-	rm -rv src/mongo/installer/compass || die
+	rm -r src/mongo/installer/compass || die
 }
 
 src_configure() {
@@ -128,24 +130,17 @@ src_test() {
 src_install() {
 	escons "${scons_opts[@]}" --nostrip install --prefix="${ED}"/usr
 
-	local x
-	for x in /var/{lib,log}/${PN}; do
-		keepdir "${x}"
-		fowners mongodb:mongodb "${x}"
-		fperms 0750 "${x}"
-	done
-
 	doman debian/mongo*.1
 	dodoc README docs/building.md
 
 	newinitd "${FILESDIR}/${PN}.initd-r3" ${PN}
 	newconfd "${FILESDIR}/${PN}.confd-r3" ${PN}
-	newinitd "${FILESDIR}/${PN/db/s}.initd-r3" ${PN/db/s}
-	newconfd "${FILESDIR}/${PN/db/s}.confd-r3" ${PN/db/s}
+	newinitd "${FILESDIR}/mongos.initd-r3" ${PN/db/s}
+	newconfd "${FILESDIR}/mongos.confd-r3" ${PN/db/s}
 
 	insinto /etc
 	newins "${FILESDIR}/${PN}.conf-r3" ${PN}.conf
-	newins "${FILESDIR}/${PN/db/s}.conf-r2" ${PN/db/s}.conf
+	newins "${FILESDIR}/mongos.conf-r2" ${PN/db/s}.conf
 
 	systemd_dounit "${FILESDIR}/${PN}.service"
 
@@ -154,17 +149,16 @@ src_install() {
 
 	# see bug #526114
 	pax-mark emr "${ED}"/usr/bin/{mongo,mongod,mongos}
-}
 
-pkg_preinst() {
-	# wrt bug #461466
-	if [[ "$(get_libdir)" == "lib64" ]]; then
-		rmdir "${ED}"/usr/lib/ &>/dev/null
-	fi
+	local x
+	for x in /var/{lib,log}/${PN}; do
+		diropts -m0750 -o mongodb -g mongodb
+		keepdir "${x}"
+	done
 }
 
 pkg_postinst() {
 	ewarn "Make sure to read the release notes and follow the upgrade process:"
-	ewarn "  https://docs.mongodb.com/manual/release-notes/$(get_version_component_range 1-2)/"
-	ewarn "  https://docs.mongodb.com/manual/release-notes/$(get_version_component_range 1-2)/#upgrade-procedures"
+	ewarn "  https://docs.mongodb.com/manual/release-notes/$(ver_cut 1-2)/"
+	ewarn "  https://docs.mongodb.com/manual/release-notes/$(ver_cut 1-2)/#upgrade-procedures"
 }
