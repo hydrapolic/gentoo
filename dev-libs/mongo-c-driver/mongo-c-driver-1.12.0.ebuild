@@ -36,6 +36,7 @@ RESTRICT="x86? ( test )"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-1.11.0-enable-tests.patch" # enable tests without libbson
+	"${FILESDIR}/${PN}-1.12.0-libressl.patch" # Bug 662654
 )
 
 src_prepare() {
