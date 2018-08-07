@@ -13,7 +13,7 @@ HOMEPAGE="https://redis.io"
 SRC_URI="https://github.com/antirez/redis/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
-KEYWORDS="amd64 arm arm64 ~hppa ~ppc ppc64 x86 ~amd64-linux ~x86-linux ~x86-macos ~x86-solaris"
+KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~x86-macos ~x86-solaris"
 IUSE="+jemalloc tcmalloc luajit test"
 SLOT="0"
 
