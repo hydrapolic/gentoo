@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Dependency Manager for PHP"
 HOMEPAGE="https://github.com/composer/composer"
@@ -13,19 +13,19 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	dev-lang/php:*[curl]
-	>=dev-php/ca-bundle-1.0.0
-	>=dev-php/cli-prompt-1.0.0
+	>=dev-php/ca-bundle-1.1.2
 	>=dev-php/psr-log-1.0.2
 	dev-php/fedora-autoloader
-	>=dev-php/json-schema-3.0.0
-	>=dev-php/jsonlint-1.4.0
-	>=dev-php/phar-utils-1.0.0
-	>=dev-php/semver-1.0.0
-	>=dev-php/spdx-licenses-1.2.0
-	>=dev-php/symfony-console-2.7.9
-	>=dev-php/symfony-filesystem-2.7.20
+	>=dev-php/json-schema-5.2.7
+	>=dev-php/jsonlint-1.7.1
+	>=dev-php/phar-utils-1.0.1
+	>=dev-php/semver-1.4.2
+	>=dev-php/spdx-licenses-1.4.0
+	>=dev-php/symfony-console-2.8.43
+	>=dev-php/symfony-filesystem-2.8.43
 	>=dev-php/symfony-finder-2.7.20
-	>=dev-php/symfony-process-2.8.12"
+	>=dev-php/symfony-process-2.8.43
+	>=dev-php/xdebug-handler-1.2.0"
 
 src_install() {
 	insinto "/usr/share/${PN}"
@@ -35,7 +35,7 @@ src_install() {
 	doins -r src res LICENSE
 
 	insinto "/usr/share/${PN}/vendor"
-	doins "${FILESDIR}"/autoload.php
+	newins "${FILESDIR}"/autoload-r1.php autoload.php
 
 	exeinto "/usr/share/${PN}/bin"
 	doexe "bin/${PN}"
