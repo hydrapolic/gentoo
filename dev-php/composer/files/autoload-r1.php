@@ -15,9 +15,9 @@ if (!class_exists('Fedora\\Autoloader\\Autoload', false)) {
 \Fedora\Autoloader\Dependencies::required(array(
 	$vendorDir . '/JsonSchema/autoload.php',
 	$vendorDir . '/Composer/CaBundle/autoload.php',
-	$vendorDir . '/Composer/XdebugHandler/autoload.php',
 	$vendorDir . '/Composer/Semver/autoload.php',
 	$vendorDir . '/Composer/Spdx/autoload.php',
+	$vendorDir . '/Composer/XdebugHandler/autoload.php',
 	$vendorDir . '/Seld/JsonLint/autoload.php',
 	$vendorDir . '/Symfony/Component/Console/autoload.php',
 	$vendorDir . '/Symfony/Component/Finder/autoload.php',
