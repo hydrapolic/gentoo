@@ -9,7 +9,6 @@ PYTHON_REQ_USE='ncurses,xml,threads'
 inherit bash-completion-r1 flag-o-matic multilib python-single-r1 toolchain-funcs
 
 MY_PV=${PV/_/-}
-MAJOR_V="$(ver_cut 1-2)"
 
 if [[ $PV == *9999 ]]; then
 	inherit git-r3
@@ -59,7 +58,7 @@ HOMEPAGE="https://www.xenproject.org"
 DOCS=( README docs/README.xen-bugtool )
 
 LICENSE="GPL-2"
-SLOT="0/${MAJOR_V}"
+SLOT="0/$(ver_cut 1-2)"
 # Inclusion of IUSE ocaml on stabalizing requires maintainer of ocaml to (get off his hands and) make
 # >=dev-lang/ocaml-4 stable
 # Masked in profiles/eapi-5-files instead
