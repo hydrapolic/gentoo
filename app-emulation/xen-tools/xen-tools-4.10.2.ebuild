@@ -1,15 +1,15 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE='ncurses,xml,threads'
 
-inherit bash-completion-r1 eutils flag-o-matic multilib python-single-r1 toolchain-funcs
+inherit bash-completion-r1 eutils flag-o-matic multilib python-single-r1 toolchain-funcs versionator
 
 MY_PV=${PV/_/-}
-MAJOR_V="$(ver_cut 1-2)"
+MAJOR_V="$(get_version_component_range 1-2)"
 
 if [[ $PV == *9999 ]]; then
 	inherit git-r3
