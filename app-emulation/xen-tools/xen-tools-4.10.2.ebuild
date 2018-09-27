@@ -58,7 +58,7 @@ HOMEPAGE="https://www.xenproject.org"
 DOCS=( README docs/README.xen-bugtool )
 
 LICENSE="GPL-2"
-SLOT="0/${PV:0:4}"
+SLOT="0/$(ver_cut 1-2)"
 # Inclusion of IUSE ocaml on stabalizing requires maintainer of ocaml to (get off his hands and) make
 # >=dev-lang/ocaml-4 stable
 # Masked in profiles/eapi-5-files instead
