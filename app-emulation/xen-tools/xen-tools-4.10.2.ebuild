@@ -6,7 +6,7 @@ EAPI=7
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE='ncurses,xml,threads'
 
-inherit bash-completion-r1 eutils flag-o-matic multilib python-single-r1 toolchain-funcs
+inherit bash-completion-r1 flag-o-matic multilib python-single-r1 toolchain-funcs
 
 MY_PV=${PV/_/-}
 MAJOR_V="$(ver_cut 1-2)"
@@ -249,7 +249,7 @@ src_prepare() {
 
 	use api   || sed -e "/SUBDIRS-\$(LIBXENAPI_BINDINGS) += libxen/d" -i tools/Makefile || die
 	sed -e 's:$(MAKE) PYTHON=$(PYTHON) subdirs-$@:LC_ALL=C "$(MAKE)" PYTHON=$(PYTHON) subdirs-$@:' \
-		 -i tools/firmware/Makefile || die
+		-i tools/firmware/Makefile || die
 
 	# Drop .config, fixes to gcc-4.6
 	sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
