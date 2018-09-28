@@ -56,7 +56,7 @@ src_install() {
 	insinto /opt/${MY_PN}
 	doins -r .
 
-	chmod +x "${ED%/}"/opt/${MY_PN}/bin/* || die
+	fperms -R +x /opt/${MY_PN}/bin
 
 	diropts -m 0750 -o ${MY_PN} -g ${MY_PN}
 	keepdir /var/log/${MY_PN}
