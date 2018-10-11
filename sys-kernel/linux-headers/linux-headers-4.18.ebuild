@@ -10,6 +10,7 @@ detect_version
 
 #PATCH_VER=""
 SRC_URI="mirror://gentoo/gentoo-headers-base-${PV}.tar.xz
+	https://github.com/hydrapolic/gentoo-experimental/raw/master/linux-headers/gentoo-headers-base-${PV}.tar.xz
 	${PATCH_VER:+mirror://gentoo/gentoo-headers-${PV}-${PATCH_VER}.tar.xz}"
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux"
