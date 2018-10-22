@@ -19,8 +19,6 @@ KEYWORDS="~amd64 ~x86"
 DESCRIPTION="Event-driven asynchronous & concurrent & coroutine networking engine"
 LICENSE="Apache-2.0"
 SLOT="0"
-# Tests can hang.  Disable until this no longer happens
-RESTRICT="test"
 
 DEPEND="
 	dev-libs/libaio
@@ -48,9 +46,7 @@ IUSE="debug http2 libressl mysql redis sockets ssl threads"
 src_configure() {
 	# PostgreSQL disabled due to Gentoo's slot system
 	local PHP_EXT_ECONF_ARGS=(
-		--with-swoole
 		--disable-coroutine-postgresql
-		$(use_enable debug swoole-debug)
 		$(use_enable http2)
 		$(use_enable mysql mysqlnd)
 		$(use_enable redis async_redis)
