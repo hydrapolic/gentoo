@@ -22,6 +22,9 @@ DEPEND="${RDEPEND}
 	sasl? ( dev-libs/cyrus-sasl )
 	ssl? ( dev-libs/openssl:0= )"
 
+# Do not complain about CFLAGS etc since go projects do not use them.
+QA_FLAGS_IGNORED='.*'
+
 S=${WORKDIR}/${MY_P}
 
 src_prepare() {
