@@ -355,6 +355,7 @@ src_configure() {
 	use system-seabios && myconf+=" --with-system-seabios=/usr/share/seabios/bios.bin"
 	use system-qemu && myconf+=" --with-system-qemu=/usr/bin/qemu-system-x86_64"
 	use amd64 && myconf+=" $(use_enable qemu-traditional)"
+	tc-ld-disable-gold # Bug 669570
 	econf ${myconf}
 }
 
