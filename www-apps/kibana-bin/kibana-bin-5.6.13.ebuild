@@ -1,9 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit eapi7-ver user
+inherit user
 
 MY_PN="${PN%-bin}"
 MY_P=${MY_PN}-${PV}
@@ -17,7 +17,10 @@ LICENSE="Apache-2.0 Artistic-2 BSD BSD-2 CC-BY-3.0 CC-BY-4.0 icu ISC MIT MPL-2.0
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="net-libs/nodejs"
+RDEPEND=">=net-libs/nodejs-6.14.4"
+
+# Do not complain about CFLAGS etc since kibana does not use them.
+QA_FLAGS_IGNORED='.*'
 
 S="${WORKDIR}/${MY_P}-linux-x86_64"
 
@@ -50,7 +53,7 @@ src_install() {
 	insinto /opt/${MY_PN}
 	doins -r .
 
-	chmod +x "${ED%/}"/opt/${MY_PN}/bin/* || die
+	fperms -R +x /opt/${MY_PN}/bin
 
 	diropts -m 0750 -o ${MY_PN} -g ${MY_PN}
 	keepdir /var/log/${MY_PN}
