@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Lightweight log shipper for Logstash and Elasticsearch"
 HOMEPAGE="https://www.elastic.co/products/beats"
@@ -14,6 +14,9 @@ RESTRICT="test"
 
 DEPEND=">=dev-lang/go-1.9.2"
 RDEPEND="!app-admin/filebeat-bin"
+
+# Do not complain about CFLAGS etc since go projects do not use them.
+QA_FLAGS_IGNORED='.*'
 
 S="${WORKDIR}/src/github.com/elastic/beats"
 
@@ -50,7 +53,7 @@ src_install() {
 pkg_postinst() {
 	if [[ -n "${REPLACING_VERSIONS}" ]]; then
 		elog "Please read the migration guide at:"
-		elog "https://www.elastic.co/guide/en/beats/libbeat/5.0/upgrading.html"
+		elog "https://www.elastic.co/guide/en/beats/libbeat/$(ver_cut 1-2)/upgrading.html"
 		elog ""
 		elog "The migration script:"
 		elog "${EROOT%/}/usr/share/filebeat/migrate_beat_config_1_x_to_5_0.py"
@@ -58,5 +61,5 @@ pkg_postinst() {
 	fi
 
 	elog "Example configurations:"
-	elog "${EROOT%/}/usr/share/doc/${PF}/examples"
+	elog "${EROOT}/usr/share/doc/${PF}/examples"
 }
