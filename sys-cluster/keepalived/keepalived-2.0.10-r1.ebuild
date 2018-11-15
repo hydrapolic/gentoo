@@ -30,6 +30,10 @@ DOCS=(
 	doc/keepalived.conf.SYNOPSIS doc/NOTE_vrrp_vmac.txt
 )
 
+PATCHES=(
+	"${FILESDIR}/${P}-snmp-crash-fix.patch"
+)
+
 src_prepare() {
 	default
 
