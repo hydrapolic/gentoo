@@ -13,10 +13,8 @@ SRC_URI="https://files.pythonhosted.org/packages/65/51/aa79e41a6deefab555a7cc26a
 LICENSE="LGPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
-DEPEND=""
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/flufl.enum-${PV}"
