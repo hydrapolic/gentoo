@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 DEPEND=">=dev-python/flufl-enum-4.1.1[${PYTHON_USEDEP}]
-	dev-python/humanfriendly[${PYTHON_USEDEP}]
+	>=dev-python/humanfriendly-4.8[${PYTHON_USEDEP}]
 	>=dev-python/lxml-4.2.1[${PYTHON_USEDEP}]
 	dev-python/pbr[${PYTHON_USEDEP}]
 	>=dev-python/pygments-2.2.0[${PYTHON_USEDEP}]
