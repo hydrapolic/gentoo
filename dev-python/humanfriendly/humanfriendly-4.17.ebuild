@@ -36,5 +36,5 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${MY_P}"
 
 python_test() {
-	pytest -vv || die
+	pytest -v || die
 }
