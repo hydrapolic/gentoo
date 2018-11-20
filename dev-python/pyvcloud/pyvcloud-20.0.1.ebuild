@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python SDK for VMware vCloud Director"
 HOMEPAGE="https://github.com/vmware/pyvcloud"
-SRC_URI="https://files.pythonhosted.org/packages/4c/90/9d9e4d825c6779bf99d11b7dee5313f5c06442a0e77132acc4157f2af617/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"

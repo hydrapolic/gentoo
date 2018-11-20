@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="A Python enumeration package"
 HOMEPAGE="https://launchpad.net/flufl.enum"
-SRC_URI="https://files.pythonhosted.org/packages/65/51/aa79e41a6deefab555a7cc26a917363c67c6b7e2e1b43067f3d11b5e1b7e/flufl.enum-${PV}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-3+"
 SLOT="0"

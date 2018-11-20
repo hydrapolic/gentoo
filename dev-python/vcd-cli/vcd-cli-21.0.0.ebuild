@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Command Line Interface for VMware vCloud Director"
 HOMEPAGE="https://github.com/vmware/vcd-cli"
-SRC_URI="https://files.pythonhosted.org/packages/80/da/fd50c6e94721aedd682701be39ce024fe954c615eeee54257ff66c464076/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
