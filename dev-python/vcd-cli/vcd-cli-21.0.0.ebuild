@@ -13,18 +13,16 @@ SRC_URI="https://files.pythonhosted.org/packages/80/da/fd50c6e94721aedd682701be3
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
-DEPEND="dev-python/colorama[${PYTHON_USEDEP}]
-dev-python/click[${PYTHON_USEDEP}]
-dev-python/pycryptodome[${PYTHON_USEDEP}]
-dev-python/pbr[${PYTHON_USEDEP}]
-dev-python/setuptools[${PYTHON_USEDEP}]
-dev-python/pyvcloud[${PYTHON_USEDEP}]
-dev-python/keyring[${PYTHON_USEDEP}]
-dev-python/tabulate[${PYTHON_USEDEP}]"
+DEPEND="dev-python/click[${PYTHON_USEDEP}]
+	dev-python/colorama[${PYTHON_USEDEP}]
+	dev-python/keyring[${PYTHON_USEDEP}]
+	dev-python/pbr[${PYTHON_USEDEP}]
+	dev-python/pycryptodome[${PYTHON_USEDEP}]
+	dev-python/pyvcloud[${PYTHON_USEDEP}]
+	dev-python/setuptools[${PYTHON_USEDEP}]
+	dev-python/tabulate[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 src_prepare() {
 	sed -e '/^data_files/,+2d' -i setup.cfg || die
