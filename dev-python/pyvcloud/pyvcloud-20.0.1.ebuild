@@ -13,18 +13,16 @@ SRC_URI="https://files.pythonhosted.org/packages/4c/90/9d9e4d825c6779bf99d11b7de
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-dev-python/pbr[${PYTHON_USEDEP}]
-dev-python/humanfriendly[${PYTHON_USEDEP}]
-dev-python/flufl-enum[${PYTHON_USEDEP}]
-dev-python/lxml[${PYTHON_USEDEP}]
-dev-python/pygments[${PYTHON_USEDEP}]
-dev-python/pyyaml[${PYTHON_USEDEP}]
-dev-python/requests[${PYTHON_USEDEP}]"
+DEPEND="dev-python/flufl-enum[${PYTHON_USEDEP}]
+	dev-python/humanfriendly[${PYTHON_USEDEP}]
+	dev-python/lxml[${PYTHON_USEDEP}]
+	dev-python/pbr[${PYTHON_USEDEP}]
+	dev-python/pygments[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/requests[${PYTHON_USEDEP}]
+	dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 src_prepare() {
 	sed -e '/^data_files/,+2d' -i setup.cfg || die
