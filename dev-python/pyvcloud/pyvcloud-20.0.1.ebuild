@@ -20,7 +20,6 @@ DEPEND=">=dev-python/flufl-enum-4.1.1[${PYTHON_USEDEP}]
 	dev-python/pbr[${PYTHON_USEDEP}]
 	>=dev-python/pygments-2.2.0[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-3.11[${PYTHON_USEDEP}]
-	<=dev-python/pyyaml-3.13[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.18.4[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
