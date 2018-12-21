@@ -1,10 +1,10 @@
 # Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
-inherit autotools eapi7-ver python-single-r1 systemd
+inherit autotools python-single-r1 systemd
 
 MY_PV_MM=$(ver_cut 1-2)
 DESCRIPTION="syslog replacement with advanced filtering features"
@@ -67,7 +67,7 @@ src_prepare() {
 
 	# drop scl modules requiring http
 	if use !http; then
-		sed -i -r '/telegram|slack/d' scl/Makefile.am || die
+		sed -i -r '/slack|telegram/d' scl/Makefile.am || die
 	fi
 
 	# use gentoo default path
