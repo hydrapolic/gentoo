@@ -15,13 +15,12 @@ SRC_URI="https://github.com/linkcheck/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~ppc-macos ~x64-solaris"
-IUSE="gnome sqlite"
+IUSE="sqlite"
 
 RDEPEND="
 	>=dev-python/requests-2.2[${PYTHON_USEDEP}]
 	dev-python/pyxdg[${PYTHON_USEDEP}]
 	virtual/python-dnspython[${PYTHON_USEDEP}]
-	gnome? ( dev-python/pygtk:2[${PYTHON_USEDEP}] )
 "
 DEPEND=""
 
