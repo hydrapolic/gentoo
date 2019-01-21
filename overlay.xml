@@ -2,7 +2,7 @@
 <layman>
     <overlay contact = "hydrapolic@gmail.com"
             name = "hydra"
-            src = "git://github.com/hydrapolic/gentoo.git"
+            src = "https://github.com/hydrapolic/gentoo.git"
             type = "git"
             status = "unofficial">
         <link>http://github.com/hydrapolic/gentoo/</link>
