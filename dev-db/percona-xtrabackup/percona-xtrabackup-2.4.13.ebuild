@@ -3,6 +3,7 @@
 
 EAPI=7
 
+CMAKE_MAKEFILE_GENERATOR=emake
 inherit cmake-utils flag-o-matic
 
 DESCRIPTION="Hot backup utility for MySQL based servers"
