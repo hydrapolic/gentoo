@@ -229,21 +229,12 @@ src_install() {
 
 	# these scripts depend on perl
 	if ! use perl; then
-		local f
-		local PERL_SCRIPTS=(
-		    "${D}"/usr/libexec/squid/basic_pop3_auth
-		    "${D}"/usr/libexec/squid/log_db_daemon
-		    "${D}"/usr/libexec/squid/basic_msnt_multi_domain_auth
-		    "${D}"/usr/libexec/squid/storeid_file_rewrite
-		    "${D}"/usr/libexec/squid/helper-mux.pl
-		)
-		for f in "${PERL_SCRIPTS[@]}"; do
-			rm -v "${f}" || ewarn "Could not remove ${f}."
-		done
+		rm "${D}"/usr/libexec/squid/basic_pop3_auth \
+			"${D}"/usr/libexec/squid/log_db_daemon \
+			"${D}"/usr/libexec/squid/storeid_file_rewrite || die
 	fi
 
 	# cleanup
-	rm "${D}"/usr/bin/Run* || die
 	rm -r "${D}"/run "${D}"/var/cache || die
 
 	dodoc CONTRIBUTORS CREDITS ChangeLog INSTALL QUICKSTART README SPONSORS doc/*.txt
