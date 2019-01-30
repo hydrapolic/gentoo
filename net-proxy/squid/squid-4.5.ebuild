@@ -106,7 +106,6 @@ src_prepare() {
 
 src_configure() {
 	local basic_modules="NCSA,POP3,getpwnam"
-	# use perl && basic_modules+=",MSNT-multi-domain"
 	use samba && basic_modules+=",SMB"
 	use ldap && basic_modules+=",SMB_LM,LDAP"
 	use pam && basic_modules+=",PAM"
