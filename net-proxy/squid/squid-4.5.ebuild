@@ -243,8 +243,8 @@ src_install() {
 	fi
 
 	# cleanup
-	rm -f "${D}"/usr/bin/Run*
-	rm -rf "${D}"/run "${D}"/var/cache/squid
+	rm "${D}"/usr/bin/Run* || die
+	rm -r "${D}"/run "${D}"/var/cache || die
 
 	dodoc CONTRIBUTORS CREDITS ChangeLog INSTALL QUICKSTART README SPONSORS doc/*.txt
 	newdoc src/auth/negotiate/kerberos/README README.kerberos
