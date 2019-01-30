@@ -229,19 +229,22 @@ src_install() {
 
 	# these scripts depend on perl
 	if ! use perl; then
-		for f in basic_pop3_auth \
-			ext_delayer_acl \
-			helper-mux \
-			log_db_daemon \
-			security_fake_certverify \
-			storeid_file_rewrite \
-			url_lfs_rewrite; do
-				rm "${D}"/usr/libexec/squid/${f} || die
+		local f
+		local PERL_SCRIPTS=(
+		    "${D}"/usr/libexec/squid/basic_pop3_auth
+		    "${D}"/usr/libexec/squid/log_db_daemon
+		    "${D}"/usr/libexec/squid/basic_msnt_multi_domain_auth
+		    "${D}"/usr/libexec/squid/storeid_file_rewrite
+		    "${D}"/usr/libexec/squid/helper-mux.pl
+		)
+		for f in "${PERL_SCRIPTS[@]}"; do
+			rm -v "${f}" || ewarn "Could not remove ${f}."
 		done
 	fi
 
 	# cleanup
-	rm -r "${D}"/run "${D}"/var/cache || die
+	rm -f "${D}"/usr/bin/Run*
+	rm -rf "${D}"/run/squid "${D}"/var/cache/squid
 
 	dodoc CONTRIBUTORS CREDITS ChangeLog INSTALL QUICKSTART README SPONSORS doc/*.txt
 	newdoc src/auth/negotiate/kerberos/README README.kerberos
