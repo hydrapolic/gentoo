@@ -18,6 +18,6 @@ src_compile() {
 }
 
 src_install() {
-	insinto /usr/$(get_libdir)/nagios/plugins
-	doins check_ssl_cert
+	exeinto /usr/$(get_libdir)/nagios/plugins
+	doexe check_ssl_cert
 }
