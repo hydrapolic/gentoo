@@ -56,6 +56,7 @@ fi
 
 DESCRIPTION="Xen tools including QEMU and xl"
 HOMEPAGE="https://www.xenproject.org"
+DOCS=( README )
 
 LICENSE="GPL-2"
 SLOT="0/$(ver_cut 1-2)"
