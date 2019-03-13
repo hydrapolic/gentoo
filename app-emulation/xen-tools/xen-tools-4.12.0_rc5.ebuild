@@ -25,7 +25,7 @@ else
 	# xen-tools's gentoo patches version which apply to this specific ebuild
 	GENTOO_GPV=0
 	# xen-tools ovmf's patches
-	OVMF_VER=
+	OVMF_VER=3
 
 	SEABIOS_VER=1.12.0
 	OVMF_REVISION=ef529e6ab7c31290a33045bb1f1837447cc0eb56
