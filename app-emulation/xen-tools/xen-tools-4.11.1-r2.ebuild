@@ -234,7 +234,7 @@ src_prepare() {
 	if use ovmf; then
 		if [[ -n ${OVMF_VER} ]];then
 			einfo "Try to apply Ovmf patch set"
-			pushd "${WORKDIR}"/edk2-*/ > /dev/null
+			pushd "${WORKDIR}"/ovmf-*/ > /dev/null
 			eapply "${WORKDIR}"/patches-ovmf
 			popd > /dev/null
 		fi
