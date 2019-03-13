@@ -28,7 +28,8 @@ else
 	OVMF_VER=3
 
 	SEABIOS_VER=1.12.0
-	OVMF_REVISION=ef529e6ab7c31290a33045bb1f1837447cc0eb56
+	# OVMF upstream 5920a9d16b1ab887c2858224316a98e961d71b05
+	OVMF_PV=20170321
 
 	[[ -n ${UPSTREAM_VER} ]] && \
 		UPSTREAM_PATCHSET_URI="https://dev.gentoo.org/~dlan/distfiles/${P/-tools/}-upstream-patches-${UPSTREAM_VER}.tar.xz
@@ -44,7 +45,7 @@ else
 	SRC_URI="https://downloads.xenproject.org/release/xen/${MY_PV}/xen-${MY_PV}.tar.gz
 	https://www.seabios.org/downloads/seabios-${SEABIOS_VER}.tar.gz
 	https://dev.gentoo.org/~dlan/distfiles/seabios-${SEABIOS_VER}.tar.gz
-	ovmf? ( https://github.com/tianocore/edk2/archive/${OVMF_REVISION}.zip -> edk2-omvf-${OVMF_REVISION}.zip
+	ovmf? ( https://dev.gentoo.org/~dlan/distfiles/ovmf-${OVMF_PV}.tar.xz
 		${OVMF_PATCHSET_URI} )
 	${UPSTREAM_PATCHSET_URI}
 	${SECURITY_PATCHSET_URI}
@@ -55,7 +56,6 @@ fi
 
 DESCRIPTION="Xen tools including QEMU and xl"
 HOMEPAGE="https://www.xenproject.org"
-DOCS=( README )
 
 LICENSE="GPL-2"
 SLOT="0/$(ver_cut 1-2)"
@@ -240,7 +240,7 @@ src_prepare() {
 			eapply "${WORKDIR}"/patches-ovmf
 			popd > /dev/null
 		fi
-		mv ../edk2-${OVMF_REVISION} tools/firmware/ovmf-dir-remote || die
+		mv ../ovmf-${OVMF_PV} tools/firmware/ovmf-dir-remote || die
 	fi
 
 	mv tools/qemu-xen/qemu-bridge-helper.c tools/qemu-xen/xen-bridge-helper.c || die
