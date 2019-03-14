@@ -22,7 +22,7 @@ else
 	# xen-tools's gentoo patches tarball
 	GENTOO_VER=16
 	# xen-tools's gentoo patches version which apply to this specific ebuild
-	GENTOO_GPV=0
+	GENTOO_GPV=1
 	# xen-tools ovmf's patches
 	OVMF_VER=3
 
