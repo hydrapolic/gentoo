@@ -58,12 +58,14 @@ src_install() {
 	newinitd "${FILESDIR}"/gitea.initd-r2 gitea
 	systemd_newunit "${FILESDIR}"/gitea.service-r1 gitea.service
 	diropts -m0750 -o git -g git
-	keepdir /etc/gitea /var/lib/gitea /var/lib/gitea/custom /var/lib/gitea/data /var/log/gitea
+	keepdir /etc/gitea
+	keepdir /var/lib/gitea /var/lib/gitea/custom /var/lib/gitea/data
+	keepdir /var/log/gitea
 }
 
 pkg_postinst() {
-	ewarn "The default path for the gitea configuration has been changed to ${EROOT}/etc/gitea/app.ini."
-	ewarn "In order to migrate the path, the gitea-repositories hooks and ssh authorized_keys have to be adapted."
+	ewarn "The configuration path has been changed to ${EROOT}/etc/gitea/app.ini."
+	ewarn "Please adapt the gitea-repositories hooks and ssh authorized_keys."
 	ewarn "Depending on your configuration you should run something like:"
 	ewarn "sed -i -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' \\"
 	ewarn "  /var/lib/gitea/gitea-repositories/*/*/hooks/*/* \\"
