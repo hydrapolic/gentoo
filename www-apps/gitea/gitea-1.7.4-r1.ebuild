@@ -65,8 +65,9 @@ pkg_postinst() {
 	ewarn "The default path for the gitea configuration has been changed to ${EROOT}/etc/gitea/app.ini."
 	ewarn "In order to migrate the path, the gitea-repositories hooks and ssh authorized_keys have to be adapted."
 	ewarn "Depending on your configuration you should run something like:"
-	ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/gitea-repositories/*/*/hooks/*/*"
-	ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/.ssh/authorized_keys"
+	ewarn "sed -i -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' \\"
+	ewarn "  /var/lib/gitea/gitea-repositories/*/*/hooks/*/* \\"
+	ewarn "  /var/lib/gitea/.ssh/authorized_keys"
 
 	if [[ ! -e "${EROOT}/etc/gitea/app.ini" ]]; then
 		elog "No app.ini found, copying initial config over"
