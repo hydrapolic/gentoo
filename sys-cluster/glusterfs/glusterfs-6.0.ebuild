@@ -20,25 +20,22 @@ HOMEPAGE="https://www.gluster.org/"
 
 LICENSE="|| ( GPL-2 LGPL-3+ )"
 SLOT="0"
-IUSE="bd-xlator crypt-xlator debug emacs +fuse +georeplication glupy infiniband ipv6 libressl +libtirpc rsyslog static-libs +syslog test +tiering vim-syntax +xml"
+IUSE="debug emacs +fuse +georeplication infiniband ipv6 libressl +libtirpc rsyslog static-libs +syslog test vim-syntax +xml"
 
 REQUIRED_USE="georeplication? ( ${PYTHON_REQUIRED_USE} )
-	glupy? ( ${PYTHON_REQUIRED_USE} )
 	ipv6? ( libtirpc )"
 
 # the tests must be run as root
 RESTRICT="test"
 
 # sys-apps/util-linux is required for libuuid
-RDEPEND="bd-xlator? ( sys-fs/lvm2 )
-	!elibc_glibc? ( sys-libs/argp-standalone )
+RDEPEND="!elibc_glibc? ( sys-libs/argp-standalone )
 	emacs? ( virtual/emacs )
 	fuse? ( >=sys-fs/fuse-2.7.0:0 )
 	georeplication? ( ${PYTHON_DEPS} )
 	infiniband? ( sys-fabric/libibverbs:* sys-fabric/librdmacm:* )
 	libtirpc? ( net-libs/libtirpc:= )
 	!libtirpc? ( elibc_glibc? ( sys-libs/glibc[rpc(-)] ) )
-	tiering? ( dev-db/sqlite:3 )
 	xml? ( dev-libs/libxml2 )
 	sys-libs/readline:=
 	dev-libs/libaio
@@ -99,16 +96,12 @@ src_configure() {
 		--disable-silent-rules \
 		--disable-fusermount \
 		$(use_enable debug) \
-		$(use_enable bd-xlator) \
-		$(use_enable crypt-xlator) \
 		$(use_enable fuse fuse-client) \
 		$(use_enable georeplication) \
-		$(use_enable glupy) \
 		$(use_enable infiniband ibverbs) \
 		$(use_enable static-libs static) \
 		$(use_enable syslog) \
 		$(use_enable test cmocka) \
-		$(use_enable tiering) \
 		$(use_enable xml xml-output) \
 		$(use libtirpc || echo --without-libtirpc) \
 		$(use ipv6 && echo --with-ipv6-default) \

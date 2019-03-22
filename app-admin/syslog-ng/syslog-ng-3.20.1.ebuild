@@ -62,7 +62,7 @@ src_prepare() {
 
 	# drop scl modules requiring json
 	if use !json; then
-		sed -i -r '/cim|elasticsearch|ewmm|graylog2|loggly|logmatic|nodejs|osquery|slack/d' scl/Makefile.am || die
+		sed -i -r '/cim|elasticsearch|ewmm|graylog2|loggly|logmatic|netskope|nodejs|osquery|slack/d' scl/Makefile.am || die
 	fi
 
 	# drop scl modules requiring http
