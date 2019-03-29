@@ -20,7 +20,7 @@ RDEPEND="dev-libs/libnl:=
 	net-libs/libnfnetlink
 	sys-apps/iproute2
 	regex? ( >=dev-libs/libpcre2-8 )
-	dbus? ( sys-apps/dbus dev-libs/glib )
+	dbus? ( sys-apps/dbus dev-libs/glib:2 )
 	json? ( dev-libs/json-c:= )
 	snmp? ( net-analyzer/net-snmp )"
 DEPEND="${RDEPEND}
