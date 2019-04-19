@@ -73,6 +73,10 @@ src_install() {
 }
 
 pkg_postinst() {
+	ewarn "Kibana optimize/plugins directories were moved to /var/lib/kibana."
+	ewarn "In case of startup failures (FATAL Error: Cannot find module...),"
+	ewarn "please remove the optimize directory content:"
+	ewarn "rm -r /var/lib/kibana/optimize/*"
 	elog "This version of Kibana is compatible with Elasticsearch $(ver_cut 1-2) and"
 	elog "Node.js 10. Some plugins may fail with other versions of Node.js (Bug #656008)."
 	elog
