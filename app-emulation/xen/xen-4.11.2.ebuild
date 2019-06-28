@@ -100,9 +100,6 @@ src_prepare() {
 
 	eapply "${FILESDIR}"/${PN}-4.6-efi.patch
 
-	# https://src.fedoraproject.org/rpms/xen/blob/master/f/xen.gcc9.fixes.patch
-	eapply "${FILESDIR}"/${PN}.gcc9.fixes.patch
-
 	# Drop .config
 	sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
 
