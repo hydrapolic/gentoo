@@ -20,7 +20,7 @@ else
 	UPSTREAM_VER=0
 	SECURITY_VER=
 	# xen-tools's gentoo patches tarball
-	GENTOO_VER=17
+	GENTOO_VER=19
 	# xen-tools's gentoo patches version which apply to this specific ebuild
 	GENTOO_GPV=0
 	# xen-tools ovmf's patches
