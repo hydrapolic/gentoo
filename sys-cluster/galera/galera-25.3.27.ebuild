@@ -10,7 +10,7 @@ MY_P="${PN}-3-${PV}"
 inherit python-any-r1 scons-utils toolchain-funcs user flag-o-matic
 DESCRIPTION="Synchronous multi-master replication engine that provides the wsrep API"
 HOMEPAGE="http://galeracluster.com"
-SRC_URI="https://releases.galeracluster.com/galera-3.27/source/galera-3-${PV}.tar.gz"
+SRC_URI="http://mirror.takeshi.nz/mariadb/mariadb-10.2.27/galera-${PV}/src/galera-${PV}.tar.gz"
 LICENSE="GPL-2 BSD"
 
 SLOT="0"
