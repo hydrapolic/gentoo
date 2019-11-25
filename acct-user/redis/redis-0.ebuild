@@ -7,7 +7,5 @@ inherit acct-user
 
 DESCRIPTION="Redis program user"
 ACCT_USER_ID=75
-ACCT_USER_HOME=/var/lib/redis
-ACCT_USER_HOME_PERMS=0750
 ACCT_USER_GROUPS=( redis )
 acct-user_add_deps

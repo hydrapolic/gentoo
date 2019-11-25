@@ -155,5 +155,5 @@ src_install() {
 	else
 		diropts -m0750 -o redis -g redis
 	fi
-	keepdir /var/log/redis
+	keepdir /var/{log,lib}/redis
 }
