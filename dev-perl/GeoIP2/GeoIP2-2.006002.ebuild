@@ -11,6 +11,8 @@ DESCRIPTION="API for MaxMind's GeoIP2 web services and databases"
 LICENSE="|| ( Artistic GPL-1+ )"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	>=dev-perl/Data-Validate-IP-0.25
@@ -31,5 +33,10 @@ RDEPEND="
 	dev-perl/URI
 "
 DEPEND="
+	${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
+	test? (
+		dev-perl/Path-Class
+		dev-perl/Test-Number-Delta
+	)
 "
