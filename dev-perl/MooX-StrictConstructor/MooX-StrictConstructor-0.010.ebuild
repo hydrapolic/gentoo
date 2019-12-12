@@ -4,13 +4,24 @@
 EAPI=7
 
 DIST_AUTHOR=HARTZELL
-DIST_NAME=MooX-StrictConstructor
 inherit perl-module
 
-DESCRIPTION="API for MaxMind's GeoIP2 web services and databases"
+DESCRIPTION="Make your Moo-based object constructors blow up on unknown attributes"
 
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
-RDEPEND=""
-DEPEND=""
+LICENSE="|| ( Artistic GPL-1+ )"
+
+RDEPEND="
+	dev-perl/Moo
+	dev-perl/strictures
+"
+DEPEND="
+	virtual/perl-ExtUtils-MakeMaker
+	test? (
+		dev-perl/Test-Fatal
+	)
+"

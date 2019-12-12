@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="project">
-    <email>netmon@gentoo.org</email>
-    <name>Gentoo network monitoring and analysis project</name>
+  <maintainer type="person">
+    <email>hydrapolic@gmail.com</email>
+    <name>Tomáš Mózes</name>
   </maintainer>
   <maintainer type="project">
-    <email>perl@gentoo.org</email>
-    <name>Gentoo Perl Project</name>
+    <email>proxy-maint@gentoo.org</email>
+    <name>Proxy Maintainers</name>
   </maintainer>
-  <longdescription>Look up country by IP Address</longdescription>
   <upstream>
-    <remote-id type="cpan">Geo-IP</remote-id>
-    <remote-id type="cpan-module">Geo::IP</remote-id>
-    <remote-id type="cpan-module">Geo::IP::Record</remote-id>
-    <remote-id type="cpan-module">Geo::Mirror</remote-id>
+    <remote-id type="cpan">MaxMind-DB-Common</remote-id>
   </upstream>
 </pkgmetadata>

@@ -6,22 +6,23 @@ EAPI=7
 DIST_AUTHOR=MAXMIND
 inherit perl-module
 
-DESCRIPTION="Code shared by the MaxMind DB reader and writer modules"
+DESCRIPTION="Sane APIs for IP addresses and networks"
 
-LICENSE="Artistic-2"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
-	dev-perl/Data-Dumper-Concise
-	dev-perl/DateTime
 	dev-perl/List-AllUtils
+	>=dev-perl/Math-Int128-0.06
 	dev-perl/Moo
-	dev-perl/MooX-StrictConstructor
 	dev-perl/namespace-autoclean
 	dev-perl/Sub-Quote
 "
 DEPEND="
-	${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
+	test? (
+		dev-perl/Test-Fatal
+	)
 "

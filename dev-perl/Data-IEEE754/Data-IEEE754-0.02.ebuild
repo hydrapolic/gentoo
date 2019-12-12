@@ -4,12 +4,19 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
-DIST_NAME=Data-IEEE754
 inherit perl-module
 
-DESCRIPTION="Read MaxMind DB files and look up IP addresses"
+DESCRIPTION="Pack and unpack big-endian IEEE754 floats and doubles"
 
 SLOT="0"
 KEYWORDS="~amd64"
+LICENSE="Artistic-2"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
-RDEPEND=""
+DEPEND="
+	virtual/perl-ExtUtils-MakeMaker
+	test? (
+		dev-perl/Test-Bits
+	)
+"

@@ -3,14 +3,13 @@
 
 EAPI=7
 
-DIST_AUTHOR=SALVA
+DIST_AUTHOR=NEILB
 inherit perl-module
 
-DESCRIPTION="Manipulate 64 bits integers in Perl"
-
-SLOT="0"
-KEYWORDS="~amd64"
+DESCRIPTION="Recursively copy Perl datatypes"
 
 LICENSE="|| ( Artistic GPL-1+ )"
+SLOT="0"
+KEYWORDS="~amd64"
 
 DEPEND="virtual/perl-ExtUtils-MakeMaker"

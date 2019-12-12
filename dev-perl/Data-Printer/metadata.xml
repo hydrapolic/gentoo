@@ -10,6 +10,6 @@
     <name>Proxy Maintainers</name>
   </maintainer>
   <upstream>
-    <remote-id type="cpan">MaxMind-DB-Reader-XS</remote-id>
+    <remote-id type="cpan">Data-Printer</remote-id>
   </upstream>
 </pkgmetadata>

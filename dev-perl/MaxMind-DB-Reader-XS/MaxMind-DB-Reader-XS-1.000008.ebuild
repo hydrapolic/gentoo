@@ -4,13 +4,26 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
-DIST_NAME=MaxMind-DB-Reader-XS
 inherit perl-module
 
-DESCRIPTION="Read MaxMind DB files and look up IP addresses"
+DESCRIPTION="Fast XS implementation of MaxMind DB reader"
 
+LICENSE="Artistic-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-perl/Module-Build"
-RDEPEND=""
+RDEPEND="
+	dev-libs/libmaxminddb
+	dev-perl/Math-Int128
+	dev-perl/Math-Int64
+	dev-perl/MaxMind-DB-Common
+	dev-perl/MaxMind-DB-Reader
+	dev-perl/Moo
+	dev-perl/Net-Works
+	dev-perl/namespace-autoclean
+"
+DEPEND="
+	${RDEPEND}
+	dev-perl/Module-Build
+	virtual/perl-ExtUtils-MakeMaker
+"

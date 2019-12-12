@@ -3,22 +3,28 @@
 
 EAPI=7
 
-DIST_AUTHOR=SALVA
+DIST_AUTHOR=GARU
 inherit perl-module
 
-DESCRIPTION="Manipulate 128 bits integers in Perl"
+DESCRIPTION="Colored pretty-print of Perl data structures and objects"
 
+LICENSE="|| ( Artistic GPL-1+ )"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-LICENSE="|| ( Artistic GPL-1+ )"
-
 RDEPEND="
-	dev-perl/Math-Int64
+	dev-perl/Clone-PP
+	dev-perl/File-HomeDir
+	dev-perl/Sort-Naturally
 "
 DEPEND="
 	${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
+	test? (
+		dev-perl/DBI
+		dev-perl/Capture-Tiny
+		dev-perl/YAML-Syck
+	)
 "
