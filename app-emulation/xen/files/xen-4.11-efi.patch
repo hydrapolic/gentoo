@@ -1,8 +1,8 @@
 diff --git a/xen/Makefile b/xen/Makefile
-index 4c54e9b..a5cdccd 100644
+index af27147777..a5299b3868 100644
 --- a/xen/Makefile
 +++ b/xen/Makefile
-@@ -41,9 +41,15 @@ _install: Z=$(CONFIG_XEN_INSTALL_SUFFIX)
+@@ -57,9 +57,15 @@ _install: Z=$(CONFIG_XEN_INSTALL_SUFFIX)
  _install: $(TARGET)$(CONFIG_XEN_INSTALL_SUFFIX)
  	[ -d $(D)$(BOOT_DIR) ] || $(INSTALL_DIR) $(D)$(BOOT_DIR)
  	$(INSTALL_DATA) $(TARGET)$(Z) $(D)$(BOOT_DIR)/$(T)-$(XEN_FULLVERSION)$(Z)
@@ -20,14 +20,14 @@ index 4c54e9b..a5cdccd 100644
 +	fi;
  	[ -d "$(D)$(DEBUG_DIR)" ] || $(INSTALL_DIR) $(D)$(DEBUG_DIR)
  	$(INSTALL_DATA) $(TARGET)-syms $(D)$(DEBUG_DIR)/$(T)-syms-$(XEN_FULLVERSION)
- 	if [ -r $(TARGET).efi -a -n '$(EFI_DIR)' ]; then \
+ 	$(INSTALL_DATA) $(TARGET)-syms.map $(D)$(DEBUG_DIR)/$(T)-syms-$(XEN_FULLVERSION).map
 diff --git a/xen/arch/x86/Makefile b/xen/arch/x86/Makefile
-index 5f24951..4ec0ee2 100644
+index ec02972f2b..628c245564 100644
 --- a/xen/arch/x86/Makefile
 +++ b/xen/arch/x86/Makefile
-@@ -116,7 +116,7 @@ $(TARGET)-syms: prelink.o xen.lds $(BASEDIR)/common/symbols-dummy.o
- 	    $(@D)/.$(@F).1.o -o $@
- 	rm -f $(@D)/.$(@F).[0-9]*
+@@ -156,7 +156,7 @@ note.o: $(TARGET)-syms
+ 		--rename-section=.data=.note.gnu.build-id -S $@.bin $@
+ 	rm -f $@.bin
  
 -EFI_LDFLAGS = $(patsubst -m%,-mi386pep,$(LDFLAGS)) --subsystem=10
 +EFI_LDFLAGS = -mi386pep $(patsubst -m%,-mi386pep,$(LDFLAGS)) --subsystem=10
