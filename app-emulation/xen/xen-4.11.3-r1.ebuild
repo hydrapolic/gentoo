@@ -98,8 +98,6 @@ src_prepare() {
 	# Gentoo's patchset
 	[[ -n ${GENTOO_VER} ]] && eapply "${WORKDIR}"/patches-gentoo
 
-	eapply "${FILESDIR}"/${PN}-4.6-efi.patch
-
 	# Drop .config
 	sed -e '/-include $(XEN_ROOT)\/.config/d' -i Config.mk || die "Couldn't	drop"
 
