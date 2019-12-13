@@ -20,9 +20,5 @@ RDEPEND="
 	dev-perl/namespace-autoclean
 	dev-perl/Sub-Quote
 "
-DEPEND="
-	virtual/perl-ExtUtils-MakeMaker
-	test? (
-		dev-perl/Test-Fatal
-	)
-"
+DEPEND="virtual/perl-ExtUtils-MakeMaker
+	test? ( dev-perl/Test-Fatal )"

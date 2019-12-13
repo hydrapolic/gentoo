@@ -8,15 +8,11 @@ inherit perl-module
 
 DESCRIPTION="Pack and unpack big-endian IEEE754 floats and doubles"
 
+LICENSE="Artistic-2"
 SLOT="0"
 KEYWORDS="~amd64"
-LICENSE="Artistic-2"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-DEPEND="
-	virtual/perl-ExtUtils-MakeMaker
-	test? (
-		dev-perl/Test-Bits
-	)
-"
+DEPEND="virtual/perl-ExtUtils-MakeMaker
+	test? ( dev-perl/Test-Bits )"

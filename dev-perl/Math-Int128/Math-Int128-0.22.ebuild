@@ -13,12 +13,6 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-LICENSE="|| ( Artistic GPL-1+ )"
-
-RDEPEND="
-	dev-perl/Math-Int64
-"
-DEPEND="
-	${RDEPEND}
-	virtual/perl-ExtUtils-MakeMaker
-"
+RDEPEND="dev-perl/Math-Int64"
+DEPEND="${RDEPEND}
+	virtual/perl-ExtUtils-MakeMaker"

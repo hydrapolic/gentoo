@@ -25,6 +25,7 @@ RDEPEND="
 	dev-perl/namespace-autoclean
 "
 DEPEND="
+	${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
 	test? (
 		>=dev-perl/Path-Class-0.27

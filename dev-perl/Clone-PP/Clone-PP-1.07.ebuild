@@ -8,7 +8,6 @@ inherit perl-module
 
 DESCRIPTION="Recursively copy Perl datatypes"
 
-LICENSE="|| ( Artistic GPL-1+ )"
 SLOT="0"
 KEYWORDS="~amd64"
 

@@ -11,6 +11,4 @@ DESCRIPTION="Manipulate 64 bits integers in Perl"
 SLOT="0"
 KEYWORDS="~amd64"
 
-LICENSE="|| ( Artistic GPL-1+ )"
-
 DEPEND="virtual/perl-ExtUtils-MakeMaker"

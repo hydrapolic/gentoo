@@ -13,15 +13,8 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-LICENSE="|| ( Artistic GPL-1+ )"
-
-RDEPEND="
-	dev-perl/Moo
-	dev-perl/strictures
-"
-DEPEND="
+RDEPEND="dev-perl/Moo
+	dev-perl/strictures"
+DEPEND="${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
-	test? (
-		dev-perl/Test-Fatal
-	)
-"
+	test? ( dev-perl/Test-Fatal )"

@@ -8,7 +8,6 @@ inherit perl-module
 
 DESCRIPTION="API for MaxMind's GeoIP2 web services and databases"
 
-LICENSE="|| ( Artistic GPL-1+ )"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"

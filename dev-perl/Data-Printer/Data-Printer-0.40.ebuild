@@ -8,7 +8,6 @@ inherit perl-module
 
 DESCRIPTION="Colored pretty-print of Perl data structures and objects"
 
-LICENSE="|| ( Artistic GPL-1+ )"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"

@@ -13,10 +13,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	dev-libs/libmaxminddb
+	dev-libs/libmaxminddb:=
 	dev-perl/Math-Int128
-	dev-perl/Math-Int64
-	dev-perl/MaxMind-DB-Common
 	dev-perl/MaxMind-DB-Reader
 	dev-perl/Moo
 	dev-perl/Net-Works

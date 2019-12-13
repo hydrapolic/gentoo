@@ -8,19 +8,13 @@ inherit perl-module
 
 DESCRIPTION="Provides a bits_is() subroutine for testing binary data"
 
+LICENSE="Artistic-2"
 SLOT="0"
 KEYWORDS="~amd64"
-LICENSE="Artistic-2"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="
-	dev-perl/List-AllUtils
-"
-DEPEND="
-	${RDEPEND}
+RDEPEND="dev-perl/List-AllUtils"
+DEPEND="${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
-	test? (
-		dev-perl/Test-Fatal
-	)
-"
+	test? ( dev-perl/Test-Fatal )"
