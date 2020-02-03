@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=GARU
+DIST_VERSION=0.40
 inherit perl-module
 
 DESCRIPTION="Colored pretty-print of Perl data structures and objects"

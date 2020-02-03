@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
+DIST_VERSION=0.02
 inherit perl-module
 
 DESCRIPTION="Pack and unpack big-endian IEEE754 floats and doubles"

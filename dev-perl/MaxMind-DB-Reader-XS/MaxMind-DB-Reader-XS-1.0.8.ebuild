@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
+DIST_VERSION=1.000008
 inherit perl-module
 
 DESCRIPTION="Fast XS implementation of MaxMind DB reader"

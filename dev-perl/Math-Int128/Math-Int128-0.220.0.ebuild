@@ -3,18 +3,17 @@
 
 EAPI=7
 
-DIST_AUTHOR=DROLSKY
+DIST_AUTHOR=SALVA
+DIST_VERSION=0.22
 inherit perl-module
 
-DESCRIPTION="Provides a bits_is() subroutine for testing binary data"
+DESCRIPTION="Manipulate 128 bits integers in Perl"
 
-LICENSE="Artistic-2"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="dev-perl/List-AllUtils"
+RDEPEND="dev-perl/Math-Int64"
 DEPEND="${RDEPEND}
-	virtual/perl-ExtUtils-MakeMaker
-	test? ( dev-perl/Test-Fatal )"
+	virtual/perl-ExtUtils-MakeMaker"

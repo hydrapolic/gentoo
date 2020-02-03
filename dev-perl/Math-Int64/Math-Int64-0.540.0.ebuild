@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=SALVA
+DIST_VERSION=0.54
 inherit perl-module
 
 DESCRIPTION="Manipulate 64 bits integers in Perl"

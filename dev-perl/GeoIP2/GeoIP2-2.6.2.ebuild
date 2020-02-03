@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
+DIST_VERSION=2.006002
 inherit perl-module
 
 DESCRIPTION="API for MaxMind's GeoIP2 web services and databases"
@@ -14,14 +15,14 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	>=dev-perl/Data-Validate-IP-0.25
+	>=dev-perl/Data-Validate-IP-0.250.0
 	dev-perl/HTTP-Message
 	dev-perl/JSON-MaybeXS
 	dev-perl/libwww-perl
 	dev-perl/List-AllUtils
 	dev-perl/List-SomeUtils
 	dev-perl/LWP-Protocol-https
-	>=dev-perl/MaxMind-DB-Reader-1.000000
+	>=dev-perl/MaxMind-DB-Reader-1.0.0
 	dev-perl/MaxMind-DB-Reader-XS
 	dev-perl/Moo
 	dev-perl/namespace-autoclean

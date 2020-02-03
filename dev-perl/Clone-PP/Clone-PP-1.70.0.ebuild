@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=NEILB
+DIST_VERSION=1.07
 inherit perl-module
 
 DESCRIPTION="Recursively copy Perl datatypes"

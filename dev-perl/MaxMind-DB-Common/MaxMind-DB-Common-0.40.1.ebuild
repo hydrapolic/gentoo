@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
+DIST_VERSION=0.040001
 inherit perl-module
 
 DESCRIPTION="Code shared by the MaxMind DB reader and writer modules"

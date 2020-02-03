@@ -3,18 +3,19 @@
 
 EAPI=7
 
-DIST_AUTHOR=HARTZELL
+DIST_AUTHOR=DROLSKY
+DIST_VERSION=0.02
 inherit perl-module
 
-DESCRIPTION="Make your Moo-based object constructors blow up on unknown attributes"
+DESCRIPTION="Provides a bits_is() subroutine for testing binary data"
 
+LICENSE="Artistic-2"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="dev-perl/Moo
-	dev-perl/strictures"
+RDEPEND="dev-perl/List-AllUtils"
 DEPEND="${RDEPEND}
 	virtual/perl-ExtUtils-MakeMaker
 	test? ( dev-perl/Test-Fatal )"

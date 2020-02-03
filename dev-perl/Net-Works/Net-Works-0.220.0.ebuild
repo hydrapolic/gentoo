@@ -4,6 +4,7 @@
 EAPI=7
 
 DIST_AUTHOR=MAXMIND
+DIST_VERSION=0.22
 inherit perl-module
 
 DESCRIPTION="Sane APIs for IP addresses and networks"
@@ -15,7 +16,7 @@ RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-perl/List-AllUtils
-	>=dev-perl/Math-Int128-0.06
+	>=dev-perl/Math-Int128-0.60.0
 	dev-perl/Moo
 	dev-perl/namespace-autoclean
 	dev-perl/Sub-Quote
