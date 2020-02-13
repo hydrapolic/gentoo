@@ -33,8 +33,8 @@ S="${WORKDIR}/${MY_P}-linux-x86_64"
 src_prepare() {
 	default
 
-	# remove empty unused directory
-	rmdir data || die
+	# remove unused directory
+	rm -r data || die
 
 	# remove bundled nodejs
 	rm -r node || die
