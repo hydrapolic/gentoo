@@ -125,7 +125,10 @@ DEPEND="${COMMON_DEPEND}
 	qemu? (
 		app-arch/snappy:=
 		x11-libs/pixman
-		sdl? ( media-libs/libsdl[X] )
+		sdl? (
+			media-libs/libsdl[X]
+			media-libs/libsdl2[X]
+		)
 	)
 	system-qemu? ( app-emulation/qemu[xen] )
 	ocaml? ( dev-ml/findlib
