@@ -9,7 +9,7 @@ SRC_URI="amd64? ( https://github.com/aquasecurity/trivy/releases/download/v${PV}
 
 LICENSE="AGPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE=""
 
 DEPEND=""
