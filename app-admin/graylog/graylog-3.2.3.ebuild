@@ -1,35 +1,29 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit user
-
 DESCRIPTION="Free and open source log management"
 HOMEPAGE="https://www.graylog.org"
-SRC_URI="https://packages.graylog2.org/releases/graylog/graylog-${PV}.tgz"
+SRC_URI="https://downloads.graylog.org/releases/graylog/${P}.tgz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 RESTRICT="strip"
 
-RDEPEND="virtual/jdk:1.8"
+RDEPEND="!app-admin/graylog2
+	acct-group/graylog
+	acct-user/graylog
+	>=virtual/jdk-1.8:*"
 
 DOCS=(
 	COPYING README.markdown UPGRADING.rst
 )
 
-GRAYLOG_DATA_DIR="/var/lib/graylog2"
-GRAYLOG_INSTALL_DIR="/usr/share/graylog2"
+GRAYLOG_DATA_DIR="/var/lib/graylog"
+GRAYLOG_INSTALL_DIR="/usr/share/graylog"
 QA_PREBUILT="${GRAYLOG_INSTALL_DIR}/lib/sigar/libsigar*"
-
-S="${WORKDIR}/graylog-${PV}"
-
-pkg_setup() {
-	enewgroup graylog
-	enewuser graylog -1 -1 -1 graylog
-}
 
 src_prepare() {
 	default
@@ -57,31 +51,33 @@ src_prepare() {
 
 	# gentoo specific paths
 	sed -i "s@\(node_id_file = \).*@\1${GRAYLOG_DATA_DIR}/node-id@g; \
-		s@\(message_journal_dir = \).*@\1${GRAYLOG_DATA_DIR}/data/journal@g; \
-		s@#\(content_packs_dir = \).*@\1${GRAYLOG_DATA_DIR}/data/contentpacks@g" \
+		s@\(message_journal_dir = \).*@\1${GRAYLOG_DATA_DIR}/data/journal@g;" \
 		graylog.conf.example || die
 }
 
 src_install() {
 	default
 
-	insinto /etc/graylog2
+	insinto /etc/graylog
 	doins graylog.conf.example
-
-	insinto "${GRAYLOG_DATA_DIR}/data/contentpacks"
-	doins data/contentpacks/grok-patterns.json
 
 	insinto "${GRAYLOG_INSTALL_DIR}"
 	doins graylog.jar
 	doins -r lib plugin
 
-	newconfd "${FILESDIR}/confd-r2" graylog2
-	newinitd "${FILESDIR}/initd-r2" graylog2
+	keepdir "${GRAYLOG_DATA_DIR}"
+
+	newconfd "${FILESDIR}/graylog.confd" graylog
+	newinitd "${FILESDIR}/graylog.initd" graylog
 }
 
 pkg_postinst() {
 	ewarn "Graylog does not depend on need.net any more (#439092)."
 	ewarn
 	ewarn "Please configure rc_need according to your binding address in:"
-	ewarn "/etc/conf.d/graylog2"
+	ewarn "/etc/conf.d/graylog"
+	ewarn
+	ewarn "Graylog requires Java >= 8"
+	ewarn "Elasticsearch 5.x or 6.x (does NOT work with 7.x)"
+	ewarn "and MongoDB 3.6 or 4.0 (does NOT work with 4.2)"
 }
