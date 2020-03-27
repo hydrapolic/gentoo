@@ -80,9 +80,6 @@ pkg_setup() {
 src_prepare() {
 	default
 
-	# https://bugzilla.redhat.com/show_bug.cgi?id=1786983
-	eapply "${FILESDIR}/glusterfs-6.7-fix-rebalance-crash.patch"
-
 	# https://bugs.gentoo.org/705536
 	# https://bugzilla.redhat.com/show_bug.cgi?id=1793990
 	eapply "${FILESDIR}/glusterfs-6.7-fix-seek.patch"
