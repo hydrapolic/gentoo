@@ -1,15 +1,15 @@
 #!/sbin/openrc-run
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-if [[ "${SVCNAME}" != "glusterfs" ]]
+if [[ "${RC_SVCNAME}" != "glusterfs" ]]
 then
-	GLUSTERFS_NAME="${SVCNAME#glusterfs.}"
+	GLUSTERFS_NAME="${RC_SVCNAME#glusterfs.}"
 else
 	GLUSTERFS_NAME="glusterfs"
 fi
 
-GLUSTERFS_PIDFILE="/var/run/${SVCNAME}.pid"
+GLUSTERFS_PIDFILE="/run/${RC_SVCNAME}.pid"
 
 eval 'GLUSTERFS_LOGFILE="${'${GLUSTERFS_NAME}'_log:-/var/log/glusterfs/'${GLUSTERFS_NAME}'.log}"'
 eval 'GLUSTERFS_VOLFILE="${'${GLUSTERFS_NAME}'_vol:-/etc/glusterfs/'${GLUSTERFS_NAME}'.vol}"'
@@ -39,7 +39,7 @@ checkconfig() {
 		if [[ -z "${GLUSTERFS_VOLFILE}" ]]
 		then
 			eerror "No GlusterFS volume file source has been defined.  Edit /etc/conf.d/glusterfs"
-			eerror "and configure a volume file source for ${SVCNAME}."
+			eerror "and configure a volume file source for ${RC_SVCNAME}."
 			return 1
 		else
 			if [[ ! -f "${GLUSTERFS_VOLFILE}" ]]
@@ -62,7 +62,7 @@ start() {
 
 	checkconfig || return 1
 
-	ebegin "Starting GlusterFS (${SVCNAME})"
+	ebegin "Starting GlusterFS (${RC_SVCNAME})"
 	eindent
 
 	if [[ -z "${GLUSTERFS_MOUNTPOINT}" ]]
@@ -104,7 +104,7 @@ start() {
 stop() {
 	local status
 
-	ebegin "Stopping GlusterFS (${SVCNAME})"
+	ebegin "Stopping GlusterFS (${RC_SVCNAME})"
 	eindent
 	if [[ -z "${GLUSTERFS_MOUNTPOINT}" ]]
 	then
