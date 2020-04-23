@@ -54,8 +54,7 @@ python_prepare_all() {
 	# requests_aws4auth not in portage
 	sed -e '/boto3/d' \
 		-e '/requests_aws4auth/d' \
-		-e 's/yaml.load/yaml.unsafe_load/g' \
-		-e "s/pyyaml.*'/pyyaml'/g" \
+		-e '/pyyaml/d' \
 		-e '/tests_require/s/, "coverage", "nosexcover"//g' \
 		-i setup.cfg setup.py || die
 
