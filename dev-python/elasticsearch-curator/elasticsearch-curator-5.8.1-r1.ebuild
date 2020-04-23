@@ -54,12 +54,12 @@ python_prepare_all() {
 	# requests_aws4auth not in portage
 	sed -e '/boto3/d' \
 		-e '/requests_aws4auth/d' \
-		-e '/pyyaml/d' \
+		-e 's/pyyaml==3.13/pyyaml/g' \
 		-e '/tests_require/s/, "coverage", "nosexcover"//g' \
 		-i setup.cfg setup.py || die
 
 	# Bug 713342
-	sed -i 's/yaml.load/yaml.safe_load/g' curator/utils.py test/unit/* || die
+	sed -i 's/yaml.load/yaml.unsafe_load/g' curator/utils.py test/unit/* || die
 
 	distutils-r1_python_prepare_all
 }
