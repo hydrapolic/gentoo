@@ -7,12 +7,11 @@ inherit apache-module autotools
 
 DESCRIPTION="MaxMind DB Apache Module"
 HOMEPAGE="https://maxmind.github.io/mod_maxminddb/"
-
 SRC_URI="https://github.com/maxmind/mod_maxminddb/releases/download/${PV}/${P}.tar.gz"
-KEYWORDS="~amd64 ~x86"
 
 LICENSE="Apache-2.0"
 SLOT="0"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND="dev-libs/libmaxminddb:="
 RDEPEND="${DEPEND}"
