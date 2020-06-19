@@ -12,7 +12,7 @@ SRC_URI="https://github.com/mtakaki/cachet-url-monitor/archive/${PV}.tar.gz -> $
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64"
 
 DEPEND=">=dev-python/click-7.0[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-5.3[${PYTHON_USEDEP}]
