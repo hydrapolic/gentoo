@@ -1,0 +1,8 @@
+#!/sbin/openrc-run
+
+command="python3.7"
+command_args="/usr/lib/python3.7/site-packages/cachet_url_monitor/scheduler.py /etc/cachet-url-monitor/config.yml"
+command_background="true"
+pidfile="/run/${RC_SVCNAME}.pid"
+output_log="/var/log/cachet-url-monitor/cachet-url-monitor.log"
+error_log="/var/log/cachet-url-monitor/cachet-url-monitor.err"

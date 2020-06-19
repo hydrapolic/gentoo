@@ -30,3 +30,15 @@ python_prepare_all() {
 
 	distutils-r1_python_prepare_all
 }
+
+python_install_all() {
+	distutils-r1_python_install_all
+
+	newinitd "${FILESDIR}/${PN}.initd" "${PN}"
+
+	insinto /etc/logrotate.d/
+	newins "${FILESDIR}/${PN}.logrotate" ${PN}
+
+	diropts -m0700
+	keepdir "/etc/${PN}" "/var/log/${PN}"
+}
