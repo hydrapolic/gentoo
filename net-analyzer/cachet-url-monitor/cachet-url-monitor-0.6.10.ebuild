@@ -20,9 +20,9 @@ DEPEND=">=dev-python/click-7.0[${PYTHON_USEDEP}]
 RDEPEND="${DEPEND}"
 
 python_prepare_all() {
-	sed -e '/boto3/d' \
-		-e '/tests_require/s/, "coverage", "nosexcover"//g' \
-		-i setup.cfg setup.py || die
+	sed -e 's/, "boto3"//g' \
+		-e '/setup_requires=/d' \
+		-i setup.py || die
 
 	sed -e '/boto3/d' \
 		-e '/botocore/d' \
