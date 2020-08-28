@@ -45,7 +45,9 @@ src_prepare() {
 	rm -r optimize plugins || die
 
 	# handle node.js version with RDEPEND
-	sed -i /node_version_validator/d src/setup_node_env/index.js || die
+	sed -i /node_version_validator/d \
+		src/setup_node_env/index.js \
+		src/setup_node_env/prebuilt_dev_only_entry.js || die
 }
 
 src_install() {
