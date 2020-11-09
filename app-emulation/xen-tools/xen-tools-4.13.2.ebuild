@@ -18,7 +18,7 @@ if [[ $PV == *9999 ]]; then
 else
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 	UPSTREAM_VER=
-	SECURITY_VER=
+	SECURITY_VER=29
 	# xen-tools's gentoo patches tarball
 	GENTOO_VER=21
 	# xen-tools's gentoo patches version which apply to this specific ebuild
