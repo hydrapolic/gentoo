@@ -3,4 +3,5 @@
 	delaycompress
 	notifempty
 	missingok
+	copytruncate
 }
