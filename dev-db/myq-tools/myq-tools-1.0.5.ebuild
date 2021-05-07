@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Tools for monitoring MySQL"
 HOMEPAGE="https://github.com/jayjanssen/myq-tools"
@@ -25,7 +25,7 @@ src_unpack() {
 
 src_compile() {
 	cd ${S} || die
-	GOPATH="${WORKDIR}" gox -os=linux -arch=amd64 -output=myq_status
+	GO111MODULE="off" GOPATH="${WORKDIR}" gox -os=linux -arch=amd64 -output=myq_status
 }
 
 src_install() {
