@@ -377,6 +377,10 @@ src_prepare() {
 	sed -e "s:\$\$source/configure:\0 --disable-vnc-png:" \
 		-i tools/Makefile || die
 
+	# disable docker (Bug #732970)
+	sed -e "s:\$\$source/configure:\0 --disable-containers:" \
+		-i tools/Makefile || die
+
 	default
 }
 
@@ -385,6 +389,7 @@ src_configure() {
 		--libdir=${PREFIX}/usr/$(get_libdir) \
 		--libexecdir=${PREFIX}/usr/libexec \
 		--localstatedir=${EPREFIX}/var \
+		--disable-golang \
 		--disable-werror \
 		--disable-xen \
 		--enable-tools \
