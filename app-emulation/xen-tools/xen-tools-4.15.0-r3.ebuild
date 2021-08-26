@@ -420,10 +420,6 @@ src_configure() {
 
 src_compile() {
 	local myopt
-
-	# gcc 11
-	myopt=" -Wno-vla-parameter"
-
 	use debug && myopt="${myopt} debug=y"
 	use python && myopt="${myopt} XENSTAT_PYTHON_BINDINGS=y"
 
