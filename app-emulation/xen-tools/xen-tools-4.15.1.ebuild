@@ -92,9 +92,17 @@ COMMON_DEPEND="
 	${PYTHON_DEPS}
 "
 
+RDEPEND="${COMMON_DEPEND}
+	sys-apps/iproute2[-minimal]
+	net-misc/bridge-utils
+	screen? (
+		app-misc/screen
+		app-admin/logrotate
+	)
+	selinux? ( sec-policy/selinux-xen )"
+
 DEPEND="${COMMON_DEPEND}
 	app-misc/pax-utils
-	dev-lang/perl
 	>=sys-kernel/linux-headers-4.11
 	x11-libs/pixman
 	$(python_gen_cond_dep '
@@ -135,17 +143,12 @@ DEPEND="${COMMON_DEPEND}
 	)
 	system-qemu? ( app-emulation/qemu[xen] )
 	ocaml? ( dev-ml/findlib
-		>=dev-lang/ocaml-4 )
+		dev-lang/ocaml[ocamlopt] )
 	python? ( >=dev-lang/swig-4.0.0 )"
 
-RDEPEND="${COMMON_DEPEND}
-	sys-apps/iproute2[-minimal]
-	net-misc/bridge-utils
-	screen? (
-		app-misc/screen
-		app-admin/logrotate
-	)
-	selinux? ( sec-policy/selinux-xen )"
+BDEPEND="dev-lang/perl
+	sys-devel/bison
+	sys-devel/gettext"
 
 # hvmloader is used to bootstrap a fully virtualized kernel
 # Approved by QA team in bug #144032
