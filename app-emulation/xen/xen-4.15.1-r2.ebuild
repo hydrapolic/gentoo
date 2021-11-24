@@ -152,10 +152,6 @@ pkg_postinst() {
 
 	use efi && einfo "The efi executable is installed in /boot/efi/gentoo"
 
-	elog "You can optionally block the installation of /boot/xen-syms by an entry"
-	elog "in folder /etc/portage/env using the portage's feature INSTALL_MASK"
-	elog "e.g. echo ${msg} > /etc/portage/env/xen.conf"
-
 	ewarn
 	ewarn "Xen 4.12+ changed the default scheduler to credit2 which can cause"
 	ewarn "domU lockups on multi-cpu systems. The legacy credit scheduler seems"
