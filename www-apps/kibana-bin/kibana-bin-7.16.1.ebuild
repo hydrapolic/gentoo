@@ -52,7 +52,7 @@ src_prepare() {
 
 	# handle node.js version with RDEPEND
 	sed -i /node_version_validator/d \
-		no_transpilation_dist.js || die
+		src/setup_node_env/no_transpilation_dist.js || die
 }
 
 src_install() {
