@@ -22,7 +22,7 @@ RDEPEND="
 	acct-user/kibana
 	dev-libs/expat
 	dev-libs/nss
-	>=net-libs/nodejs-16.13.1
+	>=net-libs/nodejs-16.13.0
 "
 
 # Do not complain about CFLAGS etc since we don't use them
@@ -52,8 +52,7 @@ src_prepare() {
 
 	# handle node.js version with RDEPEND
 	sed -i /node_version_validator/d \
-		src/setup_node_env/index.js \
-		src/setup_node_env/no_transpilation.js || die
+		no_transpilation_dist.js || die
 }
 
 src_install() {
