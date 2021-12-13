@@ -22,8 +22,7 @@ RDEPEND="
 	acct-user/kibana
 	dev-libs/expat
 	dev-libs/nss
-	>=net-libs/nodejs-14.16.0
-	<net-libs/nodejs-15
+	>=net-libs/nodejs-16.13.1
 "
 
 # Do not complain about CFLAGS etc since we don't use them
