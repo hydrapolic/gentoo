@@ -5,7 +5,7 @@
             src = "https://github.com/hydrapolic/gentoo.git"
             type = "git"
             status = "unofficial">
-        <link>http://github.com/hydrapolic/gentoo/</link>
+        <link>https://github.com/hydrapolic/gentoo/</link>
         <description>
             hydra gentoo overlay :)
         </description>
