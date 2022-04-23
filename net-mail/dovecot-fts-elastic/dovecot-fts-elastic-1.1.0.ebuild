@@ -16,7 +16,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="amd64"
 
-DEPEND="net-mail/dovecot"
+DEPEND="dev-libs/json-c:*
+	net-mail/dovecot"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
