@@ -1,7 +1,7 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="8"
+EAPI=8
 
 inherit cmake
 
@@ -15,12 +15,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+libevent sasl test"
 
-RDEPEND="
-	!dev-libs/libmemcached
-	libevent? ( dev-libs/libevent )
-	sasl? ( dev-libs/cyrus-sasl )
+RDEPEND="!dev-libs/libmemcached
+	libevent? ( dev-libs/libevent:= )
+	sasl? ( dev-libs/cyrus-sasl:2 )"
+DEPEND="${RDEPEND}
 	test? ( net-misc/memcached )"
-DEPEND="${RDEPEND}"
+BDEPEND="virtual/pkgconfig"
 
 src_configure() {
 	local mycmakeargs=(
