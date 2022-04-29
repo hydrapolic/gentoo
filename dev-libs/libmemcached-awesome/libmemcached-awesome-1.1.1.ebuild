@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+libevent sasl test"
 
 RDEPEND="
-	!!dev-libs/libmemcached
+	!dev-libs/libmemcached
 	libevent? ( dev-libs/libevent )
 	sasl? ( dev-libs/cyrus-sasl )
 	test? ( net-misc/memcached )"
