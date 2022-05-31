@@ -696,6 +696,9 @@ src_install() {
 		rm "${ED}/usr/bin/wsrep_sst_rsync_wan" || die
 	fi
 
+	# Remove dangling symlink
+	rm "${ED}/usr/$(get_libdir)/libmariadb.a" || die
+
 	# Remove broken SST scripts that are incompatible
 	local scriptremove
 	for scriptremove in wsrep_sst_xtrabackup wsrep_sst_xtrabackup-v2 ; do
