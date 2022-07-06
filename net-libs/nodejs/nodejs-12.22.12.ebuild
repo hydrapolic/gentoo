@@ -56,7 +56,7 @@ DEPEND="
 	${RDEPEND}
 "
 PATCHES=(
-	"${FILESDIR}"/${P}-global-npm-config.patch
+	"${FILESDIR}"/${PN}-12.22.10-global-npm-config.patch
 	"${FILESDIR}"/${PN}-12.20.1-fix_ppc64_crashes.patch
 	"${FILESDIR}"/${PN}-12.22.1-jinja_collections_abc.patch
 	"${FILESDIR}"/${PN}-12.22.1-uvwasi_shared_libuv.patch
