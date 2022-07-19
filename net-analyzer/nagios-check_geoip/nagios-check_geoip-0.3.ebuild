@@ -1,12 +1,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=7
 
 MY_PN="check_geoip"
 MY_P="${MY_PN}-${PV}"
-
-inherit multilib
 
 DESCRIPTION="Nagios checks for geoip database"
 HOMEPAGE="https://github.com/hydrapolic/check_geoip"
@@ -23,6 +21,6 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}"
 
 src_install() {
-    exeinto /usr/$(get_libdir)/nagios/plugins
-    doexe check_geoip
+	exeinto /usr/$(get_libdir)/nagios/plugins
+	doexe check_geoip
 }
