@@ -17,7 +17,7 @@ SRC_URI="https://github.com/SpiderLabs/ModSecurity/releases/download/v${PV}/${MY
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc fuzzyhash geoip jit json lua mlogc"
+IUSE="+apache2 doc fuzzyhash geoip jit json lua mlogc"
 
 REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
 
@@ -36,7 +36,7 @@ DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}
 	geoip? ( dev-libs/geoip )
 	mlogc? ( dev-lang/perl )"
-PDEPEND=">=www-apache/modsecurity-crs-2.2.6-r1"
+PDEPEND=">=www-apache/modsecurity-crs-3.3.2"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -54,8 +54,7 @@ PATCHES=(
 need_apache2
 
 pkg_setup() {
-	_init_apache2
-	_init_apache2_late
+	depend.apache_pkg_setup
 	use lua && lua-single_pkg_setup
 }
 
