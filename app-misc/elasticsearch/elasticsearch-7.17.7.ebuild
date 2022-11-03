@@ -50,7 +50,7 @@ src_install() {
 	keepdir /var/{lib,log}/${PN}
 	fowners ${PN}:${PN} /var/{lib,log}/${PN}
 	fperms 0750 /var/{lib,log}/${PN}
-	dodir /usr/share/${PN}/plugins
+	keepdir /usr/share/${PN}/plugins
 
 	insinto /etc/sysctl.d
 	newins "${FILESDIR}/${PN}.sysctl.d" ${PN}.conf
