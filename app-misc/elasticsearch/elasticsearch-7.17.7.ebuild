@@ -50,13 +50,12 @@ src_install() {
 	keepdir /var/{lib,log}/${PN}
 	fowners ${PN}:${PN} /var/{lib,log}/${PN}
 	fperms 0750 /var/{lib,log}/${PN}
-	keepdir /usr/share/${PN}/plugins
 
 	insinto /etc/sysctl.d
 	newins "${FILESDIR}/${PN}.sysctl.d" ${PN}.conf
 
 	newconfd "${FILESDIR}/${PN}.conf.4" ${PN}
-	newinitd "${FILESDIR}/${PN}.init.8" ${PN}
+	newinitd "${FILESDIR}/${PN}.init.9" ${PN}
 
 	systemd_install_serviced "${FILESDIR}/${PN}.service.conf"
 	systemd_newunit "${FILESDIR}"/${PN}.service.3 ${PN}.service
