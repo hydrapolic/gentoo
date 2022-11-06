@@ -55,7 +55,7 @@ src_configure() {
 		--with-perfdata-logfile="${EPREFIX}"/var/log/pnp/process_perfdata.log
 	)
 
-	econf "${myeconfargs}"
+	econf "${myeconfargs[@]}"
 }
 
 src_compile() {
