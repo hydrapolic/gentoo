@@ -19,11 +19,15 @@ REQUIRED_USE="^^ ( icinga nagios )"
 # Some things (sync mode, for one) are broken with nagios-4.x, but since
 # nagios-3.x has been end-of-life'd, we don't have much choice here but
 # to accept it.
-DEPEND="
-	dev-lang/php:*[filter,gd,json(+),simplexml,xml,zlib]
-	net-analyzer/rrdtool[graph,perl]
-	icinga? ( net-analyzer/icinga2 )
-	nagios? ( net-analyzer/nagios-core )"
+DEPEND="net-analyzer/rrdtool[graph,perl]
+	icinga? (
+		acct-group/icinga
+		acct-user/icinga
+	)
+	nagios? (
+		acct-group/nagios
+		acct-user/nagios
+	)"
 
 # A list of modules used in our Apache config file.
 APACHE_MODS="apache2_modules_alias,"       # "Alias" directive
@@ -31,6 +35,7 @@ APACHE_MODS+="apache2_modules_authz_core," # "Require" directive
 APACHE_MODS+="apache2_modules_rewrite"     # "RewriteEngine" and friends
 
 RDEPEND="${DEPEND}
+	dev-lang/php:*[filter,gd,json(+),simplexml,xml,zlib]
 	media-fonts/dejavu
 	virtual/perl-Getopt-Long
 	virtual/perl-Time-HiRes
