@@ -6,6 +6,7 @@ EAPI=7
 DESCRIPTION="A Simple and Comprehensive Vulnerability Scanner for Containers, Suitable for CI"
 HOMEPAGE="https://github.com/aquasecurity/trivy"
 SRC_URI="amd64? ( https://github.com/aquasecurity/trivy/releases/download/v${PV}/trivy_${PV}_Linux-64bit.tar.gz )"
+S="${WORKDIR}"
 
 LICENSE="AGPL-3"
 SLOT="0"
@@ -17,7 +18,7 @@ RDEPEND="${DEPEND}
 	app-arch/rpm"
 BDEPEND=""
 
-S="${WORKDIR}"
+RESTRICT+=" strip"
 
 src_install() {
 	default
