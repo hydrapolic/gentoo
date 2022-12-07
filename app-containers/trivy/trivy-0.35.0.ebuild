@@ -15,7 +15,8 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	app-arch/rpm"
+	app-arch/rpm
+	!app-misc/trivy"
 BDEPEND=""
 
 RESTRICT+=" strip"
