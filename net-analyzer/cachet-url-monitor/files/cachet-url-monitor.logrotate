@@ -1,7 +1,0 @@
-/var/log/cachet-url-monitor/cachet-url-monitor.err /var/log/cachet-url-monitor/cachet-url-monitor.log {
-	compress
-	delaycompress
-	notifempty
-	missingok
-	copytruncate
-}
