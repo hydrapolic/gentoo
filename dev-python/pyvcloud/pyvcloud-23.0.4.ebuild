@@ -1,9 +1,9 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7,8} )
+PYTHON_COMPAT=( python3_{9,11} )
 inherit distutils-r1
 
 DESCRIPTION="Python SDK for VMware vCloud Director"
