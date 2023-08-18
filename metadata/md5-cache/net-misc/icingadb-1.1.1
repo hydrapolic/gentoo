@@ -1,0 +1,14 @@
+BDEPEND=>=dev-lang/go-1.18 app-arch/unzip
+DEFINED_PHASES=compile install unpack
+DESCRIPTION=Icinga configuration and state database supporting multiple environments
+EAPI=8
+HOMEPAGE=https://icinga.com/docs/icinga-db/
+INHERIT=go-module
+KEYWORDS=~amd64
+LICENSE=GPL-2
+RDEPEND=acct-user/icinga acct-group/icinga
+RESTRICT=strip
+SLOT=0
+SRC_URI=https://github.com/Icinga/icingadb/archive/refs/tags/v1.1.1.tar.gz -> icingadb-1.1.1.tar.gz https://github.com/hydrapolic/gentoo-dist/raw/master/icinga/icingadb-1.1.1-deps.tar.xz
+_eclasses_=multiprocessing	b4e253ab22cef7b1085e9b67c7a3b730	toolchain-funcs	0c8a0b0d318eb5d5180d114bd3f6592b	multilib	c19072c3cd7ac5cb21de013f7e9832e0	go-module	8624eede24936fd7666e5298e5332f22
+_md5_=b7add68062b9a1e165d0470b6d248bb5
