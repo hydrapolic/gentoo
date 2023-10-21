@@ -8,7 +8,7 @@ inherit go-module
 DESCRIPTION="Icinga configuration and state database supporting multiple environments"
 HOMEPAGE="https://icinga.com/docs/icinga-db/"
 SRC_URI="https://github.com/Icinga/icingadb/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/hydrapolic/gentoo-dist/raw/master/icinga/${P}-deps.tar.xz"
+	https://dev.gentoo.org/~juippis/distfiles/${P}-deps.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
