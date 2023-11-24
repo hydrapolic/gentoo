@@ -7,9 +7,8 @@ inherit go-module
 
 DESCRIPTION="Lightweight log shipper for Logstash and Elasticsearch"
 HOMEPAGE="https://www.elastic.co/products/beats"
-SRC_URI="https://github.com/elastic/beats/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-SRC_URI+=" http://213.215.71.94/gentoo/${P}-deps.tar.xz"
-#SRC_URI+=" https://media.githubusercontent.com/media/hydrapolic/gentoo-dist/master/filebeat/${P}-deps.tar.xz"
+SRC_URI="https://github.com/elastic/beats/archive/v${PV}.tar.gz -> ${P}.tar.gz
+		https://dev.gentoo.org/~juippis/distfiles/${P}-deps.tar.xz"
 
 LICENSE="Apache-2.0 BSD-2 MIT"
 SLOT="0"
