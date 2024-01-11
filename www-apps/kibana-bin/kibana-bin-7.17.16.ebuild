@@ -23,7 +23,7 @@ RDEPEND="
 	dev-libs/expat
 	dev-libs/nspr
 	dev-libs/nss
-	>=net-libs/nodejs-18.18.2
+	>=net-libs/nodejs-18.17.1
 	<net-libs/nodejs-20
 	sys-libs/glibc
 "
