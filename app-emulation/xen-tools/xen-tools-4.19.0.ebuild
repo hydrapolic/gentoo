@@ -362,6 +362,10 @@ src_prepare() {
 	sed -e "s:\$\$source/configure:\0 --disable-vnc-jpeg:" \
 		-i tools/Makefile || die
 
+	# disable png automagic
+	sed -e "s:\$\$source/configure:\0 --disable-vnc-png:" \
+		-i tools/Makefile || die
+
 	# disable docker (Bug #732970)
 	sed -e "s:\$\$source/configure:\0 --disable-containers:" \
 		-i tools/Makefile || die
