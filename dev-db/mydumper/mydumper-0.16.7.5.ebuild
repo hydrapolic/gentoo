@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake flag-o-matic
+inherit cmake
 
 MY_PV="$(ver_rs 3 -)"
 MY_P="${PN}-${MY_PV}"
@@ -30,14 +30,3 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0.13.1-atomic.patch" #654314
 	"${FILESDIR}/${PN}-0.15-Do-not-overwrite-the-user-CFLAGS.patch"
 )
-
-src_configure() {
-	# -Werror=lto-type-mismatch
-	# https://bugs.gentoo.org/855239
-	#
-	# Fixed upstream in git master:
-	# https://github.com/mydumper/mydumper/pull/1413
-	filter-lto
-
-	cmake_src_configure
-}
