@@ -48,7 +48,7 @@ RDEPEND="
 	selinux? ( sec-policy/selinux-glusterfs )
 	tcmalloc? ( dev-util/google-perftools )
 	uring? ( sys-libs/liburing:= )
-	xml? ( dev-libs/libxml2 )
+	xml? ( dev-libs/libxml2:= )
 "
 DEPEND="
 	${RDEPEND}
