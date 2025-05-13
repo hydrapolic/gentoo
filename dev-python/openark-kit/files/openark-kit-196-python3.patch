@@ -1,0 +1,754 @@
+diff --git a/scripts/oak-apply-ri b/scripts/oak-apply-ri
+index 564248c..ccb641f 100644
+--- a/scripts/oak-apply-ri
++++ b/scripts/oak-apply-ri
+@@ -42,10 +42,10 @@ def parse_options():
+     return parser.parse_args()
+ 
+ def verbose(message):
+-    print "-- %s" % message
++    print("-- %s" % message)
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ def open_connection():
+     if options.defaults_file:
+@@ -68,7 +68,7 @@ def act_final_query(query, should_sleep, num_remaining_values):
+     Either print or execute the given query
+     """
+     if options.print_only:
+-        print query
++        print(query)
+     else:
+         update_cursor = conn.cursor()
+         try:
+@@ -167,7 +167,7 @@ try:
+         safety_levels['high'] = 2
+ 
+         options.safety_level = options.safety_level.lower()
+-        if not options.safety_level in safety_levels.keys():
++        if not options.safety_level in list(safety_levels.keys()):
+             print_error("safety-level must be one of 'none', 'normal', 'high'")
+             exit(1)
+         options.sleep_millis = max(0, options.sleep_millis)
+@@ -209,8 +209,8 @@ try:
+ 
+         force_ri(conn)
+ 
+-    except Exception, err:
+-        print err
++    except Exception as err:
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-block-account b/scripts/oak-block-account
+index 1b1a3ef..13ac901 100644
+--- a/scripts/oak-block-account
++++ b/scripts/oak-block-account
+@@ -48,7 +48,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -237,7 +237,7 @@ def block_account():
+                 update_query = "SET PASSWORD FOR '%s'@'%s' = '%s'" % (user, host, new_password)
+                 act_query(update_query)
+                 verbose("Successfully updated password for account %s" % account)
+-        except Exception, err:
++        except Exception as err:
+             if options.debug:
+                 traceback.print_exc()
+             print_error("Cannot change password for %s: %s" % (account, err))
+@@ -258,7 +258,7 @@ def list_accounts():
+             blocked_status = "blocked"
+         else:
+             blocked_status = "released"
+-        print("%s\t%s" % (account, blocked_status))
++        print(("%s\t%s" % (account, blocked_status)))
+ 
+ 
+ try:
+@@ -286,10 +286,10 @@ try:
+             block_account()
+         if options.kill:
+             kill_blocked_accounts_processes()
+-    except Exception, err:
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err[-1]
++        print(err[-1])
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-chunk-print b/scripts/oak-chunk-print
+index 6886436..ff0145c 100644
+--- a/scripts/oak-chunk-print
++++ b/scripts/oak-chunk-print
+@@ -50,7 +50,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -579,10 +579,10 @@ try:
+         chunk_print()
+ 
+         verbose("Chunk print completed")
+-    except Exception, err:
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-chunk-update b/scripts/oak-chunk-update
+index 7140508..e6448f9 100644
+--- a/scripts/oak-chunk-update
++++ b/scripts/oak-chunk-update
+@@ -54,7 +54,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -547,7 +547,7 @@ def act_data_pass(first_data_pass_query, rest_data_pass_query, description):
+                     total_num_affected_rows += num_affected_rows
+                     should_sleep_after_chunk = True
+                     retry_data_pass = False
+-                except Exception, err:
++                except Exception as err:
+                     print_error("Failed chunk: %s" % err)
+                     sleep_after_chunk(1)
+                     if options.skip_retry_chunk:                 
+@@ -675,10 +675,10 @@ try:
+         chunk_update()
+ 
+         verbose("Chunk update completed")
+-    except Exception, err:
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-get-slave-lag b/scripts/oak-get-slave-lag
+index 09b0691..7e4a74d 100644
+--- a/scripts/oak-get-slave-lag
++++ b/scripts/oak-get-slave-lag
+@@ -39,7 +39,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -108,15 +108,15 @@ def get_slave_lag():
+     try:
+         seconds_behind_master = get_slave_delay_seconds()
+         if options.error_if_more_than_seconds is None:
+-            print seconds_behind_master
++            print(seconds_behind_master)
+         elif seconds_behind_master is None or seconds_behind_master > options.error_if_more_than_seconds:
+             exit_with_error(seconds_behind_master)
+         else:    
+-            print seconds_behind_master
+-    except Exception, err:
++            print(seconds_behind_master)
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err
++        print(err)
+ 
+ def exit_with_error(error_message):
+     """
+@@ -134,8 +134,8 @@ try:
+ 
+         conn = open_connection()
+         get_slave_lag()
+-    except Exception, err:
+-        print err
++    except Exception as err:
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-hook-general-log b/scripts/oak-hook-general-log
+index a9ae6f8..a46088f 100644
+--- a/scripts/oak-hook-general-log
++++ b/scripts/oak-hook-general-log
+@@ -58,7 +58,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -135,7 +135,7 @@ def explain_plan_any_contains(query, database, search_value):
+         return False
+ 
+     for explain_row in explain_plan:
+-        existing_values = ["%s" % value for value in explain_row.values() if value]
++        existing_values = ["%s" % value for value in list(explain_row.values()) if value]
+         concatenated_values = "\n".join(existing_values).lower()
+         if concatenated_values.find(search_value.lower()) >= 0:
+             return True
+@@ -305,7 +305,7 @@ def dump_general_log_snapshot():
+         argument = row["argument"]
+         
+         database = None
+-        if database_per_connection_map.has_key(thread_id):
++        if thread_id in database_per_connection_map:
+             database = database_per_connection_map[thread_id]
+ 
+         should_print = True
+@@ -348,7 +348,7 @@ def dump_general_log_snapshot():
+             should_print = (command_type in ["Connect", "Quit"])
+             
+         if should_print:
+-            print "%s\t%s\t%s\t%s\t%s\t%s" % (event_time, user_host, thread_id, server_id, command_type, argument)
++            print("%s\t%s\t%s\t%s\t%s\t%s" % (event_time, user_host, thread_id, server_id, command_type, argument))
+             sys.stdout.flush()
+         
+ 
+@@ -365,10 +365,10 @@ def hook_general_log():
+                 if not originally_used_log_tables:
+                     truncate_slow_log_table()
+                 dump_general_log_snapshot()
+-            except Exception, err:
++            except Exception as err:
+                 if options.debug:
+                     traceback.print_exc()
+-                print err
++                print(err)
+             time.sleep(options.sleep_time)
+     except KeyboardInterrupt:
+         # Catch a Ctrl-C. We still want to restore defaults, most probably disabling general log.
+@@ -414,10 +414,10 @@ try:
+         cached_explain_plan = None
+         
+         hook_general_log()
+-    except Exception, err:
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-kill-slow-queries b/scripts/oak-kill-slow-queries
+index e5d1b2d..3d28067 100644
+--- a/scripts/oak-kill-slow-queries
++++ b/scripts/oak-kill-slow-queries
+@@ -21,7 +21,7 @@ import sys
+ import getpass
+ import MySQLdb
+ from optparse import OptionParser
+-import ConfigParser
++import configparser
+ 
+ def parse_options():
+     parser = OptionParser()
+@@ -42,10 +42,10 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ def open_connection():
+     if options.defaults_file:
+@@ -68,7 +68,7 @@ def act_final_query(query):
+     Either print or execute the given query
+     """
+     if options.print_only:
+-        print query
++        print(query)
+     else:
+         update_cursor = conn.cursor()
+         try:
+@@ -134,8 +134,8 @@ try:
+ 
+         conn = open_connection()
+         kill_slow_queries(conn)
+-    except Exception, err:
+-        print err
++    except Exception as err:
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-modify-charset b/scripts/oak-modify-charset
+index 7a35831..750bc49 100644
+--- a/scripts/oak-modify-charset
++++ b/scripts/oak-modify-charset
+@@ -37,10 +37,10 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ def open_connection():
+     if options.defaults_file:
+@@ -83,7 +83,7 @@ def alter_column(conn):
+         return
+     query = build_query(row)
+     if options.print_only:
+-        print query+";"
++        print(query+";")
+     else:
+         alter_cursor = conn.cursor()
+         try:
+@@ -115,8 +115,8 @@ try:
+ 
+         conn = open_connection()
+         alter_column(conn)
+-    except Exception, err:
+-        print err[-1]
++    except Exception as err:
++        print(err[-1])
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-online-alter-table b/scripts/oak-online-alter-table
+index 515651c..7281dfa 100644
+--- a/scripts/oak-online-alter-table
++++ b/scripts/oak-online-alter-table
+@@ -51,7 +51,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -395,7 +395,7 @@ def lock_tables_write():
+         except:
+             verbose("...")
+             time.sleep(0.1)
+-    print
++    print()
+     verbose("Tables locked WRITE")
+ 
+ 
+@@ -792,7 +792,7 @@ def act_data_pass(first_data_pass_query, rest_data_pass_query, description):
+                 total_num_affected_rows += num_affected_rows
+                 query_execution_time = (time.time() - query_start_time)
+                 retry_data_pass = False
+-            except Exception, err:
++            except Exception as err:
+                 print_error("Failed chunk: %s" % err)
+                 sleep_after_chunk(1)
+                 num_attempts += 1
+@@ -1012,8 +1012,8 @@ try:
+                 rename_tables()
+                 drop_table(archive_table_name)
+                 verbose("ALTER TABLE completed")
+-    except Exception, err:
+-        print Exception, err
++    except Exception as err:
++        print(Exception, err)
+         exit_with_error(err)
+ finally:
+     if conn:
+diff --git a/scripts/oak-prepare-shutdown b/scripts/oak-prepare-shutdown
+index 2073ea0..2a68e92 100644
+--- a/scripts/oak-prepare-shutdown
++++ b/scripts/oak-prepare-shutdown
+@@ -41,7 +41,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -186,10 +186,10 @@ try:
+ 
+         conn = open_connection()
+         prepare_shutdown()
+-    except Exception, err:
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-purge-master-logs b/scripts/oak-purge-master-logs
+index acc9fda..b8f4f4c 100644
+--- a/scripts/oak-purge-master-logs
++++ b/scripts/oak-purge-master-logs
+@@ -21,7 +21,7 @@ import sys
+ import getpass
+ import MySQLdb
+ from optparse import OptionParser
+-import ConfigParser
++import configparser
+ import os.path
+ 
+ def parse_options():
+@@ -46,10 +46,10 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ 
+ def act_final_query(query, verbose_message):
+@@ -57,7 +57,7 @@ def act_final_query(query, verbose_message):
+     Either print or execute the given query
+     """
+     if options.print_only:
+-        print query
++        print(query)
+     else:
+         update_cursor = master_connection.cursor()
+         try:
+@@ -76,7 +76,7 @@ def open_master_connection():
+     """
+     if options.defaults_file:
+         conn = MySQLdb.connect(read_default_file = options.defaults_file)
+-        config = ConfigParser.ConfigParser()
++        config = configparser.ConfigParser()
+         try:
+             config.read(options.defaults_file)
+         except:
+@@ -184,7 +184,7 @@ def get_slaves_master_log_files():
+                 slaves_master_log_files.append(slave_master_log_file)
+                 slave_cursor.close()
+                 verbose(" + Slave: %s:%d, replicates master file: %s" % (slave_host, slave_port, slave_master_log_file))
+-            except Exception, err:
++            except Exception as err:
+                 print_error("Cannot SHOW SLAVE STATUS on %s" % slave_host)
+         finally:
+             if slave_connection:
+@@ -198,7 +198,7 @@ def purge_master_logs_to(master_log_file):
+     """
+     query = "PURGE MASTER LOGS TO '%s'" % master_log_file
+     if(options.print_only):
+-        print query
++        print(query)
+         return
+ 
+     verbose("Will purge master logs to %s" % desired_master_logs[0])
+@@ -322,8 +322,8 @@ try:
+ 
+                 handle_purging_logic()
+ 
+-    except Exception, err:
+-        print err
++    except Exception as err:
++        print(err)
+ finally:
+     if master_connection:
+         master_connection.close()
+diff --git a/scripts/oak-repeat-query b/scripts/oak-repeat-query
+index 317bf3e..4646f03 100644
+--- a/scripts/oak-repeat-query
++++ b/scripts/oak-repeat-query
+@@ -52,7 +52,7 @@ def parse_options():
+ 
+ def verbose(message):
+     if options.verbose:
+-        print "-- %s" % message
++        print("-- %s" % message)
+ 
+ def print_error(message):
+     sys.stderr.write("-- ERROR: %s\n" % message)
+@@ -189,10 +189,10 @@ try:
+         conn = open_connection()
+                 
+         repeat_query()
+-    except Exception, err:
++    except Exception as err:
+         if options.debug:
+             traceback.print_exc()
+-        print err
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-security-audit b/scripts/oak-security-audit
+index 5e45f29..53e4c5b 100644
+--- a/scripts/oak-security-audit
++++ b/scripts/oak-security-audit
+@@ -38,7 +38,7 @@ def parse_options():
+ 
+ 
+ def verbose(message):
+-    print "-- %s" % message
++    print("-- %s" % message)
+ 
+ 
+ def verbose_topic(message):
+@@ -56,7 +56,7 @@ def verbose_passed():
+ 
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ 
+ def get_in_query(list):
+@@ -103,7 +103,7 @@ def audit_root_user(conn):
+                 user, host = row["user"], row["host"]
+                 query = "RENAME USER '%s'@'%s' TO '%s'@'localhost';" % (user, host, user,)
+                 #query = "DROP USER '%s'@'%s';" % (user, host,)
+-                print query
++                print(query)
+             except:
+                 print_error("-- Cannot %s" % query)
+     else:
+@@ -121,7 +121,7 @@ def audit_anonymous_user(conn):
+             try:
+                 user, host = row["user"], row["host"]
+                 query = "DROP USER '%s'@'%s';" % (user, host,)
+-                print query
++                print(query)
+             except:
+                 print_error("-- Cannot %s" % query)
+     else:
+@@ -139,7 +139,7 @@ def audit_any_host(conn):
+             try:
+                 user, host = row["user"], row["host"]
+                 query = "RENAME USER '%s'@'%s' TO '%s'@'<specific host>';" % (user, host, user,)
+-                print query
++                print(query)
+             except:
+                 print_error("-- Cannot %s" % query)
+     else:
+@@ -159,7 +159,7 @@ def audit_empty_passwords_accounts(conn):
+                 new_password = '<some password>'
+ 
+                 query = "SET PASSWORD FOR '%s'@'%s' = PASSWORD('%s');" % (user, host, new_password)
+-                print query
++                print(query)
+             except:
+                 print_error("-- Cannot %s" % query)
+     else:
+@@ -180,7 +180,7 @@ def audit_identical_passwords_accounts(conn):
+             for account in accounts:
+                 new_password = '<some passowrd>'
+                 query = "SET PASSWORD FOR %s = PASSWORD('%s');" % (account, new_password)
+-                print query
++                print(query)
+     else:
+         verbose_passed()
+     cursor.close()
+@@ -208,11 +208,11 @@ def audit_all_privileges(conn):
+             grant_cursor.close()
+ 
+         except:
+-            print "-- Cannot %s" % query
++            print("-- Cannot %s" % query)
+     if permissive_privileges:
+         verbose("There are %d non root accounts with all privileges" % len(permissive_privileges))
+         for (user,host,query) in permissive_privileges:
+-            print query
++            print(query)
+     else:
+         verbose_passed()
+ 
+@@ -233,7 +233,7 @@ def audit_admin_privileges(conn):
+         recommend("admin privileges are: %s" % ", ".join(privileges_admin))
+         for grantee in suspicious_grantees:
+             query = "GRANT <non-admin-privileges> ON *.* TO %s;" % grantee
+-            print query
++            print(query)
+     else:
+         verbose_passed()
+ 
+@@ -255,7 +255,7 @@ def audit_global_ddl_privileges(conn):
+         recommend("data definition privileges are: %s" % ", ".join(privileges_ddl))
+         for grantee in suspicious_grantees:
+             query = "GRANT <non-data-definition-privileges> ON *.* TO %s;" % grantee
+-            print query
++            print(query)
+         verbose("It is further recommended to only grant privileges on specific databases")
+     else:
+         verbose_passed()
+@@ -281,7 +281,7 @@ def audit_db_ddl_privileges(conn):
+         recommend("data definition privileges are: %s" % ", ".join(privileges_ddl))
+         for grantee, schema in suspicious_grantees:
+             query = 'GRANT <non-data-definition-privileges> ON "%s".* TO %s;' % (schema, grantee,)
+-            print query
++            print(query)
+     else:
+         verbose_passed()
+ 
+@@ -304,7 +304,7 @@ def audit_global_dml_privileges(conn):
+         verbose("Only grant privileges on specific schemata")
+         for grantee in suspicious_grantees:
+             query = "GRANT <the-privileges> ON <specific_schema>.* TO %s;" % grantee
+-            print query
++            print(query)
+     else:
+         verbose_passed()
+ 
+@@ -330,7 +330,7 @@ def audit_mysql_privileges(conn):
+         recommend("data definition privileges are: %s" % ", ".join(privileges_ddl))
+         for grantee, write_privileges in suspicious_grantees:
+             query = 'REVOKE %s ON "mysql".* FROM %s;' % (",".join(write_privileges), grantee,)
+-            print query
++            print(query)
+     else:
+         verbose_passed()
+ 
+@@ -352,7 +352,7 @@ def audit_sql_mode(conn):
+         if sql_mode:
+             desired_sql_mode += ","+sql_mode
+         query = "SET GLOBAL sql_mode = '%s';" % desired_sql_mode
+-        print query
++        print(query)
+ 
+ def audit_old_passwords(conn):
+     verbose_topic("Checking old_passwords setting")
+@@ -389,7 +389,7 @@ def audit_test_database(conn):
+     if 'test' in [row[0] for row in rows]:
+         recommend("`test` database found")
+         query = "DROP DATABASE test;"
+-        print query
++        print(query)
+     else:
+         verbose_passed()
+ 
+@@ -440,8 +440,8 @@ try:
+             audit_skip_networking(conn)
+         audit_test_database(conn)
+ 
+-    except Exception, err:
+-        print err[-1]
++    except Exception as err:
++        print(err[-1])
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-show-limits b/scripts/oak-show-limits
+index 0dc3b5f..2bfb133 100644
+--- a/scripts/oak-show-limits
++++ b/scripts/oak-show-limits
+@@ -37,10 +37,10 @@ def parse_options():
+     return parser.parse_args()
+ 
+ def verbose(message):
+-    print "-- %s" % message
++    print("-- %s" % message)
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ def open_connection():
+     if options.defaults_file:
+@@ -88,10 +88,10 @@ def show_limits(conn):
+                 # It's None when there are no rows...
+                 ratio = float(max_value)/data_type_max_value
+                 if ratio >= options.ratio_threshold:
+-                    print "%s.%s.%s:\t%d/%d\t%f" % (schema_name, table_name, column_name, max_value, data_type_max_value , ratio)
+-        except Exception, err:
++                    print("%s.%s.%s:\t%d/%d\t%f" % (schema_name, table_name, column_name, max_value, data_type_max_value , ratio))
++        except Exception as err:
+             print_error("Error reading %s.%s.%s" % (schema_name, table_name, column_name))
+-            print err
++            print(err)
+ 
+     cursor.close()
+ 
+@@ -109,8 +109,8 @@ try:
+         conn = open_connection()
+         show_limits(conn)
+ 
+-    except Exception, err:
+-        print err
++    except Exception as err:
++        print(err)
+ finally:
+     if conn:
+         conn.close()
+diff --git a/scripts/oak-show-replication-status b/scripts/oak-show-replication-status
+index c048d42..3ff6f5e 100644
+--- a/scripts/oak-show-replication-status
++++ b/scripts/oak-show-replication-status
+@@ -21,7 +21,7 @@ import sys
+ import getpass
+ import MySQLdb
+ from optparse import OptionParser
+-import ConfigParser
++import configparser
+ 
+ def parse_options():
+     parser = OptionParser()
+@@ -38,10 +38,10 @@ def parse_options():
+     return parser.parse_args()
+ 
+ def verbose(message):
+-    print "-- %s" % message
++    print("-- %s" % message)
+ 
+ def print_error(message):
+-    print "-- ERROR: %s" % message
++    print("-- ERROR: %s" % message)
+ 
+ def open_master_connection():
+     """
+@@ -49,7 +49,7 @@ def open_master_connection():
+     """
+     if options.defaults_file:
+         conn = MySQLdb.connect(read_default_file = options.defaults_file)
+-        config = ConfigParser.ConfigParser()
++        config = configparser.ConfigParser()
+         try:
+             config.read(options.defaults_file)
+         except:
+@@ -184,8 +184,8 @@ try:
+             print_error("Expected: %d slaves. Found: %d" % (options.expect_num_slaves, len(slave_hosts_and_ports)))
+         show_slaves_master_log_files()
+ 
+-    except Exception, err:
+-        print err
++    except Exception as err:
++        print(err)
+ finally:
+     if master_connection:
+         master_connection.close()
