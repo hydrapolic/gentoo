@@ -1,0 +1,11 @@
+#!/sbin/openrc-run
+
+command="/usr/local/qualys/cloud-agent/bin/qualys-cloud-agent"
+command_background="yes"
+pidfile="/run/$RC_SVCNAME.pid"
+retry="90"
+
+depend() {
+    need net
+    after firewall
+}
