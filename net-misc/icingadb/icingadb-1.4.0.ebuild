@@ -9,7 +9,7 @@ DESCRIPTION="Icinga configuration and state database supporting multiple environ
 HOMEPAGE="https://icinga.com/docs/icinga-db/"
 SRC_URI="
 	https://github.com/Icinga/icingadb/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	https://dev.gentoo.org/~sbraz/distfiles/${P}-deps.tar.xz
+	https://github.com/hydrapolic/gentoo-dist/releases/download/${P}/${P}-deps.tar.xz
 "
 
 LICENSE="GPL-2"
