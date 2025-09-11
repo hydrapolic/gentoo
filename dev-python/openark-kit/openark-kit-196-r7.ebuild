@@ -3,12 +3,6 @@
 
 EAPI=8
 
-DISTUTILS_USE_SETUPTOOLS=bdepend
-#DISTUTILS_EXT=1
-#DISTUTILS_USE_PEP517=no
-PYTHON_COMPAT=( python3_{10..13} )
-inherit distutils-r1
-
 DESCRIPTION="Common utilities for MySQL"
 HOMEPAGE="https://code.openark.org/forge/openark-kit"
 SRC_URI="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/openarkkit/${P}.tar.gz"
@@ -17,12 +11,14 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="amd64"
 
-RDEPEND="dev-python/mysqlclient[${PYTHON_USEDEP}]"
+RDEPEND="dev-python/mysqlclient"
 
 PATCHES=(
 	"${FILESDIR}/openark-kit-196-python3.patch"
 )
 
-#python_prepare() {
-#	2to3 -n -w --no-diffs scripts/* || die
-#}
+src_install() {
+	dobin scripts/*
+
+	default
+}
