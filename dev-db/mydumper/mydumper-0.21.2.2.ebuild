@@ -34,7 +34,6 @@ BDEPEND="
 	doc? (
 		$(python_gen_any_dep '
 			dev-python/accessible-pygments[${PYTHON_USEDEP}]
-			dev-python/backrefs[${PYTHON_USEDEP}]
 			dev-python/furo[${PYTHON_USEDEP}]
 			dev-python/sphinx-copybutton[${PYTHON_USEDEP}]
 			dev-python/sphinx-inline-tabs[${PYTHON_USEDEP}]
@@ -52,7 +51,6 @@ PATCHES=(
 python_check_deps() {
 	python_has_version \
 		"dev-python/accessible-pygments[${PYTHON_USEDEP}]" \
-		"dev-python/backrefs[${PYTHON_USEDEP}]" \
 		"dev-python/furo[${PYTHON_USEDEP}]" \
 		"dev-python/sphinx-copybutton[${PYTHON_USEDEP}]" \
 		"dev-python/sphinx-inline-tabs[${PYTHON_USEDEP}]" \
