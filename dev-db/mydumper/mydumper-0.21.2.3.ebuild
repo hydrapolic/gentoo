@@ -46,6 +46,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0.13.1-atomic.patch" #654314
 	"${FILESDIR}/${PN}-0.18-Do-not-overwrite-the-user-CFLAGS.patch"
 	"${FILESDIR}/${PN}-0.16-cmake-docs.patch"
+	"${FILESDIR}/${PN}-0.21-silent-config-loading.patch"
 )
 
 python_check_deps() {

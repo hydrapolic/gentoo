@@ -1,0 +1,27 @@
+# https://github.com/mydumper/mydumper/issues/2044
+diff --git a/src/common.c b/src/common.c
+index 9ca5d24..28f8720 100644
+--- a/src/common.c
++++ b/src/common.c
+@@ -159,7 +159,7 @@ void parse_key_file_group(GKeyFile *kf, GOptionContext *context, const gchar * g
+     if (!g_option_context_parse(context, &slen, &gclist, &error)) {
+       m_critical("option parsing failed: %s, try --help\n", error->message);
+     }else{
+-      g_message("Config file loaded");
++      g_debug("Config file loaded");
+     }
+     g_strfreev(gclist);
+   }
+diff --git a/src/myloader/myloader_process.c b/src/myloader/myloader_process.c
+index 6afb5b3..ddbc1d0 100644
+--- a/src/myloader/myloader_process.c
++++ b/src/myloader/myloader_process.c
+@@ -591,7 +591,7 @@ void process_metadata_global_filename(gchar *file, GOptionContext * local_contex
+         if (!g_option_context_parse(local_context, &slen, &gclist, &error)) {
+           m_critical("option parsing failed: %s, try --help\n", error->message);
+         }else{
+-          g_message("Config file loaded");
++          g_debug("Config file loaded");
+         }
+         g_strfreev(gclist);
+       }
