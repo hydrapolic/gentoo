@@ -1,4 +1,4 @@
-# Copyright 1999-2025 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,14 +6,10 @@ EAPI=8
 inherit cmake
 
 MARIADB_VERSION="10.11.18"
-#MY_PN="${PN}-4"
-#MY_P="${MY_PN}-${PV}"
 
 DESCRIPTION="Synchronous multi-master replication engine that provides the wsrep API"
-HOMEPAGE="https://galeracluster.com"
-SRC_URI="https://archive.mariadb.org//mariadb-${MARIADB_VERSION}/${P}/src/${P}.tar.gz"
-
-#S="${WORKDIR}/${MY_P}"
+HOMEPAGE="https://mariadb.com/products/enterprise/galera-cluster/"
+SRC_URI="https://archive.mariadb.org/mariadb-${MARIADB_VERSION}/${P}/src/${P}.tar.gz"
 
 LICENSE="GPL-2 BSD"
 SLOT="0"
