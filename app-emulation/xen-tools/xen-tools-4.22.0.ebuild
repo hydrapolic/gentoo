@@ -100,6 +100,7 @@ COMMON_DEPEND="
 	)
 	zstd? ( app-arch/zstd )
 	app-arch/bzip2
+	app-arch/lz4
 	app-arch/zstd
 	dev-libs/json-c
 	dev-libs/libnl:3
