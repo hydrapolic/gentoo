@@ -1,0 +1,33 @@
+From 212bf7462962b4eb199e10ea2ae26a5f4f38a20f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@gentoo.org>
+Date: Thu, 12 Dec 2024 14:05:29 +0100
+Subject: [PATCH 5/5] libmariadb: do not install client plugins
+
+This is useful for testing, where we can build the client plugins
+required for tests but they are not installed afterwards as we need to
+avoid collisions with dev-db/mariadb-connector-c
+---
+ libmariadb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Submodule libmariadb b5d28284e8d..c315e99a0c8:
+diff --git a/libmariadb/cmake/plugins.cmake b/libmariadb/cmake/plugins.cmake
+index 5de75750..0b1be915 100644
+--- a/libmariadb/cmake/plugins.cmake
++++ b/libmariadb/cmake/plugins.cmake
+@@ -87,7 +87,11 @@ FUNCTION(REGISTER_PLUGIN)
+       if(WIN32)
+         SIGN_TARGET(${target})
+       endif()
+-      INSTALL_PLUGIN(${CC_PLUGIN_TARGET} ${CMAKE_CURRENT_BINARY_DIR})
++      if(WITHOUT_CLIENTLIBS STREQUAL "YES" AND NOT "${CLIENT_PLUGIN_${cc_plugin}}" STREQUAL "")
++        message(STATUS "Client plugin ${CC_PLUGIN_TARGET} will not be installed")
++      else()
++        INSTALL_PLUGIN(${CC_PLUGIN_TARGET} ${CMAKE_CURRENT_BINARY_DIR})
++      endif()
+     endif()
+     if(${CC_PLUGIN_DEFAULT} MATCHES "STATIC")
+       set(PLUGINS_STATIC ${PLUGINS_STATIC} ${CC_PLUGIN_TARGET} PARENT_SCOPE)
+-- 
+2.49.0
+

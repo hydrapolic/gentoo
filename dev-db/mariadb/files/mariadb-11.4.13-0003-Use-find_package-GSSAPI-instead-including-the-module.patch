@@ -1,0 +1,54 @@
+From 335d7cf3cbfb40a88c72f3e172d8f945cdf43f15 Mon Sep 17 00:00:00 2001
+From: Heiko Becker <heirecka@exherbo.org>
+Date: Fri, 25 Nov 2022 15:05:33 +0100
+Subject: [PATCH 3/5] Use find_package(GSSAPI) instead including the module
+
+When including it, CMAKE_DISABLE_FIND_PACKAGE doesn't have the desired
+effect. This can cause a CMake error when building mariadb:
+
+"CMake Error at libmariadb/plugins/auth/CMakeLists.txt:123 (SET_TARGET_PROPERTIES):
+  SET_TARGET_PROPERTIES Can not find target to add properties to:
+  auth_gssapi_client"
+
+Gentoo-bug: https://bugs.gentoo.org/885829
+Upstream-PR: https://github.com/mariadb-corporation/mariadb-connector-c/pull/210
+---
+ libmariadb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libmariadb/CMakeLists.txt b/libmariadb/CMakeLists.txt
+index 6685d0be..f3aa48cb 100644
+--- a/libmariadb/CMakeLists.txt
++++ b/libmariadb/CMakeLists.txt
+@@ -5,6 +5,7 @@
+ CMAKE_MINIMUM_REQUIRED(VERSION 3.12.0 FATAL_ERROR)
+ 
+ INCLUDE(CheckFunctionExists)
++INCLUDE(FeatureSummary)
+ # CMP0077 defaults to NEW since cmake 3.13; can drop when minimum is bumped
+ CMAKE_POLICY(SET CMP0077 NEW)
+ 
+@@ -510,7 +511,8 @@ IF(NOT REMOTEIO_PLUGIN_TYPE MATCHES "OFF")
+ ENDIF()
+ IF(NOT WIN32)
+   IF(NOT AUTH_GSSAPI_PLUGIN_TYPE MATCHES "OFF")
+-    INCLUDE(${CC_SOURCE_DIR}/cmake/FindGSSAPI.cmake)
++    FIND_PACKAGE(GSSAPI)
++    SET_PACKAGE_PROPERTIES(GSSAPI PROPERTIES TYPE OPTIONAL)
+     IF(GSSAPI_FOUND)
+       INCLUDE_DIRECTORIES(${GSSAPI_INCS})
+       IF(AUTH_GSSAPI_PLUGIN_TYPE MATCHES "STATIC")
+diff --git a/libmariadb/plugins/auth/CMakeLists.txt b/libmariadb/plugins/auth/CMakeLists.txt
+index bee0e0cb..8db0fc36 100644
+--- a/libmariadb/plugins/auth/CMakeLists.txt
++++ b/libmariadb/plugins/auth/CMakeLists.txt
+@@ -124,7 +124,8 @@ ENDIF()
+ 
+ #GSSAPI client authentication plugin
+ IF(NOT WIN32)
+-  INCLUDE(${CC_SOURCE_DIR}/cmake/FindGSSAPI.cmake)
++  FIND_PACKAGE(GSSAPI)
++  SET_PACKAGE_PROPERTIES(GSSAPI PROPERTIES TYPE OPTIONAL)
+   IF(GSSAPI_FOUND)
+     SET(GSSAPI_SOURCES ${AUTH_DIR}/auth_gssapi_client.c ${AUTH_DIR}/gssapi_client.c ${AUTH_DIR}/gssapi_errmsg.c)
+     IF (CMAKE_VERSION VERSION_GREATER 3.18)
