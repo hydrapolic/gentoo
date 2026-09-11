@@ -5,6 +5,7 @@ EAPI=8
 
 SUBSLOT="18"
 JAVA_PKG_OPT_USE="jdbc"
+MARIADB_GENTOO_PATCH_VERSION="11.4.13-0"
 
 inherit systemd flag-o-matic prefix toolchain-funcs \
 	multiprocessing java-pkg-opt-2 cmake pam
@@ -13,7 +14,7 @@ DESCRIPTION="An enhanced, drop-in replacement for MySQL"
 HOMEPAGE="https://mariadb.org/"
 SRC_URI="
 	mirror://mariadb/${P}/source/${P}.tar.gz
-	https://dev.gentoo.org/~arkamar/distfiles/${PN}-11.4.8-patches-01.tar.xz
+	https://gitweb.gentoo.org/proj/mariadb-patches.git/snapshot/${PN}-patches-${MARIADB_GENTOO_PATCH_VERSION}.tar.bz2
 "
 # Shorten the path because the socket path length must be shorter than 107 chars
 # and we will run a mysql server during test phase
@@ -106,21 +107,10 @@ DEPEND="${COMMON_DEPEND}
 	)
 	static? ( sys-libs/ncurses[static-libs] )
 "
+
 RDEPEND="${COMMON_DEPEND}
-	!dev-db/mysql !dev-db/percona-server
-	!dev-db/mariadb:10.3
-	!dev-db/mariadb:10.4
-	!dev-db/mariadb:10.5
-	!dev-db/mariadb:10.6
-	!dev-db/mariadb:10.7
-	!dev-db/mariadb:10.8
-	!dev-db/mariadb:10.9
-	!dev-db/mariadb:10.10
-	!dev-db/mariadb:10.11
-	!dev-db/mariadb:11.0
-	!dev-db/mariadb:11.1
-	!dev-db/mariadb:11.2
-	!dev-db/mariadb:11.3
+	!<dev-db/mariadb-$(ver_cut 1-2)
+	!dev-db/mysql
 	selinux? ( sec-policy/selinux-mysql )
 	server? (
 		columnstore? ( dev-db/mariadb-connector-c )
@@ -221,13 +211,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	#eapply "${WORKDIR}"/mariadb-patches
-	eapply "${FILESDIR}"/mariadb-11.4.13-0001-cmake-build-without-client-libs-and-tools.patch
-	eapply "${FILESDIR}"/mariadb-11.4.13-0002-libmariadb-cmake-find-GSSAPI-via-pkg-config.patch
-	eapply "${FILESDIR}"/mariadb-11.4.13-0003-Use-find_package-GSSAPI-instead-including-the-module.patch
-	eapply "${FILESDIR}"/mariadb-11.4.13-0004-cmake-don-t-install-mysql-d-.service-symlinks.patch
-	eapply "${FILESDIR}"/mariadb-11.4.13-0005-libmariadb-do-not-install-client-plugins.patch
-
+	eapply "${WORKDIR}"/${PN}-patches-${MARIADB_GENTOO_PATCH_VERSION}
 	eapply "${FILESDIR}"/${PN}-10.6.12-gcc-13.patch
 	eapply "${FILESDIR}"/${PN}-wsrep-gcc-15.patch
 
