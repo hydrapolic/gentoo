@@ -1,0 +1,13 @@
+diff -up ./ext/ldap/php_ldap.h.remi-oci8 ./ext/ldap/php_ldap.h
+--- ./ext/ldap/php_ldap.h.remi-oci8	2017-06-20 15:45:35.000000000 +0200
++++ ./ext/ldap/php_ldap.h	2017-06-20 16:55:01.640203868 +0200
+@@ -23,7 +23,7 @@
+ #include <lber.h>
+ #endif
+ 
+-#include <ldap.h>
++#include "/usr/include/ldap.h"
+ 
+ extern zend_module_entry ldap_module_entry;
+ #define ldap_module_ptr &ldap_module_entry
+

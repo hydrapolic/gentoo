@@ -1,0 +1,26 @@
+From 98d2b923243d406b3d26f0770ac02f917729b948 Mon Sep 17 00:00:00 2001
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 4 Sep 2025 09:01:49 +0200
+Subject: [PATCH] Fix GH-19681 PHP_EXPAND_PATH broken with bash 5.3.0
+
+---
+ build/php.m4 | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/build/php.m4 b/build/php.m4
+index 142ddf08fd98b..e5ead0f4c44af 100644
+--- a/build/php.m4
++++ b/build/php.m4
+@@ -64,7 +64,11 @@ AC_DEFUN([PHP_EXPAND_PATH],[
+     changequote({,})
+     ep_dir=`echo $1|$SED 's%/*[^/][^/]*/*$%%'`
+     changequote([,])
+-    ep_realdir=`(cd "$ep_dir" && pwd)`
++    if test -z $ep_dir ; then
++      ep_realdir=`(pwd)`
++    else
++      ep_realdir=`(cd "$ep_dir" && pwd)`
++    fi
+     $2="$ep_realdir"/`basename "$1"`
+   fi
+ ])

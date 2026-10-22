@@ -1,0 +1,400 @@
+From 4dc8b3c0efaae25b08c8f59b068f17c97c59d0ae Mon Sep 17 00:00:00 2001
+From: Remi Collet <remi@remirepo.net>
+Date: Wed, 5 May 2021 15:41:00 +0200
+Subject: [PATCH] get rid of inet_aton and inet_ntoa use inet_ntop iand
+ inet_pton where available standardize buffer size
+
+---
+ ext/sockets/sockaddr_conv.c |  4 ++++
+ ext/sockets/sockets.c       | 48 +++++++++++++++++++++++++------------
+ ext/standard/dns.c          | 16 ++++++++++++-
+ main/network.c              | 20 ++++++++++++++--
+ 4 files changed, 70 insertions(+), 18 deletions(-)
+
+diff --git a/ext/sockets/sockaddr_conv.c b/ext/sockets/sockaddr_conv.c
+index 57996612d2d7e..65c8418fb3a6f 100644
+--- a/ext/sockets/sockaddr_conv.c
++++ b/ext/sockets/sockaddr_conv.c
+@@ -89,7 +89,11 @@ int php_set_inet_addr(struct sockaddr_in *sin, char *string, php_socket *php_soc
+ 	struct in_addr tmp;
+ 	struct hostent *host_entry;
+ 
++#ifdef HAVE_INET_PTON
++	if (inet_pton(AF_INET, string, &tmp)) {
++#else
+ 	if (inet_aton(string, &tmp)) {
++#endif
+ 		sin->sin_addr.s_addr = tmp.s_addr;
+ 	} else {
+ 		if (strlen(string) > MAXFQDNLEN || ! (host_entry = php_network_gethostbyname(string))) {
+diff --git a/ext/sockets/sockets.c b/ext/sockets/sockets.c
+index 16ad3e8013a4c..85c938d1b97b1 100644
+--- a/ext/sockets/sockets.c
++++ b/ext/sockets/sockets.c
+@@ -220,8 +220,10 @@ zend_module_entry sockets_module_entry = {
+ ZEND_GET_MODULE(sockets)
+ #endif
+ 
++#ifndef HAVE_INET_NTOP
+ /* inet_ntop should be used instead of inet_ntoa */
+ int inet_ntoa_lock = 0;
++#endif
+ 
+ static int php_open_listen_sock(php_socket *sock, int port, int backlog) /* {{{ */
+ {
+@@ -1086,10 +1088,12 @@ PHP_FUNCTION(socket_getsockname)
+ 	struct sockaddr_in		*sin;
+ #if HAVE_IPV6
+ 	struct sockaddr_in6		*sin6;
+-	char					addr6[INET6_ADDRSTRLEN+1];
++#endif
++#ifdef HAVE_INET_NTOP
++	char					addrbuf[INET6_ADDRSTRLEN];
+ #endif
+ 	struct sockaddr_un		*s_un;
+-	char					*addr_string;
++	const char				*addr_string;
+ 	socklen_t				salen = sizeof(php_sockaddr_storage);
+ 
+ 	if (zend_parse_parameters(ZEND_NUM_ARGS(), "Oz|z", &arg1, socket_ce, &addr, &port) == FAILURE) {
+@@ -1110,8 +1114,8 @@ PHP_FUNCTION(socket_getsockname)
+ #if HAVE_IPV6
+ 		case AF_INET6:
+ 			sin6 = (struct sockaddr_in6 *) sa;
+-			inet_ntop(AF_INET6, &sin6->sin6_addr, addr6, INET6_ADDRSTRLEN);
+-			ZEND_TRY_ASSIGN_REF_STRING(addr, addr6);
++			inet_ntop(AF_INET6, &sin6->sin6_addr,  addrbuf, sizeof(addrbuf));
++			ZEND_TRY_ASSIGN_REF_STRING(addr, addrbuf);
+ 
+ 			if (port != NULL) {
+ 				ZEND_TRY_ASSIGN_REF_LONG(port, htons(sin6->sin6_port));
+@@ -1121,11 +1125,14 @@ PHP_FUNCTION(socket_getsockname)
+ #endif
+ 		case AF_INET:
+ 			sin = (struct sockaddr_in *) sa;
++#ifdef HAVE_INET_NTOP
++			addr_string = inet_ntop(AF_INET, &sin->sin_addr, addrbuf, sizeof(addrbuf));
++#else
+ 			while (inet_ntoa_lock == 1);
+ 			inet_ntoa_lock = 1;
+ 			addr_string = inet_ntoa(sin->sin_addr);
+ 			inet_ntoa_lock = 0;
+-
++#endif
+ 			ZEND_TRY_ASSIGN_REF_STRING(addr, addr_string);
+ 
+ 			if (port != NULL) {
+@@ -1158,10 +1165,12 @@ PHP_FUNCTION(socket_getpeername)
+ 	struct sockaddr_in		*sin;
+ #if HAVE_IPV6
+ 	struct sockaddr_in6		*sin6;
+-	char					addr6[INET6_ADDRSTRLEN+1];
++#endif
++#ifdef HAVE_INET_NTOP
++	char					addrbuf[INET6_ADDRSTRLEN];
+ #endif
+ 	struct sockaddr_un		*s_un;
+-	char					*addr_string;
++	const char				*addr_string;
+ 	socklen_t				salen = sizeof(php_sockaddr_storage);
+ 
+ 	if (zend_parse_parameters(ZEND_NUM_ARGS(), "Oz|z", &arg1, socket_ce, &arg2, &arg3) == FAILURE) {
+@@ -1182,9 +1191,9 @@ PHP_FUNCTION(socket_getpeername)
+ #if HAVE_IPV6
+ 		case AF_INET6:
+ 			sin6 = (struct sockaddr_in6 *) sa;
+-			inet_ntop(AF_INET6, &sin6->sin6_addr, addr6, INET6_ADDRSTRLEN);
++			inet_ntop(AF_INET6, &sin6->sin6_addr, addrbuf, sizeof(addrbuf));
+ 
+-			ZEND_TRY_ASSIGN_REF_STRING(arg2, addr6);
++			ZEND_TRY_ASSIGN_REF_STRING(arg2, addrbuf);
+ 
+ 			if (arg3 != NULL) {
+ 				ZEND_TRY_ASSIGN_REF_LONG(arg3, htons(sin6->sin6_port));
+@@ -1195,11 +1204,14 @@ PHP_FUNCTION(socket_getpeername)
+ #endif
+ 		case AF_INET:
+ 			sin = (struct sockaddr_in *) sa;
++#ifdef HAVE_INET_NTOP
++			addr_string = inet_ntop(AF_INET, &sin->sin_addr, addrbuf, sizeof(addrbuf));
++#else
+ 			while (inet_ntoa_lock == 1);
+ 			inet_ntoa_lock = 1;
+ 			addr_string = inet_ntoa(sin->sin_addr);
+ 			inet_ntoa_lock = 0;
+-
++#endif
+ 			ZEND_TRY_ASSIGN_REF_STRING(arg2, addr_string);
+ 
+ 			if (arg3 != NULL) {
+@@ -1531,12 +1543,14 @@ PHP_FUNCTION(socket_recvfrom)
+ 	struct sockaddr_in	sin;
+ #if HAVE_IPV6
+ 	struct sockaddr_in6	sin6;
+-	char				addr6[INET6_ADDRSTRLEN];
++#endif
++#ifdef HAVE_INET_NTOP
++	char				addrbuf[INET6_ADDRSTRLEN];
+ #endif
+ 	socklen_t			slen;
+ 	int					retval;
+ 	zend_long				arg3, arg4;
+-	char				*address;
++	const char			*address;
+ 	zend_string			*recv_buf;
+ 
+ 	if (zend_parse_parameters(ZEND_NUM_ARGS(), "Ozllz|z", &arg1, socket_ce, &arg2, &arg3, &arg4, &arg5, &arg6) == FAILURE) {
+@@ -1594,7 +1608,11 @@ PHP_FUNCTION(socket_recvfrom)
+ 			ZSTR_LEN(recv_buf) = retval;
+ 			ZSTR_VAL(recv_buf)[ZSTR_LEN(recv_buf)] = '\0';
+ 
++#ifdef HAVE_INET_NTOP
++			address = inet_ntop(AF_INET, &sin.sin_addr, addrbuf, sizeof(addrbuf));
++#else
+ 			address = inet_ntoa(sin.sin_addr);
++#endif
+ 
+ 			ZEND_TRY_ASSIGN_REF_NEW_STR(arg2, recv_buf);
+ 			ZEND_TRY_ASSIGN_REF_STRING(arg5, address ? address : "0.0.0.0");
+@@ -1621,11 +1639,11 @@ PHP_FUNCTION(socket_recvfrom)
+ 			ZSTR_LEN(recv_buf) = retval;
+ 			ZSTR_VAL(recv_buf)[ZSTR_LEN(recv_buf)] = '\0';
+ 
+-			memset(addr6, 0, INET6_ADDRSTRLEN);
+-			inet_ntop(AF_INET6, &sin6.sin6_addr, addr6, INET6_ADDRSTRLEN);
++			memset(addrbuf, 0, INET6_ADDRSTRLEN);
++			inet_ntop(AF_INET6, &sin6.sin6_addr,  addrbuf, sizeof(addrbuf));
+ 
+ 			ZEND_TRY_ASSIGN_REF_NEW_STR(arg2, recv_buf);
+-			ZEND_TRY_ASSIGN_REF_STRING(arg5, addr6[0] ? addr6 : "::");
++			ZEND_TRY_ASSIGN_REF_STRING(arg5, addrbuf[0] ? addrbuf : "::");
+ 			ZEND_TRY_ASSIGN_REF_LONG(arg6, ntohs(sin6.sin6_port));
+ 			break;
+ #endif
+diff --git a/ext/standard/dns.c b/ext/standard/dns.c
+index 41b98424edb60..6efdbbe894b46 100644
+--- a/ext/standard/dns.c
++++ b/ext/standard/dns.c
+@@ -228,6 +228,9 @@ PHP_FUNCTION(gethostbynamel)
+ 	struct hostent *hp;
+ 	struct in_addr in;
+ 	int i;
++#ifdef HAVE_INET_NTOP
++	char addr4[INET_ADDRSTRLEN];
++#endif
+ 
+ 	ZEND_PARSE_PARAMETERS_START(1, 1)
+ 		Z_PARAM_PATH(hostname, hostname_len)
+@@ -255,7 +258,11 @@ PHP_FUNCTION(gethostbynamel)
+ 		}
+ 
+ 		in = *h_addr_entry;
++#ifdef HAVE_INET_NTOP
++		add_next_index_string(return_value, inet_ntop(AF_INET, &in, addr4, INET_ADDRSTRLEN));
++#else
+ 		add_next_index_string(return_value, inet_ntoa(in));
++#endif
+ 	}
+ }
+ /* }}} */
+@@ -266,7 +273,10 @@ static zend_string *php_gethostbyname(char *name)
+ 	struct hostent *hp;
+ 	struct in_addr *h_addr_0; /* Don't call this h_addr, it's a macro! */
+ 	struct in_addr in;
+-	char *address;
++#ifdef HAVE_INET_NTOP
++	char addr4[INET_ADDRSTRLEN];
++#endif
++	const char *address;
+ 
+ 	hp = php_network_gethostbyname(name);
+ 	if (!hp) {
+@@ -281,7 +291,11 @@ static zend_string *php_gethostbyname(char *name)
+ 
+ 	memcpy(&in.s_addr, h_addr_0, sizeof(in.s_addr));
+ 
++#ifdef HAVE_INET_NTOP
++	address = inet_ntop(AF_INET, &in, addr4, INET_ADDRSTRLEN);
++#else
+ 	address = inet_ntoa(in);
++#endif
+ 	return zend_string_init(address, strlen(address), 0);
+ }
+ /* }}} */
+diff --git a/main/network.c b/main/network.c
+index 2c504952b2dd1..7f2f714ec42df 100644
+--- a/main/network.c
++++ b/main/network.c
+@@ -236,8 +236,12 @@ PHPAPI int php_network_getaddresses(const char *host, int socktype, struct socka
+ 	} while ((sai = sai->ai_next) != NULL);
+ 
+ 	freeaddrinfo(res);
++#else
++#ifdef HAVE_INET_PTON
++	if (!inet_pton(AF_INET, host, &in)) {
+ #else
+ 	if (!inet_aton(host, &in)) {
++#endif
+ 		if(strlen(host) > MAXFQDNLEN) {
+ 			host_info = NULL;
+ 			errno = E2BIG;
+@@ -555,7 +559,11 @@ PHPAPI int php_network_parse_network_address_with_port(const char *addr, zend_lo
+ 		goto out;
+ 	}
+ #endif
++#ifdef HAVE_INET_PTON
++	if (inet_pton(AF_INET, tmp, &in4->sin_addr) > 0) {
++#else
+ 	if (inet_aton(tmp, &in4->sin_addr) > 0) {
++#endif
+ 		in4->sin_port = htons(port);
+ 		in4->sin_family = AF_INET;
+ 		*sl = sizeof(struct sockaddr_in);
+@@ -617,15 +625,19 @@ PHPAPI void php_network_populate_name_from_sockaddr(
+ 	}
+ 
+ 	if (textaddr) {
+-#if HAVE_IPV6 && HAVE_INET_NTOP
++#ifdef HAVE_INET_NTOP
+ 		char abuf[256];
+ #endif
+-		char *buf = NULL;
++		const char *buf = NULL;
+ 
+ 		switch (sa->sa_family) {
+ 			case AF_INET:
+ 				/* generally not thread safe, but it *is* thread safe under win32 */
++#ifdef HAVE_INET_NTOP
++				buf = inet_ntop(AF_INET, &((struct sockaddr_in*)sa)->sin_addr, (char *)&abuf, sizeof(abuf));
++#else
+ 				buf = inet_ntoa(((struct sockaddr_in*)sa)->sin_addr);
++#endif
+ 				if (buf) {
+ 					*textaddr = strpprintf(0, "%s:%d",
+ 						buf, ntohs(((struct sockaddr_in*)sa)->sin_port));
+@@ -862,7 +874,11 @@ php_socket_t php_network_connect_socket_to_host(const char *host, unsigned short
+ 
+ 					in4->sin_family = sa->sa_family;
+ 					in4->sin_port = htons(bindport);
++#ifdef HAVE_INET_PTON
++					if (!inet_pton(AF_INET, bindto, &in4->sin_addr)) {
++#else
+ 					if (!inet_aton(bindto, &in4->sin_addr)) {
++#endif
+ 						php_error_docref(NULL, E_WARNING, "Invalid IP Address: %s", bindto);
+ 						goto skip_bind;
+ 					}
+From e5b6f43ec7813392d83ea586b7902e0396a1f792 Mon Sep 17 00:00:00 2001
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 6 May 2021 14:21:29 +0200
+Subject: [PATCH] get rid of inet_addr usage
+
+---
+ main/fastcgi.c            | 4 ++++
+ sapi/litespeed/lsapilib.c | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/main/fastcgi.c b/main/fastcgi.c
+index 071f69d3a7f0..c936d42405de 100644
+--- a/main/fastcgi.c
++++ b/main/fastcgi.c
+@@ -688,8 +688,12 @@ int fcgi_listen(const char *path, int backlog)
+ 		if (!*host || !strncmp(host, "*", sizeof("*")-1)) {
+ 			sa.sa_inet.sin_addr.s_addr = htonl(INADDR_ANY);
+ 		} else {
++#ifdef HAVE_INET_PTON
++			if (!inet_pton(AF_INET, host, &sa.sa_inet.sin_addr)) {
++#else
+ 			sa.sa_inet.sin_addr.s_addr = inet_addr(host);
+ 			if (sa.sa_inet.sin_addr.s_addr == INADDR_NONE) {
++#endif
+ 				struct hostent *hep;
+ 
+ 				if(strlen(host) > MAXFQDNLEN) {
+diff --git a/sapi/litespeed/lsapilib.c b/sapi/litespeed/lsapilib.c
+index a72b5dc1b988..305f3326a682 100644
+--- a/sapi/litespeed/lsapilib.c
++++ b/sapi/litespeed/lsapilib.c
+@@ -2673,8 +2673,12 @@ int LSAPI_ParseSockAddr( const char * pBind, struct sockaddr * pAddr )
+             ((struct sockaddr_in *)pAddr)->sin_addr.s_addr = htonl( INADDR_LOOPBACK );
+         else
+         {
++#ifdef HAVE_INET_PTON
++            if (!inet_pton(AF_INET, p, &((struct sockaddr_in *)pAddr)->sin_addr))
++#else
+             ((struct sockaddr_in *)pAddr)->sin_addr.s_addr = inet_addr( p );
+             if ( ((struct sockaddr_in *)pAddr)->sin_addr.s_addr == INADDR_BROADCAST)
++#endif
+             {
+                 doAddrInfo = 1;
+             }
+From 99d67d121acd4c324738509679d23acaf759d065 Mon Sep 17 00:00:00 2001
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 6 May 2021 16:35:48 +0200
+Subject: [PATCH] use getnameinfo instead of gethostbyaddr
+
+---
+ ext/standard/dns.c | 34 ++++++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
+
+diff --git a/ext/standard/dns.c b/ext/standard/dns.c
+index edd9a4549f5c..540c777faaba 100644
+--- a/ext/standard/dns.c
++++ b/ext/standard/dns.c
+@@ -169,20 +169,30 @@ PHP_FUNCTION(gethostbyaddr)
+ static zend_string *php_gethostbyaddr(char *ip)
+ {
+ #if HAVE_IPV6 && HAVE_INET_PTON
+-	struct in6_addr addr6;
+-#endif
+-	struct in_addr addr;
+-	struct hostent *hp;
++	struct sockaddr_in sa4;
++	struct sockaddr_in6 sa6;
++	char out[NI_MAXHOST];
+ 
+-#if HAVE_IPV6 && HAVE_INET_PTON
+-	if (inet_pton(AF_INET6, ip, &addr6)) {
+-		hp = gethostbyaddr((char *) &addr6, sizeof(addr6), AF_INET6);
+-	} else if (inet_pton(AF_INET, ip, &addr)) {
+-		hp = gethostbyaddr((char *) &addr, sizeof(addr), AF_INET);
+-	} else {
+-		return NULL;
++	if (inet_pton(AF_INET6, ip, &sa6.sin6_addr)) {
++		sa6.sin6_family = AF_INET6;
++
++		if (getnameinfo((struct sockaddr *)&sa6, sizeof(sa6), out, sizeof(out), NULL, 0, NI_NAMEREQD) < 0) {
++			return zend_string_init(ip, strlen(ip), 0);
++		}
++		return zend_string_init(out, strlen(out), 0);
++	} else if (inet_pton(AF_INET, ip, &sa4.sin_addr)) {
++		sa4.sin_family = AF_INET;
++
++		if (getnameinfo((struct sockaddr *)&sa4, sizeof(sa4), out, sizeof(out), NULL, 0, NI_NAMEREQD) < 0) {
++			return zend_string_init(ip, strlen(ip), 0);
++		}
++		return zend_string_init(out, strlen(out), 0);
+ 	}
++	return NULL; /* not a valid IP */
+ #else
++	struct in_addr addr;
++	struct hostent *hp;
++
+ 	addr.s_addr = inet_addr(ip);
+ 
+ 	if (addr.s_addr == -1) {
+@@ -190,13 +200,13 @@ static zend_string *php_gethostbyaddr(char *ip)
+ 	}
+ 
+ 	hp = gethostbyaddr((char *) &addr, sizeof(addr), AF_INET);
+-#endif
+ 
+ 	if (!hp || hp->h_name == NULL || hp->h_name[0] == '\0') {
+ 		return zend_string_init(ip, strlen(ip), 0);
+ 	}
+ 
+ 	return zend_string_init(hp->h_name, strlen(hp->h_name), 0);
++#endif
+ }
+ /* }}} */
+ 
