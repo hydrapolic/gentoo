@@ -206,7 +206,6 @@ PATCHES=(
 	"${FILESDIR}/remicollet/0237-php-from-8.2.34-to-8.0.patch"
 	"${FILESDIR}/remicollet/0238-php-from-8.2.35-to-8.0.patch"
 	"${FILESDIR}/remicollet/0239-php-from-8.2.36-to-8.0.patch"
-	"${FILESDIR}/remicollet/0238-php-8.0-cve-2026-109618.patch"
 	"${FILESDIR}/remicollet/0300-php-7.4.0-datetests.patch"
 	"${FILESDIR}/remicollet/0301-php-8.0.30-zlib-tests.patch"
 	"${FILESDIR}/remicollet/0302-php-8.0.30-pcretests.patch"
