@@ -145,6 +145,7 @@ PATCHES=(
 	"${FILESDIR}/php-iodbc-header-location.patch"
 	"${FILESDIR}/php80-firebird-warnings.patch"
 
+	# https://git.remirepo.net/cgit/rpms/scl-php80/php.git/log/
 	# https://rpms.remirepo.net/SRPMS/repoview/php80-php.html
 	"${FILESDIR}/remicollet/0001-php-7.4.0-httpd.patch"
 	"${FILESDIR}/remicollet/0005-php-7.2.0-includedir.patch"
